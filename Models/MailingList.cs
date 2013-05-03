@@ -8,6 +8,11 @@ namespace Moosend.API.Client.Models
     [DataContract(Namespace = "")]
     public class MailingList
     {
+        public MailingList()
+        {
+            CustomFieldsDefinition = new List<CustomFieldDefinition>();
+        }
+
         [DataMember]
         public virtual Guid ID
         {
@@ -65,34 +70,11 @@ namespace Moosend.API.Client.Models
             internal set;
         }
 
-        private IList<CustomFieldDefinition> _CustomFieldsDefinition = new List<CustomFieldDefinition>();
-        
         [DataMember]
         public virtual IList<CustomFieldDefinition> CustomFieldsDefinition
         {
-            get
-            {
-                return _CustomFieldsDefinition;
-            }
-            internal set
-            {
-                _CustomFieldsDefinition = value;
-            }
-        }
-
-        private IList<Segment> _Segments = new List<Segment>();
-
-        [DataMember]
-        public virtual IList<Segment> Segments
-        {
-            get
-            {
-                return _Segments;
-            }
-            set
-            {
-                _Segments = value;
-            }
+            get;
+            private set;
         }
 
         [DataMember]
@@ -121,6 +103,18 @@ namespace Moosend.API.Client.Models
         {
             get;
             internal set;
+        }
+
+        public virtual String ConfirmationPage
+        {
+            get;
+            set;
+        }
+
+        public virtual String RedirectAfterUnsubscribePage
+        {
+            get;
+            set;
         }
     }
 }

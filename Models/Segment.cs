@@ -8,9 +8,25 @@ namespace Moosend.API.Client.Models
     [DataContract(Namespace = "")]
     public class Segment
     {
-        public Segment()
+        internal Segment()
         {
             Criteria = new List<SegmentCriteria>();
+        }
+
+        public Segment(Guid mailingListID)
+        {
+            mailingListID.CheckNotNull("mailingListID");
+
+            Criteria = new List<SegmentCriteria>();
+            this.MailingListID = mailingListID;
+        }
+
+        public Segment(MailingList mailingList, String name, SegmentMatchType matchType = SegmentMatchType.All)
+        {
+            Criteria = new List<SegmentCriteria>();
+            this.MailingListID = mailingList.ID;
+            this.Name = name;
+            this.MatchType = matchType;
         }
 
         [DataMember]
@@ -71,6 +87,12 @@ namespace Moosend.API.Client.Models
 
         [DataMember]
         public virtual DateTime UpdatedOn
+        {
+            get;
+            internal set;
+        }
+
+        public virtual Guid MailingListID
         {
             get;
             internal set;

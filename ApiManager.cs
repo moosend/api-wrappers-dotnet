@@ -12,8 +12,7 @@ namespace Moosend.API.Client
 {
     public class ApiManager
     {
-        private static readonly String END_POINT = "http://api.moosend.com";
-        //private static readonly String END_POINT = "http://localhost:3204";
+        private static readonly String END_POINT = "http://api.moosend.com";        
 
         public ApiManager()
         {

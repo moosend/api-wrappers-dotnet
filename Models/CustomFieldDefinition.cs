@@ -14,6 +14,12 @@ namespace Moosend.API.Client.Models
             internal set;
         }
 
+        public virtual Guid MailingListID
+        {
+            get;
+            internal set;
+        }
+
         [DataMember]
         public virtual String Name
         {

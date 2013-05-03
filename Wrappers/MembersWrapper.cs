@@ -51,14 +51,14 @@ namespace Moosend.API.Client.Wrappers
 
         public void Remove(Guid mailingListID, String email)
         {
-            _Manager.MakeRequest(HttpMethod.DELETE, String.Format("/subscribers/{0}/remove", mailingListID), new { 
+            _Manager.MakeRequest(HttpMethod.POST, String.Format("/subscribers/{0}/remove", mailingListID), new { 
                 Email = email 
             });
         }
 
         public void Remove(Guid mailingListID, IList<String> emails)
         {
-            _Manager.MakeRequest(HttpMethod.DELETE, String.Format("/subscribers/{0}/remove_many", mailingListID), new { 
+            _Manager.MakeRequest(HttpMethod.POST, String.Format("/subscribers/{0}/remove_many", mailingListID), new { 
                 emails = String.Join(",", emails) 
             });
         }

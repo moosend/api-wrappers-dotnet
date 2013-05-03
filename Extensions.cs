@@ -10,6 +10,45 @@ namespace Moosend.API.Client
 {
     internal static class Extensions
     {
+        public static bool DerivesFrom<T>(this Type type)
+        {
+            return type.DerivesFrom(typeof(T));
+        }
+
+        public static bool IsOrDerivesFrom<T>(this Type type)
+        {
+            if (object.ReferenceEquals(type, typeof(T))) return true;
+            return type.DerivesFrom(typeof(T));
+        }
+
+        private static bool DerivesFrom(this Type type, Type baseType)
+        {
+            if (object.ReferenceEquals(type, baseType)) return false;
+            if (type.IsInterface && !baseType.IsInterface) return false;
+            if (type == null || baseType == null) return false;
+            if (baseType.IsInterface) return type.GetInterfaces().Contains(baseType);
+
+            while ((!object.ReferenceEquals(type, baseType)))
+            {
+                if (object.ReferenceEquals(type, typeof(object))) return false;
+                type = type.BaseType;
+            }
+            return true;
+        }
+
+        public static object GetDefault(this Type t)
+        {
+            return t.IsValueType ? Activator.CreateInstance(t) : null;
+        }
+
+        public static void CheckNotNull(this object value, string paramName)
+        {
+            if (value == null || object.Equals(value, GetDefault(value.GetType())))
+            {
+                throw new ArgumentNullException(paramName);
+            }
+        }
+
         /// <summary>
         /// Convert the given object to an object of type T. 
         /// </summary>

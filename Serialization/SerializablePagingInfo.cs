@@ -5,7 +5,7 @@ namespace Moosend.API.Client.Serialization
 {
     [Serializable]
     [DataContract(Namespace = "")]
-    public class SerializablePagingInfo
+    internal class SerializablePagingInfo
     {
         [DataMember]
         public int PageSize { get; set; }

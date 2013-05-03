@@ -9,7 +9,7 @@ namespace Moosend.API.Client.Serialization
 {
     [Serializable]
     [DataContract(Namespace = "")]
-    public class SerializableMailingListMemberCollection : SerializablePagedList<MailingListMember>
+    internal class SerializableMailingListMemberCollection : SerializablePagedList<MailingListMember>
     {
         [DataMember(Name = "MailingListMembers")]
         public new PagedList<MailingListMember> PagedList

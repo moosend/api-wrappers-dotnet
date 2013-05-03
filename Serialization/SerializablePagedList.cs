@@ -5,7 +5,7 @@ namespace Moosend.API.Client.Serialization
 {
     [Serializable]
     [DataContract(Namespace = "")]
-    public class SerializablePagedList<T>
+    internal class SerializablePagedList<T>
     {
         private PagedList<T> _PagedList;
 

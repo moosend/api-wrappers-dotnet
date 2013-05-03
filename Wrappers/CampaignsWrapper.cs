@@ -16,9 +16,57 @@ namespace Moosend.API.Client.Wrappers
             _Manager = manager;
         }
 
+        public Sender FindSender(String email)
+        {
+            return _Manager.MakeRequest<Sender>(HttpMethod.GET, "/campaigns/senders/find", new { email = email });
+        }
+
+        public IList<Sender> GetSenders()
+        {
+            return _Manager.MakeRequest<IList<Sender>>(HttpMethod.GET, "/campaigns/senders");
+        }
+
         public Guid Create(CampaignParams campaignParams)
         {
             return _Manager.MakeRequest<Guid>(HttpMethod.POST, "/campaigns/create", campaignParams);
+        }
+
+        public void Save(Campaign campaign)
+        {
+            if (campaign.ID == Guid.Empty)
+            {
+                var data = new CampaignParams()
+                {
+                    ConfirmationToEmail = campaign.ConfirmationTo,
+                    Name = campaign.Name,
+                    Subject = campaign.Subject,
+                    WebLocation = campaign.WebLocation                     
+                };
+                
+                if (campaign.MailingList != null) data.MailingListID = campaign.MailingList.ID;
+                if (campaign.Segment != null) data.SegmentID = campaign.Segment.ID;
+                if (campaign.Sender != null) data.SenderEmail = campaign.Sender.Email;
+                if (campaign.ReplyToEmail != null) data.ReplyToEmail = campaign.ReplyToEmail.Email;
+                else campaign.ReplyToEmail = campaign.Sender;
+
+                if (campaign.ABCampaignData != null)
+                {
+                    data.ABCampaignType = campaign.ABCampaignData.ABCampaignType;
+                    data.ABWinnerSelectionType = campaign.ABCampaignData.ABWinnerSelectionType;
+                    data.HoursToTest = campaign.ABCampaignData.HoursToTest;
+                    data.ListPercentage = campaign.ABCampaignData.ListPercentage;
+                    if (campaign.ABCampaignData.SenderB != null) data.SenderEmailB = campaign.ABCampaignData.SenderB.Email;
+                    data.SubjectB = campaign.ABCampaignData.SubjectB;
+                    data.WebLocationB = campaign.ABCampaignData.WebLocationB;
+                }
+                campaign.ID = Create(data);
+            }
+            else
+            {
+                Update(campaign);
+            }
+            Campaign reloaded = FindByID(campaign.ID);
+            Utilities.CopyProperties<Campaign>(reloaded, campaign);
         }
 
         public Campaign Clone(Guid campaignID)
@@ -28,7 +76,7 @@ namespace Moosend.API.Client.Wrappers
 
         public void SendTest(Guid campaignID, IList<String> emails)
         {
-            _Manager.MakeRequest(HttpMethod.POST, String.Format("/campaigns/{0}/send_test", campaignID), emails);
+            _Manager.MakeRequest(HttpMethod.POST, String.Format("/campaigns/{0}/send_test", campaignID), new { TestEmails = emails });
         }
 
         public void Send(Guid campaignID)
