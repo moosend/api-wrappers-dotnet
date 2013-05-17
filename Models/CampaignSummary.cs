@@ -64,7 +64,7 @@ namespace Moosend.API.Client.Models
         }
 
         [DataMember]
-        public virtual ABWinnerSelectionType? ABWinnerSelectionType
+        public virtual ABWinnerSelectionType ABWinnerSelectionType
         {
             get;
             internal set;

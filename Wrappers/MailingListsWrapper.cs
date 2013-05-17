@@ -43,7 +43,7 @@ namespace Moosend.API.Client.Wrappers
             return _Manager.MakeRequest<Guid>(HttpMethod.POST, String.Format( "/lists/{0}/update", list.ID), list);
         }
 
-        public PagedList<MailingListMember> GetMembers(Guid mailingListID, SubscribeType status, DateTime? since = null, int page = 1, int pageSize = 500)
+        public PagedList<Subscriber> GetSubscribers(Guid mailingListID, SubscribeType status, DateTime? since = null, int page = 1, int pageSize = 500)
         {
             return _Manager.MakeRequest<SerializableMailingListMemberCollection>(HttpMethod.GET, String.Format("/lists/{0}/subscribers/{1}", mailingListID, status.ToString()), new
             {
@@ -93,38 +93,6 @@ namespace Moosend.API.Client.Wrappers
         public void DeleteCustomField(Guid mailingListID, Guid customFieldID)
         {
             _Manager.MakeRequest(HttpMethod.DELETE, String.Format("/lists/{0}/customfields{1}/delete", mailingListID, customFieldID));
-        }
-
-        public IList<Segment> GetSegments(Guid mailingListID)
-        {
-            var segments = _Manager.MakeRequest<IList<Segment>>(HttpMethod.GET, String.Format("/lists/{0}/segments", mailingListID));
-            foreach (Segment s in segments)
-            {
-                s.MailingListID = mailingListID;
-            }
-            return segments;
-        }
-
-        private int CreateSegment(Guid mailingListID, String name, SegmentMatchType matchType = SegmentMatchType.All)
-        {
-            return _Manager.MakeRequest<int>(HttpMethod.POST, String.Format("/lists/{0}/segments/create", mailingListID), new { 
-                Name = name,
-                MatchType = matchType
-            });
-        }
-
-        private void UpdateSegment(Segment segment)
-        {
-            _Manager.MakeRequest(HttpMethod.POST, String.Format("/lists/{0}/segments/{1}/update", segment.MailingListID, segment.ID), new
-            {
-                Name = segment.Name,
-                MatchType = segment.MatchType
-            });
-        }
-
-        public void DeleteSegment(Guid mailingListID, int segmentID)
-        {
-            _Manager.MakeRequest(HttpMethod.DELETE, String.Format("/lists/{0}/segments/{1}/delete", mailingListID, segmentID));
         }
 
         public void Save(MailingList list)
@@ -180,118 +148,5 @@ namespace Moosend.API.Client.Wrappers
             MailingList reloaded = FindByID(list.ID, true);
             Utilities.CopyProperties<MailingList>(reloaded, list);
         }
-
-        public void SaveSegment(Segment segment)
-        {
-            // do some validation
-            foreach (SegmentCriteria criteria in segment.Criteria)
-            {
-                if (criteria.SegmentID != segment.ID && criteria.SegmentID != 0)
-                {
-                    throw new InvalidOperationException("Cannot save criteria that belong to another segment");
-                }
-            }
-
-            if (segment.ID == 0)
-            {
-                // we are inserting a new segment
-                segment.ID = CreateSegment(segment.MailingListID, segment.Name, segment.MatchType);
-
-                // inserting criteria for the new segment as well
-                foreach (SegmentCriteria criteria in segment.Criteria)
-                {
-                    String field = criteria.Field.ToString();
-                    if (criteria.Field == SegmentCriteriaField.CustomField) field = criteria.CustomFieldID.Value.ToString();
-                    AddSegmentCriteria(segment.MailingListID, segment.ID, field, criteria.Comparer, criteria.Value, criteria.DateFrom, criteria.DateTo);
-                }
-            }
-            else
-            {
-                // or we are updating an existing segment
-                UpdateSegment(segment);
-
-                // updating criteria for the existing segment as well
-                // we will load the existing segment from the database to compare it with our modified segment
-                Segment existing = FindSegmentByID(segment.MailingListID, segment.ID);
-
-                List<int> existingCriteriaIDs = existing.Criteria.Select(x => x.ID).ToList();
-                List<int> segmentCriteriaIDs = segment.Criteria.Where(x => x.ID != 0).Select(x => x.ID).ToList();
-
-                // find with criteria where deleted
-                foreach (int idToDelete in existingCriteriaIDs.Where(id => !segmentCriteriaIDs.Contains(id)))
-                {
-                    RemoveSegmentCriteria(segment.MailingListID, segment.ID, idToDelete);
-                }
-
-                // find which criteria where modified
-                foreach (int idToUpdate in segmentCriteriaIDs.Where(id => existingCriteriaIDs.Contains(id)))
-                {
-                    SegmentCriteria criteria = segment.Criteria.Single(c => c.ID == idToUpdate);
-                    UpdateSegmentCriteria(segment.MailingListID, segment.ID, criteria);
-                }
-
-                // find which criteria where added
-                foreach (SegmentCriteria criteria in segment.Criteria.Where(x => x.ID == 0))
-                {
-                    String field = criteria.Field.ToString();
-                    if (criteria.Field == SegmentCriteriaField.CustomField) field = criteria.CustomFieldID.Value.ToString();
-                    AddSegmentCriteria(segment.MailingListID, segment.ID, field, criteria.Comparer, criteria.Value, criteria.DateFrom, criteria.DateTo);
-                }
-            }
-
-            // reload segment to populate the object with all properties
-            Segment reloaded = FindSegmentByID(segment.MailingListID, segment.ID);
-            Utilities.CopyProperties<Segment>(reloaded, segment);
-        }
-
-
-        private int AddSegmentCriteria(Guid mailingListID, int segmentID, String field, SegmentCriteriaComparer comparer, String value, DateTime? dateFrom = null, DateTime? dateTo = null)
-        {
-            return _Manager.MakeRequest<int>(HttpMethod.POST, String.Format("/lists/{0}/segments/{1}/criteria/add", mailingListID, segmentID), new { 
-                Field = field,
-                Comparer = comparer,
-                Value = value,
-                DateFrom = dateFrom,
-                DateTo = dateTo
-            });
-        }
-
-        private void UpdateSegmentCriteria(Guid mailingListID, int segmentID, SegmentCriteria criteria)
-        {
-            _Manager.MakeRequest(HttpMethod.POST, String.Format("/lists/{0}/segments/{1}/criteria/{2}/update", mailingListID, segmentID, criteria.ID), new {
-                Field = criteria.Field,
-                Comparer = criteria.Comparer,
-                Value = criteria.Value,
-                DateFrom = criteria.DateFrom,
-                DateTo = criteria.DateTo            
-            });
-        }
-
-        private void RemoveSegmentCriteria(Guid mailingListID, int segmentID, int criteriaID)
-        {
-            _Manager.MakeRequest(HttpMethod.DELETE, String.Format("/lists/{0}/segments/{1}/criteria/{2}/delete", mailingListID, segmentID, criteriaID));
-        }
-
-        public PagedList<MailingListMember> GetSegmentMembers(Segment segment, SubscribeType status = SubscribeType.Subscribed, int page = 1, int pageSize = 500)
-        {
-            return GetSegmentMembers(segment.MailingListID, segment.ID, status, page, pageSize);
-        }
-
-        public PagedList<MailingListMember> GetSegmentMembers(Guid mailingListID, int segmentID, SubscribeType status = SubscribeType.Subscribed, int page = 1, int pageSize = 500)
-        {
-            return _Manager.MakeRequest<SerializableMailingListMemberCollection>(HttpMethod.GET, String.Format("/lists/{0}/segments/{1}/members", mailingListID, segmentID), new { 
-                Status = status, 
-                Page = page, 
-                PageSize = pageSize 
-            }).PagedList;
-        }
-
-        public Segment FindSegmentByID(Guid mailingListID, int segmentID)
-        {
-            var segment = _Manager.MakeRequest<Segment>(HttpMethod.GET, String.Format("/lists/{0}/segments/{1}/details", mailingListID, segmentID));
-            segment.MailingListID = mailingListID;
-            return segment;
-        }
-
     }
 }

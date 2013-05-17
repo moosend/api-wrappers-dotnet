@@ -12,7 +12,7 @@ namespace Moosend.API.Client
 {
     public class ApiManager
     {
-        private static readonly String END_POINT = "http://api.moosend.com";        
+        private static readonly String END_POINT = "http://api.moosend.com";
 
         public ApiManager()
         {
@@ -43,17 +43,17 @@ namespace Moosend.API.Client
             }
         }
 
-        private MembersWrapper _Members;
+        private SubscribersWrapper _Subscribers;
 
-        public MembersWrapper Members
+        public SubscribersWrapper Subscribers
         {
             get
             {
-                if (_Members == null)
+                if (_Subscribers == null)
                 {
-                    _Members = new MembersWrapper(this);
+                    _Subscribers = new SubscribersWrapper(this);
                 }
-                return _Members;
+                return _Subscribers;
             }
         }
 
@@ -68,6 +68,20 @@ namespace Moosend.API.Client
                     _MailingLists = new MailingListsWrapper(this);
                 }
                 return _MailingLists;
+            }
+        }
+
+        private SegmentsWrapper _Segments;
+
+        public SegmentsWrapper Segments
+        {
+            get
+            {
+                if (_Segments == null)
+                {
+                    _Segments = new SegmentsWrapper(this);
+                }
+                return _Segments;
             }
         }
 

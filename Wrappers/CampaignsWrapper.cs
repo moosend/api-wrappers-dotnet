@@ -18,12 +18,12 @@ namespace Moosend.API.Client.Wrappers
 
         public Sender FindSender(String email)
         {
-            return _Manager.MakeRequest<Sender>(HttpMethod.GET, "/campaigns/senders/find", new { email = email });
+            return _Manager.MakeRequest<Sender>(HttpMethod.GET, "/senders/find_one", new { email = email });
         }
 
         public IList<Sender> GetSenders()
         {
-            return _Manager.MakeRequest<IList<Sender>>(HttpMethod.GET, "/campaigns/senders");
+            return _Manager.MakeRequest<IList<Sender>>(HttpMethod.GET, "/senders/find_all");
         }
 
         public Guid Create(CampaignParams campaignParams)
@@ -123,7 +123,7 @@ namespace Moosend.API.Client.Wrappers
 
         public void Delete(Guid campaignID)
         {
-            _Manager.MakeRequest(HttpMethod.POST, String.Format("/campaigns/{0}/delete", campaignID));
+            _Manager.MakeRequest(HttpMethod.DELETE, String.Format("/campaigns/{0}/delete", campaignID));
         }
 
         public Campaign FindByID(Guid campaignID)
@@ -131,22 +131,22 @@ namespace Moosend.API.Client.Wrappers
             return _Manager.MakeRequest<Campaign>(HttpMethod.GET, String.Format("/campaigns/{0}/view", campaignID));
         }
 
-        public CampaignStatisticsSummary FindByIDWithStatistics(Guid campaignID)
+        public CampaignStatisticsSummary GetSummary(Guid campaignID)
         {
             return _Manager.MakeRequest<CampaignStatisticsSummary>(HttpMethod.GET, String.Format("/campaigns/{0}/view_summary", campaignID));
         }
 
-        public PagedList<ContextAnalyticsNode> GetGeographicsActivity(Guid campaignID)
+        public PagedList<ContextAnalyticsNode> GetActivityByLocation(Guid campaignID)
         {
             return _Manager.MakeRequest<SerializableContextAnalyticsNodeCollection>(HttpMethod.GET, String.Format("/campaigns/{0}/stats/countries", campaignID)).PagedList;
         }
 
-        public PagedList<ContextAnalyticsNode> GetLinksActivity(Guid campaignID)
+        public PagedList<ContextAnalyticsNode> GetLinkActivity(Guid campaignID)
         {
             return _Manager.MakeRequest<SerializableContextAnalyticsNodeCollection>(HttpMethod.GET, String.Format("/campaigns/{0}/stats/links", campaignID)).PagedList;
         }
 
-        public PagedList<ContextAnalyticsNode> GetEventsByType(Guid campaignID, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null)
+        public PagedList<ContextAnalyticsNode> GetStatistics(Guid campaignID, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null)
         {
             return _Manager.MakeRequest<SerializableContextAnalyticsNodeCollection>(HttpMethod.GET, String.Format("/campaigns/{0}/stats/{1}", campaignID, type.ToString())).PagedList;
         }
