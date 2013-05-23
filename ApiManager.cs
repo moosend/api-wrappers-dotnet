@@ -118,13 +118,14 @@ namespace Moosend.API.Client
             // build uri for request
             String parametersWithApiKey = "apiKey=" + ApiKey + "&mode=Data";
             if (!string.IsNullOrWhiteSpace(query) && method == HttpMethod.GET) parametersWithApiKey += "&" + query;
-            String uri = END_POINT + path + ".json?" + parametersWithApiKey + "&format=json";
+            String uri = END_POINT + path + ".json?" + parametersWithApiKey;
 
             // initialize web request
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
             req.Method = method.ToString();
+            req.Accept = "application/json";
             req.ContentType = "application/json";
-            req.Timeout = 180000; // trhee minutes
+            req.Timeout = 180000; // 3 minutes
             req.AutomaticDecompression = DecompressionMethods.GZip;            
             req.UserAgent = String.Format("moosend-api-{0}-{1}", Environment.Version, Environment.OSVersion);
             req.KeepAlive = false;
