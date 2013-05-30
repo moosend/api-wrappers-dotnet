@@ -82,6 +82,15 @@ namespace Moosend.API.Client
             }
         }
 
+        private static string ToFormattedString(this object value)
+        {
+            if (value == null)
+                return null;
+            else if (value.GetType() == typeof(DateTime))
+                return ((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss");
+            else
+                return value.ToString();
+        }
 
         public static string ToQueryString(this object request, string separator = ",")
         {
@@ -118,7 +127,7 @@ namespace Moosend.API.Client
             return string.Join("&", properties
                 .Select(x => string.Concat(
                     Uri.EscapeDataString(x.Key), "=",
-                    Uri.EscapeDataString(x.Value.ToString()))));
+                    Uri.EscapeDataString(x.Value.ToFormattedString()))));
         }
     }
 }
