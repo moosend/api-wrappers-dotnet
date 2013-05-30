@@ -23,8 +23,9 @@ namespace Moosend.API.Client.Wrappers
 
         public IList<Subscriber> Subscribe(Guid mailingListID, IList<SubscriberParams> members)
         {
-            return _Manager.MakeRequest<IList<Subscriber>>(HttpMethod.POST, String.Format("/subscribers/{0}/subscribe_many", mailingListID), new { 
-                Members = members.Select(m => new { 
+            return _Manager.MakeRequest<IList<Subscriber>>(HttpMethod.POST, String.Format("/subscribers/{0}/subscribe_many", mailingListID), new {
+                Subscribers = members.Select(m => new
+                { 
                     Name = m.Name, 
                     Email = m.Email, 
                     CustomFields = m.CustomFields.Select(c => c.Key + "=" + c.Value).ToList() 
