@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Moosend.API.Client.Models;
+using Newtonsoft.Json;
 using Moosend.API.Client.Serialization;
 
 namespace Moosend.API.Client.Wrappers

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Newtonsoft.Json.Utilities.LinqBridge;
 using System.Text;
 using Moosend.API.Client.Models;
 using System.Web;
@@ -23,7 +23,7 @@ namespace Moosend.API.Client.Wrappers
 
         public IList<Subscriber> Subscribe(Guid mailingListID, IList<SubscriberParams> members)
         {
-            return _Manager.MakeRequest<IList<Subscriber>>(HttpMethod.POST, String.Format("/subscribers/{0}/subscribe_many", mailingListID), new {
+            var result = _Manager.MakeRequest<IList<Subscriber>>(HttpMethod.POST, String.Format("/subscribers/{0}/subscribe_many", mailingListID), new {
                 Subscribers = members.Select(m => new
                 { 
                     Name = m.Name, 
@@ -31,16 +31,26 @@ namespace Moosend.API.Client.Wrappers
                     CustomFields = m.CustomFields.Select(c => c.Key + "=" + c.Value).ToList() 
                 }).ToList() 
             });
+
+            // populate custom fields with subscriber id, because it is not returned by the response
+            result.ToList().ForEach(subscriber => subscriber.CustomFields.ToList().ForEach(cf => cf.SubscriberID = subscriber.ID));
+
+            return result;
         }
 
         public Subscriber Subscribe(Guid mailingListID, SubscriberParams member)
         {
-            return _Manager.MakeRequest<Subscriber>(HttpMethod.POST, String.Format("/subscribers/{0}/subscribe", mailingListID), new
+            var subscriber = _Manager.MakeRequest<Subscriber>(HttpMethod.POST, String.Format("/subscribers/{0}/subscribe", mailingListID), new
             {
                 Name = member.Name,
                 Email = member.Email,
                 CustomFields = member.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
             });
+
+            // populate custom fields with subscriber id, because it is not returned by the response
+            subscriber.CustomFields.ToList().ForEach(cf => cf.SubscriberID = subscriber.ID);
+
+            return subscriber;
         }
 
         public void Unsubscribe(Guid mailingListID, Guid campaignID, String email)
@@ -60,7 +70,7 @@ namespace Moosend.API.Client.Wrappers
         public void Remove(Guid mailingListID, IList<String> emails)
         {
             _Manager.MakeRequest(HttpMethod.POST, String.Format("/subscribers/{0}/remove_many", mailingListID), new { 
-                emails = String.Join(",", emails) 
+                emails = String.Join(",", emails.ToArray()) 
             });
         }
     }

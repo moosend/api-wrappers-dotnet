@@ -1,41 +1,39 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class Sender
     {
-        [DataMember]
+        [JsonProperty]
         public virtual Guid ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Email
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime CreatedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Boolean IsEnabled
         {
             get;

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class Segment
     {
         internal Segment()
@@ -29,63 +27,63 @@ namespace Moosend.API.Client.Models
             this.MatchType = matchType;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual SegmentMatchType MatchType
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual IList<SegmentCriteria> Criteria
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual long MemberCount
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual string CreatedBy
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime CreatedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual string UpdatedBy
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime UpdatedOn
         {
             get;

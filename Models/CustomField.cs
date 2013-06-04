@@ -1,26 +1,24 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class CustomField
     {
-        public virtual Guid MailingListMemberID
+        public virtual Guid SubscriberID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Value
         {
             get;
@@ -29,19 +27,20 @@ namespace Moosend.API.Client.Models
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
+            if (obj == null) return false;
+            
             var t = obj as CustomField;
-            if (t == null)
-                return false;
-            if (MailingListMemberID == t.MailingListMemberID && Name == t.Name)
-                return true;
+            
+            if (t == null) return false;
+            
+            if (SubscriberID == t.SubscriberID && Name == t.Name) return true;
+            
             return false;
         }
 
         public override int GetHashCode()
         {
-            return (MailingListMemberID.ToString() + Name).GetHashCode();
+            return (SubscriberID.ToString() + Name).GetHashCode();
         }  
     }
 }

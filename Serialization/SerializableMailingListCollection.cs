@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Moosend.API.Client.Models;
 
 namespace Moosend.API.Client.Serialization
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     internal class SerializableMailingListCollection : SerializablePagedList<MailingList>
     {
-        [DataMember(Name = "MailingLists")]
+        [JsonProperty("MailingLists")]
         public new PagedList<MailingList> PagedList
         {
             get { return base.PagedList; }

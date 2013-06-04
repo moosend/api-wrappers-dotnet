@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Moosend.API.Client.Wrappers;
 using Moosend.API.Client;
@@ -117,7 +116,7 @@ namespace Moosend.API.Client
 
             // build uri for request
             String parametersWithApiKey = "apiKey=" + ApiKey + "&mode=Data";
-            if (!string.IsNullOrWhiteSpace(query) && method == HttpMethod.GET) parametersWithApiKey += "&" + query;
+            if (!string.IsNullOrEmpty(query) && method == HttpMethod.GET) parametersWithApiKey += "&" + query;
             String uri = END_POINT + path + ".json?" + parametersWithApiKey;
 
             // initialize web request

@@ -1,25 +1,23 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Serialization
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     internal class SerializablePagingInfo
     {
-        [DataMember]
+        [JsonProperty]
         public int PageSize { get; set; }
 
-        [DataMember]
+        [JsonProperty]
         public int CurrentPage { get; set; }
 
-        [DataMember]
+        [JsonProperty]
         public string SortExpression { get; set; }
 
-        [DataMember]
+        [JsonProperty]
         public Boolean SortIsAscending { get; set; }
 
-        [DataMember]
+        [JsonProperty]
         public long TotalResults { get; set; }
 
     }

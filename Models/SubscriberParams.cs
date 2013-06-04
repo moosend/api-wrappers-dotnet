@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
@@ -13,21 +12,21 @@ namespace Moosend.API.Client.Models
             CustomFields = new Dictionary<String, String>();
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Email
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual IDictionary<String, String> CustomFields
         {
             get;

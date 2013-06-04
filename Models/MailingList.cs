@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class MailingList
     {
         public MailingList()
@@ -13,14 +11,14 @@ namespace Moosend.API.Client.Models
             CustomFieldsDefinition = new List<CustomFieldDefinition>();
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Guid ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
@@ -35,70 +33,70 @@ namespace Moosend.API.Client.Models
             }
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual long ActiveMemberCount
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual long BouncedMemberCount
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual long RemovedMemberCount
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual long UnsubscribedMemberCount
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual MailingListStatus Status
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual IList<CustomFieldDefinition> CustomFieldsDefinition
         {
             get;
             private set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual string CreatedBy
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime CreatedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual string UpdatedBy
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime UpdatedOn
         {
             get;

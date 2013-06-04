@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Newtonsoft.Json.Utilities.LinqBridge;
 using System.Text;
 using Moosend.API.Client.Models;
+using Newtonsoft.Json;
 using Moosend.API.Client.Serialization;
 
 namespace Moosend.API.Client.Wrappers
@@ -45,12 +46,17 @@ namespace Moosend.API.Client.Wrappers
 
         public PagedList<Subscriber> GetSubscribers(Guid mailingListID, SubscribeType status, DateTime? since = null, int page = 1, int pageSize = 500)
         {
-            return _Manager.MakeRequest<SerializableMailingListMemberCollection>(HttpMethod.GET, String.Format("/lists/{0}/subscribers/{1}", mailingListID, status.ToString()), new
+            var result = _Manager.MakeRequest<SerializableMailingListMemberCollection>(HttpMethod.GET, String.Format("/lists/{0}/subscribers/{1}", mailingListID, status.ToString()), new
             {
                 Since = since,
                 Page = page,
                 PageSize = pageSize
             }).PagedList;
+
+            // populate custom fields with subscriber id, because it is not returned by the response
+            result.ForEach(subscriber => subscriber.CustomFields.ToList().ForEach(cf => cf.SubscriberID = subscriber.ID));
+            
+            return result;
         }
 
         public MailingList FindByID(Guid mailingListID, Boolean withStatistics = true)

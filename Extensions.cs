@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Newtonsoft.Json.Utilities.LinqBridge;
 using System.Text;
 using System.Globalization;
 using System.ComponentModel;
@@ -119,7 +119,7 @@ namespace Moosend.API.Client
                 if (valueElemType.IsPrimitive || valueElemType == typeof(string))
                 {
                     var enumerable = properties[key] as IEnumerable;
-                    properties[key] = string.Join(separator, enumerable.Cast<object>());
+                    properties[key] = string.Join(separator, enumerable.Cast<string>().ToArray());
                 }
             }
 
@@ -127,7 +127,7 @@ namespace Moosend.API.Client
             return string.Join("&", properties
                 .Select(x => string.Concat(
                     Uri.EscapeDataString(x.Key), "=",
-                    Uri.EscapeDataString(x.Value.ToFormattedString()))));
+                    Uri.EscapeDataString(x.Value.ToFormattedString()))).ToArray());
         }
     }
 }

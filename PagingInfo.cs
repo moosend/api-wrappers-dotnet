@@ -5,7 +5,6 @@ namespace Moosend.API.Client
     /// <summary>
     /// Represents an object to store paging information
     /// </summary>
-    [Serializable]
     public class PagingInfo
     {
         public static PagingInfo All

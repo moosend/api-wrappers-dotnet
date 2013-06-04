@@ -1,90 +1,89 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Moosend.API.Client;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
     public class ABCampaignData
     {
-        [DataMember]
+        [JsonProperty]
         public virtual int ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String SubjectB
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String PlainContentB
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String HTMLContentB
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String WebLocationB
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Sender SenderB
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int HoursToTest
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int ListPercentage
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual ABCampaignType ABCampaignType
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual ABWinnerSelectionType ABWinnerSelectionType
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? DeliveredOnA
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? DeliveredOnB
         {
             get;

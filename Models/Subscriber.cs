@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class Subscriber
     {
         public Subscriber()
@@ -14,56 +12,56 @@ namespace Moosend.API.Client.Models
             SubscribeType = SubscribeType.Subscribed;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Guid ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Email
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime CreatedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? UnsubscribedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Guid? UnsubscribedFromID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual SubscribeType SubscribeType
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual IList<CustomField> CustomFields
         {
             get;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Moosend.API.Client
@@ -15,7 +14,6 @@ namespace Moosend.API.Client
         PagingInfo PagingInfo { get; }
     }
 
-    [Serializable]
     public class PagedList<T> : List<T>, IPagableCollection
     {
         public PagedList()

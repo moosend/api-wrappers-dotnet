@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Serialization
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     internal class SerializablePagedList<T>
     {
         private PagedList<T> _PagedList;
 
-        [DataMember]
+        [JsonProperty]
         public PagedList<T> PagedList
         {
             get
@@ -25,7 +23,7 @@ namespace Moosend.API.Client.Serialization
             }
         }
 
-        [DataMember(Name = "Paging")]
+        [JsonProperty("Paging")]
         public SerializablePagingInfo PagingInfo
         {
             get;

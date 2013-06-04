@@ -1,181 +1,179 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class CampaignSummary
     {
-        [DataMember]
+        [JsonProperty]
         public virtual Guid ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Subject
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual string SiteName
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String ConfirmationTo
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime CreatedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int? ABHoursToTest
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual ABCampaignType? ABCampaignType
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual ABWinnerSelectionType ABWinnerSelectionType
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual CampaignStatus Status
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? DeliveredOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? ScheduledFor
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String ScheduledForTimezone
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Guid? MailingListID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String MailingListName
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int SegmentID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String SegmentName
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual MailingListStatus MailingListStatus
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalSent
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalOpens
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int UniqueOpens
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalBounces
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalForwards
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalLinkClicks
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int UniqueLinkClicks
         {
             get;
@@ -209,14 +207,14 @@ namespace Moosend.API.Client.Models
             }
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int RecipientsCount
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual bool IsTransactional
         {
             get;

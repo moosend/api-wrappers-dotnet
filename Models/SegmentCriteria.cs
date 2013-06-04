@@ -1,62 +1,60 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class SegmentCriteria
     {
-        [DataMember]
+        [JsonProperty]
         public virtual int ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int SegmentID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual SegmentCriteriaField Field
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Guid? CustomFieldID
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual SegmentCriteriaComparer Comparer
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Value
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? DateFrom
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? DateTo
         {
             get;

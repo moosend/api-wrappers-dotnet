@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class CustomFieldDefinition
     {
-        [DataMember]
+        [JsonProperty]
         public virtual Guid ID
         {
             get;
@@ -20,28 +18,28 @@ namespace Moosend.API.Client.Models
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Context
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Boolean IsRequired
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual CustomFieldType Type
         {
             get;

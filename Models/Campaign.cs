@@ -1,147 +1,145 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class Campaign
     {
-        [DataMember]
+        [JsonProperty]
         public virtual Guid ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Name
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Subject
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String WebLocation
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String HTMLContent
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String PlainContent
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Sender Sender
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? DeliveredOn
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Sender ReplyToEmail
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime CreatedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime UpdatedOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? ScheduledFor
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String Timezone
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual FormatType FormatType
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual ABCampaignData ABCampaignData
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual MailingList MailingList
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual String ConfirmationTo
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual CampaignStatus Status
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Segment Segment
         {
             get;
             set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual bool IsTransactional
         {
             get;

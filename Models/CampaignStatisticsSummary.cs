@@ -1,132 +1,130 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Moosend.API.Client.Models
 {
-    [Serializable]
-    [DataContract(Namespace = "")]
     public class CampaignStatisticsSummary
     {
-        [DataMember]
+        [JsonProperty]
         public virtual int ID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual ABVersion ABVersion
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Guid CampaignID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual string CampaignName
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual Guid MailingListID
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual string MailingListName
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime? CampaignDeliveredOn
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime To
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual DateTime From
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalOpens
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int UniqueOpens
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalBounces
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalForwards
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int UniqueForwards
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalUnsubscribes
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int TotalLinkClicks
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int UniqueLinkClicks
         {
             get;
             internal set;
         }
 
-        [DataMember]
+        [JsonProperty]
         public virtual int Sent
         {
             get;

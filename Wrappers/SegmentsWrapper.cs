@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Newtonsoft.Json.Utilities.LinqBridge;
 using System.Text;
 using Moosend.API.Client.Models;
 using Moosend.API.Client.Serialization;
