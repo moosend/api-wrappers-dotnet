@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Moosend.API.Client
 {
-    public class ApiManager
+    public class ApiManager : IApiManager
     {
         private static readonly String END_POINT = "http://api.moosend.com";
 
