@@ -9,9 +9,9 @@ namespace Moosend.API.Client.Wrappers
 {
     public class SegmentsWrapper
     {
-        private ApiManager _Manager;
+        private IApiManager _Manager;
 
-        internal SegmentsWrapper(ApiManager manager)
+        internal SegmentsWrapper(IApiManager manager)
         {
             _Manager = manager;
         }

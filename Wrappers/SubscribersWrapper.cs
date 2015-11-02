@@ -9,9 +9,9 @@ namespace Moosend.API.Client.Wrappers
 {
     public class SubscribersWrapper
     {
-        private ApiManager _Manager;
+        private IApiManager _Manager;
 
-        internal SubscribersWrapper(ApiManager manager)
+        internal SubscribersWrapper(IApiManager manager)
         {
             _Manager = manager;
         }
