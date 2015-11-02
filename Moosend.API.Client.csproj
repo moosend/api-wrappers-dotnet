@@ -54,6 +54,7 @@
     <Compile Include="ApiResult.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IApiManager.cs" />
     <Compile Include="Models\CampaignParams.cs" />
     <Compile Include="Models\CampaignStatisticsSummary.cs" />
     <Compile Include="Models\ContextAnalyticsNode.cs" />
