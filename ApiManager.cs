@@ -22,6 +22,14 @@ namespace Moosend.API.Client
             this.ApiKey = apiKey;
         }
 
+        public ApiManager(ICampaignsWrapper campaignsWrapper, IMailingListsWrapper mailingListsWrapper, ISubscribersWrapper subscriberWrapper, ISegmentsWrapper segmentsWrapper)
+        {
+            _Campaigns = campaignsWrapper;
+            _MailingLists = mailingListsWrapper;
+            _Subscribers = subscriberWrapper;
+            _Segments = segmentsWrapper;
+        }
+
         public String ApiKey
         {
             get;
@@ -40,6 +48,10 @@ namespace Moosend.API.Client
                 }
                 return _Campaigns;
             }
+            private set
+            {
+                _Campaigns = value;
+            }
         }
 
         private ISubscribersWrapper _Subscribers;
@@ -53,6 +65,10 @@ namespace Moosend.API.Client
                     _Subscribers = new SubscribersWrapper(this);
                 }
                 return _Subscribers;
+            }
+            private set
+            {
+                _Subscribers = value;
             }
         }
 
@@ -68,6 +84,10 @@ namespace Moosend.API.Client
                 }
                 return _MailingLists;
             }
+            private set
+            {
+                _MailingLists = value;
+            }
         }
 
         private ISegmentsWrapper _Segments;
@@ -81,6 +101,10 @@ namespace Moosend.API.Client
                     _Segments = new SegmentsWrapper(this);
                 }
                 return _Segments;
+            }
+            private set
+            {
+                _Segments = value;
             }
         }
 
