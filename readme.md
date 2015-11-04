@@ -51,10 +51,10 @@ Include the following using statements for your convinience
 	using Moosend.API.Client.Models;
 ```
 
-Make a declaration like the following in your class to access the API
+Make a declaration like the following in your class to access the API (or even better use DI to inject using your favorite IoC library)
 
 ```c#
-	private ApiManager MoosendAPI = new ApiManager("YOUR_API_KEY");
+	private IApiManager MoosendAPI = new ApiManager("YOUR_API_KEY");
 ```
 
 Examples
