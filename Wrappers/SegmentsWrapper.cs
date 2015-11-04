@@ -7,7 +7,7 @@ using Moosend.API.Client.Serialization;
 
 namespace Moosend.API.Client.Wrappers
 {
-    public class SegmentsWrapper
+    public class SegmentsWrapper : ISegmentsWrapper
     {
         private IApiManager _Manager;
 

@@ -8,7 +8,7 @@ using Moosend.API.Client.Serialization;
 
 namespace Moosend.API.Client.Wrappers
 {
-    public class MailingListsWrapper
+    public class MailingListsWrapper : IMailingListsWrapper
     {
         private IApiManager _Manager;
 

@@ -258,6 +258,10 @@
     <Compile Include="Utilities.cs" />
     <Compile Include="Wrappers\CampaignsWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wrappers\ICampaignsWrapper.cs" />
+    <Compile Include="Wrappers\IMailingListsWrapper.cs" />
+    <Compile Include="Wrappers\ISegmentsWrapper.cs" />
+    <Compile Include="Wrappers\ISubscribersWrapper.cs" />
     <Compile Include="Wrappers\SegmentsWrapper.cs" />
     <Compile Include="Wrappers\MailingListsWrapper.cs" />
     <Compile Include="Wrappers\SubscribersWrapper.cs" />

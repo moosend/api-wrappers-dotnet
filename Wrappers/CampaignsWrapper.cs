@@ -7,7 +7,7 @@ using Moosend.API.Client.Serialization;
 
 namespace Moosend.API.Client.Wrappers
 {
-    public class CampaignsWrapper
+    public class CampaignsWrapper : ICampaignsWrapper
     {
         private IApiManager _Manager;
 

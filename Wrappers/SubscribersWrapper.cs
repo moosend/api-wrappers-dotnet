@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Moosend.API.Client.Wrappers
 {
-    public class SubscribersWrapper
+    public class SubscribersWrapper : ISubscribersWrapper
     {
         private IApiManager _Manager;
 
