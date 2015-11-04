@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Moosend.API.Client
 {
-    public class ApiManager
+    public class ApiManager : IApiManager
     {
         private static readonly String END_POINT = "http://api.moosend.com";
 
@@ -22,15 +22,23 @@ namespace Moosend.API.Client
             this.ApiKey = apiKey;
         }
 
+        public ApiManager(ICampaignsWrapper campaignsWrapper, IMailingListsWrapper mailingListsWrapper, ISubscribersWrapper subscriberWrapper, ISegmentsWrapper segmentsWrapper)
+        {
+            _Campaigns = campaignsWrapper;
+            _MailingLists = mailingListsWrapper;
+            _Subscribers = subscriberWrapper;
+            _Segments = segmentsWrapper;
+        }
+
         public String ApiKey
         {
             get;
             set;
         }
 
-        private CampaignsWrapper _Campaigns;
+        private ICampaignsWrapper _Campaigns;
 
-        public CampaignsWrapper Campaigns
+        public ICampaignsWrapper Campaigns
         {
             get
             {
@@ -40,11 +48,15 @@ namespace Moosend.API.Client
                 }
                 return _Campaigns;
             }
+            private set
+            {
+                _Campaigns = value;
+            }
         }
 
-        private SubscribersWrapper _Subscribers;
+        private ISubscribersWrapper _Subscribers;
 
-        public SubscribersWrapper Subscribers
+        public ISubscribersWrapper Subscribers
         {
             get
             {
@@ -54,11 +66,15 @@ namespace Moosend.API.Client
                 }
                 return _Subscribers;
             }
+            private set
+            {
+                _Subscribers = value;
+            }
         }
 
-        private MailingListsWrapper _MailingLists;
+        private IMailingListsWrapper _MailingLists;
 
-        public MailingListsWrapper MailingLists
+        public IMailingListsWrapper MailingLists
         {
             get
             {
@@ -68,11 +84,15 @@ namespace Moosend.API.Client
                 }
                 return _MailingLists;
             }
+            private set
+            {
+                _MailingLists = value;
+            }
         }
 
-        private SegmentsWrapper _Segments;
+        private ISegmentsWrapper _Segments;
 
-        public SegmentsWrapper Segments
+        public ISegmentsWrapper Segments
         {
             get
             {
@@ -81,6 +101,10 @@ namespace Moosend.API.Client
                     _Segments = new SegmentsWrapper(this);
                 }
                 return _Segments;
+            }
+            private set
+            {
+                _Segments = value;
             }
         }
 
