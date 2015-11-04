@@ -5,10 +5,10 @@ namespace Moosend.API.Client
     public interface IApiManager
     {
         string ApiKey { get; set; }
-        CampaignsWrapper Campaigns { get; }
-        MailingListsWrapper MailingLists { get; }
-        SegmentsWrapper Segments { get; }
-        SubscribersWrapper Subscribers { get; }
+        ICampaignsWrapper Campaigns { get; }
+        IMailingListsWrapper MailingLists { get; }
+        ISegmentsWrapper Segments { get; }
+        ISubscribersWrapper Subscribers { get; }
 
         void MakeRequest(HttpMethod method, string path);
         void MakeRequest(HttpMethod method, string path, object parameters);

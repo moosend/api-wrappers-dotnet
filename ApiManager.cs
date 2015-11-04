@@ -28,9 +28,9 @@ namespace Moosend.API.Client
             set;
         }
 
-        private CampaignsWrapper _Campaigns;
+        private ICampaignsWrapper _Campaigns;
 
-        public CampaignsWrapper Campaigns
+        public ICampaignsWrapper Campaigns
         {
             get
             {
@@ -42,9 +42,9 @@ namespace Moosend.API.Client
             }
         }
 
-        private SubscribersWrapper _Subscribers;
+        private ISubscribersWrapper _Subscribers;
 
-        public SubscribersWrapper Subscribers
+        public ISubscribersWrapper Subscribers
         {
             get
             {
@@ -56,9 +56,9 @@ namespace Moosend.API.Client
             }
         }
 
-        private MailingListsWrapper _MailingLists;
+        private IMailingListsWrapper _MailingLists;
 
-        public MailingListsWrapper MailingLists
+        public IMailingListsWrapper MailingLists
         {
             get
             {
@@ -70,9 +70,9 @@ namespace Moosend.API.Client
             }
         }
 
-        private SegmentsWrapper _Segments;
+        private ISegmentsWrapper _Segments;
 
-        public SegmentsWrapper Segments
+        public ISegmentsWrapper Segments
         {
             get
             {
