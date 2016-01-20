@@ -7,15 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v1", "v1", "{AC7D9940-5F0B-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.API.Client", "v1\Moosend.API.Client.csproj", "{0AE7EE3E-5446-4749-ABAF-5F2FCA577A06}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v3", "v3", "{F0143FD5-CE50-4FD9-A6F8-38E84DB8598C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v2.1", "v2.1", "{F0143FD5-CE50-4FD9-A6F8-38E84DB8598C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Client", "v3\Moosend.Api.Client\Moosend.Api.Client.csproj", "{CA41C3E8-1FF5-492B-845A-88CCDB69455E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Client", "v2.1\Moosend.Api.Client\Moosend.Api.Client.csproj", "{CA41C3E8-1FF5-492B-845A-88CCDB69455E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Common", "v3\Moosend.Api.Common\Moosend.Api.Common.csproj", "{85CA653A-16F5-4665-AD6A-267D6C2DD86D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Common", "v2.1\Moosend.Api.Common\Moosend.Api.Common.csproj", "{85CA653A-16F5-4665-AD6A-267D6C2DD86D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Console", "v3\Moosend.Api.Console\Moosend.Api.Console.csproj", "{6DDF1C88-A1CD-4CC5-9977-F1C314726ADA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Console", "v2.1\Moosend.Api.Console\Moosend.Api.Console.csproj", "{6DDF1C88-A1CD-4CC5-9977-F1C314726ADA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Tests", "v3\Moosend.Api.Tests\Moosend.Api.Tests.csproj", "{87814ED5-B82B-42A9-95C1-9C8A34946438}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moosend.Api.Tests", "v2.1\Moosend.Api.Tests\Moosend.Api.Tests.csproj", "{87814ED5-B82B-42A9-95C1-9C8A34946438}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
