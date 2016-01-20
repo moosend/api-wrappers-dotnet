@@ -87,6 +87,7 @@ namespace Moosend.Api.Client
         //    return await GetResponse<Campaign>(response);
         //}
 
+
         #endregion
 
         public async Task<TModel> GetResponse<TModel>(HttpResponseMessage response)
