@@ -69,12 +69,8 @@ namespace Moosend.Api.Client
             return await SendAsync<PagedCampaigns>(HttpMethod.Get, path, queryParams, token).ConfigureAwait(false);
         }
 
-        /// <summary>
-        ///     Returns basic information for the specified sender identified by its email address.
-        /// </summary>
-        /// <param name="email">
-        ///     The email address of the senders to get information for.
-        /// </param>
+        /// <summary> Returns basic information for the specified sender identified by its email address. </summary>
+        /// <param name="email"> The email address of the senders to get information for. </param>
         /// <param name="token"> Cancellation Token </param>
         /// <returns></returns>
         public async Task<Sender> GetSenderAsync(string email, CancellationToken token = default(CancellationToken))
@@ -98,14 +94,24 @@ namespace Moosend.Api.Client
         ///     You can choose to send either a regural campaign or an AB split campaign.
         ///     Campaign content must be specified from a web location.
         /// </summary>
-        /// <param name="campaignParams">
-        ///      Draft's content properties. You must specify at least Name, Subject and SenderEmail. 
-        /// </param>
+        /// <param name="campaignParams"> Draft's content properties. You must specify at least Name, Subject and SenderEmail. </param>
         /// <param name="token"> Cancellation Token </param>
         /// <returns></returns>
         public async Task<Guid> CreateDraftAsync(CampaignParams campaignParams, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Guid>(HttpMethod.Post, "/campaigns/create", campaignParams, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///     Sends a test email of a draft campaign to a list of email addresses you specify for previewing.
+        /// </summary>
+        /// <param name="campaignId"> The ID of the draft campaign to be tested. </param>
+        /// <param name="emails"> A list of email addresses to send the preview to. </param>
+        /// <param name="token"> Cancellation Token </param>
+        /// <returns></returns>
+        public async Task<bool> SendTestAsync(Guid campaignId, IList<string> emails, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/send_test", campaignId), new { TestEmails = emails }, token).ConfigureAwait(false);
         }
 
         #endregion
@@ -158,6 +164,11 @@ namespace Moosend.Api.Client
 
                     if (result.Code == 0)
                     {
+                        if (typeof (TModel) == typeof (bool))
+                        {
+                            return (TModel)(object)true;
+                        }
+
                         // deserialize again to get the expected object
                         return JsonConvert.DeserializeObject<ApiResponse<TModel>>(responseJson).Context;
                     }
