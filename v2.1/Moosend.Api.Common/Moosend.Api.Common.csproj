@@ -69,6 +69,8 @@
     <Compile Include="Responses\ApiCodes.cs" />
     <Compile Include="Responses\ApiResponse.cs" />
     <Compile Include="Responses\CampaignsResponse.cs" />
+    <Compile Include="Responses\ContextWithWarnings.cs" />
+    <Compile Include="Responses\MessageWarning.cs" />
     <Compile Include="Responses\PagedResult.cs" />
   </ItemGroup>
   <ItemGroup>
