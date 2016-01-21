@@ -24,14 +24,13 @@ namespace Moosend.Api.Client
             _apiKey = context.ApiKey;
 
             _httpClient = context.Handler == null
-                ? new HttpClient(new HttpClientHandler {AutomaticDecompression = DecompressionMethods.GZip})
+                ? new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip })
                 : new HttpClient(context.Handler);
 
             _httpClient.Timeout = context.Timeout;
             _httpClient.BaseAddress = context.Endpoint;
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            _httpClient.DefaultRequestHeaders.Add("User-Agent",
-                string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion));
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion));
             _httpClient.DefaultRequestHeaders.Add("Keep-Alive", "false");
         }
 
@@ -80,7 +79,7 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         public async Task<Sender> GetSenderAsync(string email, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<Sender>(HttpMethod.Get, "/senders/find_one", new {Email = email}, token).ConfigureAwait(false);
+            return await SendAsync<Sender>(HttpMethod.Get, "/senders/find_one", new { Email = email }, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,6 +91,21 @@ namespace Moosend.Api.Client
         public async Task<IList<Sender>> GetSendersAsync(CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<IList<Sender>>(HttpMethod.Get, "/senders/find_all", null, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///     Creates a new campaign in your account. This method does not send the campaign, but rather creates it as a draft, ready for sending or testing.
+        ///     You can choose to send either a regural campaign or an AB split campaign.
+        ///     Campaign content must be specified from a web location.
+        /// </summary>
+        /// <param name="campaignParams">
+        ///      Draft's content properties. You must specify at least Name, Subject and SenderEmail. 
+        /// </param>
+        /// <param name="token"> Cancellation Token </param>
+        /// <returns></returns>
+        public async Task<Guid> CreateDraftAsync(CampaignParams campaignParams, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<Guid>(HttpMethod.Post, "/campaigns/create", campaignParams, token).ConfigureAwait(false);
         }
 
         #endregion
@@ -126,7 +140,7 @@ namespace Moosend.Api.Client
             request.RequestUri = uri;
             request.Method = method;
 
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+            var response = await _httpClient.SendAsync(request, token).ConfigureAwait(false);
 
             return await GetResponse<TModel>(response);
         }
@@ -138,23 +152,57 @@ namespace Moosend.Api.Client
             switch (response.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    var apiResponse = JsonConvert.DeserializeObject<ApiResponse<TModel>>(responseJson);
 
-                    if (apiResponse.Code == ApiCodes.SUCCESS)
+                    // deserialize as a generic api result and check if result is an error
+                    var result = JsonConvert.DeserializeObject<ApiResponse<object>>(responseJson);
+
+                    if (result.Code == 0)
                     {
-                        return apiResponse.Context;
+                        // deserialize again to get the expected object
+                        return JsonConvert.DeserializeObject<ApiResponse<TModel>>(responseJson).Context;
                     }
 
-                    throw new ApiClientException(apiResponse.Error, apiResponse.Code);
+                    if (result.Code == -2)
+                    {
+                        var responseWithWarnings = JsonConvert.DeserializeObject<ApiResponse<ContextWithWarnings>>(responseJson);
+
+                        // create exception message from messages
+                        string errorMessage = null;
+                        foreach (var message in responseWithWarnings.Context.Messages)
+                        {
+                            errorMessage += string.Format(" {0},", message.Message);
+                        }
+
+                        if (errorMessage != null)
+                        {
+                            errorMessage = errorMessage.Remove(errorMessage.Length - 1).Trim();
+                        }
+
+                        throw new ApiClientException(errorMessage, responseWithWarnings.Code);
+                    }
+
+                    throw new ApiClientException(result.Error, result.Code);
                 case HttpStatusCode.BadRequest:
                     throw new ApiClientException("Bad Request", 400);
                 case HttpStatusCode.NotFound:
                     throw new ApiClientException("Not Found", 404);
                 default:
-                    throw new ApiClientException("An error occurred", (int) response.StatusCode);
+                    throw new ApiClientException("An error occurred", (int)response.StatusCode);
             }
         }
 
         #endregion
+    }
+
+    public class ContextWithWarnings
+    {
+        public Guid Id { get; set; }
+        public IList<MessageWarning> Messages { get; set; }
+    }
+
+    public class MessageWarning
+    {
+        public int Code { get; set; }
+        public string Message { get; set; }
     }
 }
