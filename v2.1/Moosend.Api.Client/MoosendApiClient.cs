@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -55,15 +56,8 @@ namespace Moosend.Api.Client
         /// <param name="sortMethod">
         ///     The method to sort results: ASC for ascending, DESC for descending. If not specified, ASC will be assumed.
         /// </param>
-        /// <param name="token">
-        ///     Canellation Token.
-        /// </param>
-        /// <exception cref="ApiClientException">
-        ///     Thrown when a non-
-        ///     numeric value is assigned.
-        /// </exception>
-        public async Task<PagedCampaigns> FindAllCampaignsAsync(int page = 1, int pageSize = 10,
-            string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken))
+        /// <param name="token"> Cancellation Token </param>
+        public async Task<PagedCampaigns> GetAllCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken))
         {
             var path = string.Format("/campaigns/{0}/{1}", page, pageSize);
 
@@ -82,13 +76,22 @@ namespace Moosend.Api.Client
         /// <param name="email">
         ///     The email address of the senders to get information for.
         /// </param>
-        /// <param name="token">
-        ///     Cancellation Token.
-        /// </param>
+        /// <param name="token"> Cancellation Token </param>
         /// <returns></returns>
-        public async Task<Sender> FindSender(string email, CancellationToken token = default(CancellationToken))
+        public async Task<Sender> GetSenderAsync(string email, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Sender>(HttpMethod.Get, "/senders/find_one", new {Email = email}, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///     Gets a list of your active senders in your account. 
+        ///     You may specify any email address of these senders when sending a campaign.
+        /// </summary>
+        /// <param name="token"> Cancellation Token </param>
+        /// <returns></returns>
+        public async Task<IList<Sender>> GetSendersAsync(CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<IList<Sender>>(HttpMethod.Get, "/senders/find_all", null, token).ConfigureAwait(false);
         }
 
         #endregion
