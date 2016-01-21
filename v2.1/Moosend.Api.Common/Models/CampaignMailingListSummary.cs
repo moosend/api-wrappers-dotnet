@@ -17,6 +17,7 @@ namespace Moosend.Api.Common.Models
         public DateTime CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedOn { get; set; }
+        // TODO set the type
         public object ImportOperation { get; set; }
     }
 }

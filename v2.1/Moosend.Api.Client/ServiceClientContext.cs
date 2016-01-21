@@ -5,6 +5,7 @@ namespace Moosend.Api.Client
 {
     public class ServiceClientContext
     {
+        // TODO maybe set default endpoint api v3 or make it a const in MoosendApiClient
         public ServiceClientContext(Uri endpoint, string apiKey)
         {
             if (endpoint == null) throw new ArgumentNullException("endpoint");

@@ -1,39 +1,17 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace Moosend.Api.Common.Models
 {
     public class Sender
     {
-        public Guid Id
-        {
-            get;
-            internal set;
-        }
-
-        public string Name
-        {
-            get;
-            internal set;
-        }
-
-        public string Email
-        {
-            get;
-            internal set;
-        }
-
-        public DateTime CreatedOn
-        {
-            get;
-            internal set;
-        }
-
-        public bool IsEnabled
-        {
-            get;
-            internal set;
-        }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public bool IsEnabled { get; set; }
+        public bool SpfVerified { get; set; }
+        public bool DkimVerified { get; set; }
+        public string DkimPublic { get; set; }
 
         public string Display
         {
