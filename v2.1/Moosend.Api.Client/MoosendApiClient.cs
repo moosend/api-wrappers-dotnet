@@ -114,6 +114,18 @@ namespace Moosend.Api.Client
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/send_test", campaignId), new { TestEmails = emails }, token).ConfigureAwait(false);
         }
 
+        /// <summary>
+        ///     Sends an existing draft campaign to all recipients specified in its mailing list. 
+        ///     The campaign is sent immediatelly.
+        /// </summary>
+        /// <param name="campaignId"> The ID of the campaign to be sent </param>
+        /// <param name="token"> Cancellation Token </param>
+        /// <returns></returns>
+        public async Task<bool> SendCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/send", campaignId), null, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers
