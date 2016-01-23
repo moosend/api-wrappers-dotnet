@@ -132,10 +132,29 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         public async Task<bool> DeleteCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<bool>(HttpMethod.Delete, String.Format("/campaigns/{0}/delete", campaignId), null, token).ConfigureAwait(false);
+            return await SendAsync<bool>(HttpMethod.Delete, string.Format("/campaigns/{0}/delete", campaignId), null, token).ConfigureAwait(false);
         }
 
-        #endregion
+        /// <summary>
+        ///     Returns a detailed list of statistics for a given campaign based on activity such as emails sent, opened, bounced, link clicked, etc. 
+        ///     Because the results from this call could be quite big, paging information is required as input.
+        /// </summary>
+        /// <param name="campaignId"> The ID of the campaign to display statistics for. </param>
+        /// <param name="type"></param>
+        /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
+        /// <param name="pageSize">
+        ///     The maximum number of results per page. This must be a positive integer up to 100. If not specified, 50 results per page will be returned. 
+        ///     If a value greater than 100 is specified, it will be treated as 100. </param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<PagedCampaignStatisticsResponse> GetCampaignStatisticsAsync(Guid campaignId, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<PagedCampaignStatisticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/{1}", campaignId, type), null, token).ConfigureAwait(false);
+        }
+
+        #endregion  
 
         #region Generic API calling method and helpers
 
@@ -185,7 +204,7 @@ namespace Moosend.Api.Client
 
                     if (result.Code == 0)
                     {
-                        if (typeof (TModel) == typeof (bool))
+                        if (typeof(TModel) == typeof(bool))
                         {
                             return (TModel)(object)true;
                         }
