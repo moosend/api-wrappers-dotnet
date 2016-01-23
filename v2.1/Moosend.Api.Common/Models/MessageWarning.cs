@@ -1,4 +1,4 @@
-﻿namespace Moosend.Api.Common.Responses
+﻿namespace Moosend.Api.Common.Models
 {
     public class MessageWarning
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Moosend.Api.Common.Responses
+namespace Moosend.Api.Common
 {
     public class ApiClientException : Exception
     {

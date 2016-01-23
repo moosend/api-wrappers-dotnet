@@ -2,7 +2,7 @@
 
 namespace Moosend.Api.Common.Responses
 {
-    public class PagedResult
+    public class PagedResponse
     {
         public Paging Paging { get; set; }
     }

@@ -140,7 +140,16 @@ namespace Moosend.Api.Client
         ///     Because the results from this call could be quite big, paging information is required as input.
         /// </summary>
         /// <param name="campaignId"> The ID of the campaign to display statistics for. </param>
-        /// <param name="type"></param>
+        /// <param name="type">
+        ///     The type of the activity to display results for. This must be one of the following values:
+        ///         Sent : to get information about when and to which recipients the campaign was sent.
+        ///         Opened : to get information about who opened the campaign and when.
+        ///         LinkClicked : to get information about who clicked on which link and when.
+        ///         Forwarded : to get information about who forwarded the campaign using the relevant link on the email body and when.
+        ///         Unsubscribed : to get information about who unsubscribed from the campaign by clicking on the unsubscribe link and when.
+        ///         Bounced : to get information about which email recipients failed to receive the campaign.
+        ///     If not specified, the value Sent will be used by default.
+        /// </param>
         /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
         /// <param name="pageSize">
         ///     The maximum number of results per page. This must be a positive integer up to 100. If not specified, 50 results per page will be returned. 

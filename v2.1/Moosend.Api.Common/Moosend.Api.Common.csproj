@@ -51,12 +51,12 @@
     <Compile Include="Models\CampaignMailingListSummary.cs" />
     <Compile Include="Models\CampaignSummaryMailingList.cs" />
     <Compile Include="Models\Paging.cs" />
-    <Compile Include="Responses\ApiClientException.cs" />
+    <Compile Include="ApiClientException.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\CampaignParams.cs" />
     <Compile Include="Models\CampaignStatisticsSummary.cs" />
     <Compile Include="Models\CampaignSummary.cs" />
-    <Compile Include="Models\ContextAnalyticsNode.cs" />
+    <Compile Include="Models\Analytics.cs" />
     <Compile Include="Models\CustomField.cs" />
     <Compile Include="Models\CustomFieldDefinition.cs" />
     <Compile Include="Models\MailingList.cs" />
@@ -69,9 +69,10 @@
     <Compile Include="Responses\ApiCodes.cs" />
     <Compile Include="Responses\ApiResponse.cs" />
     <Compile Include="Responses\CampaignsResponse.cs" />
+    <Compile Include="Responses\PagedCampaignStatisticsResponse.cs" />
     <Compile Include="Responses\ContextWithWarnings.cs" />
-    <Compile Include="Responses\MessageWarning.cs" />
-    <Compile Include="Responses\PagedResult.cs" />
+    <Compile Include="Models\MessageWarning.cs" />
+    <Compile Include="Responses\PagedResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Requests\" />
