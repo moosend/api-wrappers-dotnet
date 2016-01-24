@@ -1,6 +1,6 @@
 ﻿namespace Moosend.Api.Common.Models
 {
-    public struct Analytics
+    public struct AnalyticsDetails
     {
         public string Context { get; set; }
 
