@@ -37,7 +37,7 @@ namespace Moosend.Api.Client
         #region Campaigns
 
         /// <summary>
-        ///     Gets a list of all campaigns in your account with detailed infomation.
+        ///     Returns a list of all campaigns in your account with detailed infomation.
         ///     Because the results from this call could be quite big, paging information is required as input.
         /// </summary>
         /// <param name="page">
@@ -56,7 +56,6 @@ namespace Moosend.Api.Client
         ///     The method to sort results: ASC for ascending, DESC for descending. If not specified, ASC will be assumed.
         /// </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns> Returns a list of all campaigns in your account with detailed infomation. </returns>
         public async Task<PagedCampaigns> GetAllCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken))
         {
             var path = string.Format("/campaigns/{0}/{1}", page, pageSize);
@@ -70,10 +69,9 @@ namespace Moosend.Api.Client
             return await SendAsync<PagedCampaigns>(HttpMethod.Get, path, queryParams, token).ConfigureAwait(false);
         }
 
-        /// <summary> Gets basic information for the specified sender identified by its email address. </summary>
+        /// <summary> Returns basic information for the specified sender identified by its email address. </summary>
         /// <param name="email"> The email address of the senders to get information for. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns> Returns basic information for the specified sender identified by its email address. </returns>
         public async Task<Sender> GetSenderAsync(string email, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Sender>(HttpMethod.Get, "/senders/find_one", new { Email = email }, token).ConfigureAwait(false);
@@ -84,7 +82,6 @@ namespace Moosend.Api.Client
         ///     You may specify any email address of these senders when sending a campaign.
         /// </summary>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
         public async Task<IList<Sender>> GetSendersAsync(CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<IList<Sender>>(HttpMethod.Get, "/senders/find_all", null, token).ConfigureAwait(false);
@@ -97,7 +94,6 @@ namespace Moosend.Api.Client
         /// </summary>
         /// <param name="campaignParams"> Draft's content properties. You must specify at least Name, Subject and SenderEmail. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
         public async Task<Guid> CreateDraftAsync(CampaignParams campaignParams, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Guid>(HttpMethod.Post, "/campaigns/create", campaignParams, token).ConfigureAwait(false);
@@ -121,7 +117,6 @@ namespace Moosend.Api.Client
         /// </summary>
         /// <param name="campaignId"> The ID of the campaign to be sent. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
         public async Task<bool> SendCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/send", campaignId), null, token).ConfigureAwait(false);
@@ -130,7 +125,6 @@ namespace Moosend.Api.Client
         /// <summary> Deletes a campaign from your account, draft or even sent. </summary>
         /// <param name="campaignId"> The ID of the campaign to be deleted. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
         public async Task<bool> DeleteCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<bool>(HttpMethod.Delete, string.Format("/campaigns/{0}/delete", campaignId), null, token).ConfigureAwait(false);
@@ -158,7 +152,6 @@ namespace Moosend.Api.Client
         /// <param name="from"> A date value that specifies since when to start returning results. If ommitted, results will be returned from the moment the campaign was sent. </param>
         /// <param name="to"> A date value that specifies up to when to return results. If ommitted, results will be returned up to date. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
         public async Task<PagedAnalyticsResponse> GetCampaignStatisticsAsync(Guid campaignId, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/{1}", campaignId, type), null, token).ConfigureAwait(false);
@@ -167,7 +160,6 @@ namespace Moosend.Api.Client
         /// <summary> Returns a list with your campaign links and how many clicks have been made by your recipients, either unique or total. /// </summary>
         /// <param name="campaignId"> The ID of the requested campaign </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
         public async Task<PagedAnalyticsResponse> GetCampaignLinkActivityAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/links", campaignId), null, token).ConfigureAwait(false);
