@@ -12,16 +12,23 @@ using Newtonsoft.Json;
 
 namespace Moosend.Api.Client
 {
-    public class MoosendApiClient
+    public class MoosendApiClient : IMoosendApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly Uri _endpoint;
         private readonly string _apiKey;
 
-        public MoosendApiClient(ServiceClientContext context)
+        public MoosendApiClient(string apiKey, ServiceClientContext context = null)
         {
+            if (apiKey == null) throw new ArgumentNullException("");
+
+            if (context == null)
+            {
+                context = new ServiceClientContext(new Uri("https://api.moosend.com/v3"));
+            }
+
             _endpoint = context.Endpoint;
-            _apiKey = context.ApiKey;
+            _apiKey = apiKey;
 
             _httpClient = context.Handler == null
                 ? new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip })
@@ -191,14 +198,11 @@ namespace Moosend.Api.Client
         {
             var request = new HttpRequestMessage();
 
-            var sb = new StringBuilder(string.Format("{0}{1}.json?apiKey={2}",
-                _endpoint,
-                path,
-                _apiKey));
+            var relativeUrl = string.Format("{0}.json?apikey={1}", path, _apiKey);
 
             if (parameters != null && method == HttpMethod.Get)
             {
-                sb.Append("&" + parameters.ToQueryString());
+                relativeUrl += "&" + parameters.ToQueryString();
             }
             else if (parameters != null && method == HttpMethod.Post)
             {
@@ -210,7 +214,7 @@ namespace Moosend.Api.Client
                 }
             }
 
-            var uri = new Uri(_endpoint, sb.ToString());
+            var uri = new Uri(_endpoint + relativeUrl);
 
             request.RequestUri = uri;
             request.Method = method;
