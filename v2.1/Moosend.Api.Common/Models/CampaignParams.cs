@@ -1,21 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Moosend.Api.Common.Models
 {
     public class CampaignParams
     {
         /// <summary>
-        ///     The campaign name
+        ///     The campaign name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        ///     The subject of the emails for the new campaign
+        ///     The subject of the emails for the new campaign.
         /// </summary>
         public string Subject { get; set; }
 
         /// <summary>
-        ///     The sender of the campaign
+        ///     The sender of the campaign.
         /// </summary>
         public string SenderEmail { get; set; }
 
@@ -38,15 +39,9 @@ namespace Moosend.Api.Common.Models
         public string WebLocation { get; set; }
 
         /// <summary>
-        ///     The ID of a mailing list in your account to which the campaign will be sent to.
+        ///     A list of mailing list id's and optionally segment id's to which the campaign will be sent to. You can specify the same mailing list id multiple times with different segment id each time in order to send to multiple segments of the same mailing list.
         /// </summary>
-        public Guid MailingListId { get; set; }
-
-        /// <summary>
-        ///     The ID of a segment in the specified mailing list to filter the recipients with. If not specified, the campaign
-        ///     will be sent to all active members of the mailing list.
-        /// </summary>
-        public int SegmentId { get; set; }
+        public IList<CampaignMailingListForm> MailingLists { get; set; }
 
         /// <summary>
         ///     Defines the way to split an AB campaign. If omitted, a regular campaign will be sent.
