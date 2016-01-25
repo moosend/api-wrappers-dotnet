@@ -94,7 +94,7 @@ namespace Moosend.Api.Client
         /// </summary>
         /// <param name="campaignParams"> Draft's content properties. You must specify at least Name, Subject and SenderEmail. </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<Guid> CreateDraftAsync(CampaignParams campaignParams, CancellationToken token = default(CancellationToken))
+        public async Task<Guid> CreateCampaignAsync(CampaignParams campaignParams, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Guid>(HttpMethod.Post, "/campaigns/create", campaignParams, token).ConfigureAwait(false);
         }
@@ -171,6 +171,16 @@ namespace Moosend.Api.Client
         public async Task<PagedAnalyticsResponse> GetCampaignActivityByLocationAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/countries", campaignId), null, token).ConfigureAwait(false);
+        }
+
+        /// <summary> Updates properties of an existing draft campaign in your account. Non-draft campaigns cannot be updated. </summary>
+        /// <param name="campaignId"> The ID of the draft campaign to update. </param>
+        /// <param name="campaignParams"> Updated parameters to update in campaign. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<bool> UpdateCampaignAsync(Guid campaignId, CampaignParams campaignParams, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/update", campaignId), campaignParams, token).ConfigureAwait(false);
         }
 
         #endregion  
