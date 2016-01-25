@@ -165,6 +165,14 @@ namespace Moosend.Api.Client
             return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/links", campaignId), null, token).ConfigureAwait(false);
         }
 
+        /// <summary> Returns a detailed report of your campaign activity (opens, clicks, etc) by country. </summary>
+        /// <param name="campaignId"> The ID of the requested campaign. </param>
+        /// <param name="token"></param>
+        public async Task<PagedAnalyticsResponse> GetCampaignActivityByLocationAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/countries", campaignId), null, token).ConfigureAwait(false);
+        }
+
         #endregion  
 
         #region Generic API calling method and helpers
