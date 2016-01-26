@@ -146,6 +146,32 @@ namespace Moosend.Api.Client
         /// <returns> The Guid of the mailing list. </returns>
         Task<Guid> UpdateMailingListAsync(Guid listId, string name, string confirmationPage = null, string redirectAfterUnsubscribePage = null, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Gets a list of all subscribers in a given mailing list.
+        ///     You may filter the list by setting a date to fetch those subscribed since then and/or by their status.
+        ///     Because the results from this call could be quite big, paging information is required as input.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to fetch subscribers for. </param>
+        /// <param name="status">
+        ///     The status to filter the subscribers in the given mailing list. This must be one of the following values:
+        ///         Subscribed : to fetch active subscribers only
+        ///         Unsubscribed : to fetch unsubscribed subscribers only
+        ///         Bounced : to fetch subscribers that have bounced on a previously sent campaign and are suspicious for not being valid
+        ///         Removed : to fetch removed subscribers pending deletion from our database
+        ///     If ommitted, all subscribers will be returned, no matter what their status is.
+        /// </param>
+        /// <param name="since">
+        ///     A date to specify since when to fetch results, according to the date each subscriber was added to the mailing list.
+        ///     The date must be formatted as YYYY-MM-DD (eg. 2012-12-31). 
+        ///     If omitted, all subscribers will be returned, no matter what date they were added in the list.
+        /// </param>
+        /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
+        /// <param name="pageSize"> 
+        ///     The maximum number of results per page. This must be a positive integer up to 1000. If not specified, 500 results per page will be returned. 
+        ///     If a value greater than 1000 is specified, it will be treated as 1000. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        Task<SubscribersResponse> GetSubscribersForListAsync(Guid mailingListId, SubscribeType status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken));
+        
         #endregion
 
         Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));
