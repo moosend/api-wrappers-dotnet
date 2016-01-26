@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moosend.Api.Common;
 using Moosend.Api.Common.Models;
-using Moosend.Api.Common.Requests;
 using Moosend.Api.Common.Responses;
 using Newtonsoft.Json;
 
@@ -302,13 +301,31 @@ namespace Moosend.Api.Client
 
         /// <summary> Creates a new custom field in the specified mailing list. </summary>
         /// <param name="mailingListId"> The id of the mailing list where the custom field will belong to. </param>
-        /// <param name="request"> A request object containing the new custom field's properties. </param>
+        /// <param name="name"> The name of the custom field </param>
+        /// <param name="customFieldType"> Specifies the data type of the custom field. If ommitted, Text will be assumed. </param>
+        /// <param name="isRequired">
+        ///     Specify whether this is field will be mandatory on not, when being used in a subscription form. 
+        ///     You should specify a value of either truetrue or false. 
+        ///     If ommitted, false will be assumed. </param>
+        /// <param name="options"> 
+        ///     If you want to create a custom field of type SingleSelectDropdown, you must set this parameter to specify the available options for the user to choose from.
+        ///     Use a comma (,) to seperate different options. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
-        public async Task<Guid> CreateCustomFieldInListAsync(Guid mailingListId, CreateCustomFieldRequest request, CancellationToken token = default(CancellationToken))
+        /// <returns> The Guid of the new  Custom Field. </returns>
+        public async Task<Guid> CreateCustomFieldAsync(Guid mailingListId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<Guid>(HttpMethod.Post, string.Format("/lists/{0}/customfields/create", mailingListId), request, token).ConfigureAwait(false);
+            var parameters = new
+            {
+                Name = name,
+                CustomFieldType = customFieldType,
+                IsRequired = isRequired,
+                Options = options
+            };
+
+            return await SendAsync<Guid>(HttpMethod.Post, string.Format("/lists/{0}/customfields/create", mailingListId), parameters, token).ConfigureAwait(false);
         }
+
+
 
         #endregion
 
