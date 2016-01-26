@@ -11,6 +11,8 @@ namespace Moosend.Api.Client
 {
     public interface IMoosendApiClient
     {
+        #region Campaigns
+
         /// <summary>
         ///     Returns a list of all campaigns in your account with detailed infomation.
         ///     Because the results from this call could be quite big, paging information is required as input.
@@ -31,7 +33,7 @@ namespace Moosend.Api.Client
         ///     The method to sort results: ASC for ascending, DESC for descending. If not specified, ASC will be assumed.
         /// </param>
         /// <param name="token"> Cancellation Token. </param>
-        Task<PagedCampaigns> GetAllCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken));
+        Task<CampaignsResponse> GetCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken));
 
         /// <summary> Returns basic information for the specified sender identified by its email address. </summary>
         /// <param name="email"> The email address of the senders to get information for. </param>
@@ -116,6 +118,18 @@ namespace Moosend.Api.Client
         /// <param name="token"> Cancellation Token. </param>
         /// <returns></returns>
         Task<bool> UpdateCampaignAsync(Guid campaignId, CampaignParams campaignParams, CancellationToken token = default(CancellationToken));
+
+        #endregion
+
+        #region Mailing Lists
+
+        /// <summary> Gets a list of your active mailing lists in your account. </summary>
+        /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
+        /// <param name="pageSize"> The maximum number of results per page. If ommitted, 10 mailing lists will be returned per page. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        Task<MailingListsResponse> GetMailingListsAsync(int page = 1, int pageSize = 10, CancellationToken token = default(CancellationToken));
+
+        #endregion
 
         Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));
         Task<TModel> GetResponse<TModel>(HttpResponseMessage response);

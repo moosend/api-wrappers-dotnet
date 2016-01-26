@@ -63,7 +63,7 @@ namespace Moosend.Api.Client
         ///     The method to sort results: ASC for ascending, DESC for descending. If not specified, ASC will be assumed.
         /// </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<PagedCampaigns> GetAllCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken))
+        public async Task<CampaignsResponse> GetCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken))
         {
             var path = string.Format("/campaigns/{0}/{1}", page, pageSize);
 
@@ -73,7 +73,7 @@ namespace Moosend.Api.Client
                 SortMethod = sortMethod
             };
 
-            return await SendAsync<PagedCampaigns>(HttpMethod.Get, path, queryParams, token).ConfigureAwait(false);
+            return await SendAsync<CampaignsResponse>(HttpMethod.Get, path, queryParams, token).ConfigureAwait(false);
         }
 
         /// <summary> Returns basic information for the specified sender identified by its email address. </summary>
@@ -190,7 +190,20 @@ namespace Moosend.Api.Client
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/update", campaignId), campaignParams, token).ConfigureAwait(false);
         }
 
-        #endregion  
+        #endregion
+
+        #region Mailing Lists
+
+        /// <summary> Gets a list of your active mailing lists in your account. </summary>
+        /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
+        /// <param name="pageSize"> The maximum number of results per page. If ommitted, 10 mailing lists will be returned per page. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        public async Task<MailingListsResponse> GetMailingListsAsync(int page = 1, int pageSize = 10, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<MailingListsResponse>(HttpMethod.Get, string.Format("/lists/{0}/{1}", page, pageSize), null, token).ConfigureAwait(false);
+        }
+
+        #endregion
 
         #region Generic API calling method and helpers
 
