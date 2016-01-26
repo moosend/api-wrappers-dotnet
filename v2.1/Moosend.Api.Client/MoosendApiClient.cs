@@ -208,7 +208,7 @@ namespace Moosend.Api.Client
         /// <param name="confirmationPage"> The URL of the page that will be displayed at the end of the subscription process. </param>
         /// <param name="redirectAfterUnsubscribePage"> The URL of the page that users will be redirected after unsubscribing from your mailing list. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
+        /// <returns> The Guid of the mailing list. </returns>
         public async Task<Guid> CreateMailingListAsync(string name, string confirmationPage = null, string redirectAfterUnsubscribePage = null, CancellationToken token = default(CancellationToken))
         {
             var parameters = new
@@ -219,6 +219,25 @@ namespace Moosend.Api.Client
             };
 
             return await SendAsync<Guid>(HttpMethod.Post, "/lists/create", parameters, token).ConfigureAwait(false);
+        }
+
+        /// <summary> Updates the properties of an existing mailing list. </summary>
+        /// <param name="listId"> The ID of the mailing list to update. </param>
+        /// <param name="name"> The name of the new mailing list. </param>
+        /// <param name="confirmationPage"> The URL of the page that will be displayed at the end of the subscription process. </param>
+        /// <param name="redirectAfterUnsubscribePage"> The URL of the page that users will be redirected after unsubscribing from your mailing list. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> The Guid of the mailing list. </returns>
+        public async Task<Guid> UpdateMailingListAsync(Guid listId, string name, string confirmationPage = null, string redirectAfterUnsubscribePage = null, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Name = name,
+                ConfirmationPage = confirmationPage,
+                RedirectAfterUnsubscribePage = redirectAfterUnsubscribePage
+            };
+
+            return await SendAsync<Guid>(HttpMethod.Post, string.Format("/lists/{0}/update", listId), parameters, token).ConfigureAwait(false);
         }
 
         #endregion

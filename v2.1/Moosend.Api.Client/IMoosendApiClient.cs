@@ -137,6 +137,15 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         Task<Guid> CreateMailingListAsync(string name, string confirmationPage = null, string redirectAfterUnsubscribePage = null, CancellationToken token = default(CancellationToken));
 
+        /// <summary> Updates the properties of an existing mailing list. </summary>
+        /// <param name="listId"> The ID of the mailing list to update. </param>
+        /// <param name="name"> The name of the new mailing list. </param>
+        /// <param name="confirmationPage"> The URL of the page that will be displayed at the end of the subscription process. </param>
+        /// <param name="redirectAfterUnsubscribePage"> The URL of the page that users will be redirected after unsubscribing from your mailing list. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> The Guid of the mailing list. </returns>
+        Task<Guid> UpdateMailingListAsync(Guid listId, string name, string confirmationPage = null, string redirectAfterUnsubscribePage = null, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));
