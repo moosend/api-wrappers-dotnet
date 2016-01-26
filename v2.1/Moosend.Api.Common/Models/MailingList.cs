@@ -39,8 +39,7 @@ namespace Moosend.Api.Common.Models
 
         public DateTime UpdatedOn { get; set; }
 
-        public string ConfirmationPage { get; set; }
-
-        public string RedirectAfterUnsubscribePage { get; set; }
+        // TODO set the type
+        public object ImportOperation { get; set; }
     }
 }
