@@ -75,6 +75,7 @@
     <Compile Include="Responses\ContextWithWarnings.cs" />
     <Compile Include="Models\MessageWarning.cs" />
     <Compile Include="Responses\PagedResponse.cs" />
+    <Compile Include="Responses\SubscribersResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Requests\" />

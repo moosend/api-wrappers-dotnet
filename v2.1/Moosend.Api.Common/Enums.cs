@@ -235,6 +235,18 @@ namespace Moosend.Api.Common
         CheckBox = 5
     }
 
+    public enum SubscribeMethod
+    {
+        [Description("Subscription Form")]
+        SubscriptionForm = 0,
+
+        [Description("File Import")]
+        FileImport = 1,
+
+        [Description("Manually Added")]
+        ManuallyAdded = 2
+    }
+
     public enum SubscribeType
     {
         /// <summary>
