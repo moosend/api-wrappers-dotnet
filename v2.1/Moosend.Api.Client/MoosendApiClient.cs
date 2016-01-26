@@ -290,6 +290,15 @@ namespace Moosend.Api.Client
             return await SendAsync<MailingList>(HttpMethod.Get, string.Format("/lists/{0}/details", mailingListId), null, token).ConfigureAwait(false);
         }
 
+        /// <summary> Deletes a mailing list from your account. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to be deleted. </param>
+        /// <param name="token"> Ceancellation Token. </param>
+        /// <returns> A boolean value indicating success. </returns>
+        public async Task<bool> DeleteMailingListAsync(Guid mailingListId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Delete, string.Format("/lists/{0}/delete", mailingListId), null, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers

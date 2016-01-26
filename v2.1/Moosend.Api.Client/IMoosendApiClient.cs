@@ -183,6 +183,12 @@ namespace Moosend.Api.Client
         /// <param name="token"> Cancellation Token. </param>
         Task<MailingList> GetMailingListByIdAsync(Guid mailingListId, bool withStatistics = true, CancellationToken token = default(CancellationToken));
 
+        /// <summary> Deletes a mailing list from your account. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to be deleted. </param>
+        /// <param name="token"> Ceancellation Token. </param>
+        /// <returns> A boolean value indicating success. </returns>
+        Task<bool> DeleteMailingListAsync(Guid mailingListId, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));
