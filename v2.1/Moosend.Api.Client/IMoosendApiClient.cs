@@ -204,6 +204,22 @@ namespace Moosend.Api.Client
         /// <returns> The Guid of the new  Custom Field. </returns>
         Task<Guid> CreateCustomFieldAsync(Guid mailingListId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken));
 
+        /// <summary> Updates the properties of an existing custom field in the specified mailing list. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the custom field belongs to. </param>
+        /// <param name="customFieldId"> The ID of the custom field to be updated. </param>
+        /// <param name="name"> The name of the custom field </param>
+        /// <param name="customFieldType"> Specifies the data type of the custom field. If ommitted, Text will be assumed. </param>
+        /// <param name="isRequired">
+        ///     Specify whether this is field will be mandatory on not, when being used in a subscription form. 
+        ///     You should specify a value of either truetrue or false. 
+        ///     If ommitted, false will be assumed. </param>
+        /// <param name="options"> 
+        ///     If you want to create a custom field of type SingleSelectDropdown, you must set this parameter to specify the available options for the user to choose from.
+        ///     Use a comma (,) to seperate different options. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> Custom field's Guid. </returns>
+        Task<bool> UpdateCustomFieldAsync(Guid mailingListId, Guid customFieldId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));

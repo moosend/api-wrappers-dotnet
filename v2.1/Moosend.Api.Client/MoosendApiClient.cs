@@ -300,7 +300,7 @@ namespace Moosend.Api.Client
         }
 
         /// <summary> Creates a new custom field in the specified mailing list. </summary>
-        /// <param name="mailingListId"> The id of the mailing list where the custom field will belong to. </param>
+        /// <param name="mailingListId"> The ID of the mailing list where the custom field will belong to. </param>
         /// <param name="name"> The name of the custom field </param>
         /// <param name="customFieldType"> Specifies the data type of the custom field. If ommitted, Text will be assumed. </param>
         /// <param name="isRequired">
@@ -311,7 +311,7 @@ namespace Moosend.Api.Client
         ///     If you want to create a custom field of type SingleSelectDropdown, you must set this parameter to specify the available options for the user to choose from.
         ///     Use a comma (,) to seperate different options. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns> The Guid of the new  Custom Field. </returns>
+        /// <returns> The Guid of new custom field. </returns>
         public async Task<Guid> CreateCustomFieldAsync(Guid mailingListId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken))
         {
             var parameters = new
@@ -325,7 +325,33 @@ namespace Moosend.Api.Client
             return await SendAsync<Guid>(HttpMethod.Post, string.Format("/lists/{0}/customfields/create", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
+        /// <summary> Updates the properties of an existing custom field in the specified mailing list. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the custom field belongs to. </param>
+        /// <param name="customFieldId"> The ID of the custom field to be updated. </param>
+        /// <param name="name"> The name of the custom field </param>
+        /// <param name="customFieldType"> Specifies the data type of the custom field. If ommitted, Text will be assumed. </param>
+        /// <param name="isRequired">
+        ///     Specify whether this is field will be mandatory on not, when being used in a subscription form. 
+        ///     You should specify a value of either truetrue or false. 
+        ///     If ommitted, false will be assumed. </param>
+        /// <param name="options"> 
+        ///     If you want to create a custom field of type SingleSelectDropdown, you must set this parameter to specify the available options for the user to choose from.
+        ///     Use a comma (,) to seperate different options. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean indicating success. </returns>
+        public async Task<bool> UpdateCustomFieldAsync(Guid mailingListId, Guid customFieldId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Name = name,
+                CustomFieldId = customFieldId,
+                CustomFieldType = customFieldType,
+                IsRequired = isRequired,
+                Options = options
+            };
 
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/lists/{0}/customfields/{1}/update", mailingListId, customFieldId), parameters, token).ConfigureAwait(false);
+        }
 
         #endregion
 
