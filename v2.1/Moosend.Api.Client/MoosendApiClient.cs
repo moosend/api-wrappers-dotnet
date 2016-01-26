@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moosend.Api.Common;
 using Moosend.Api.Common.Models;
+using Moosend.Api.Common.Requests;
 using Moosend.Api.Common.Responses;
 using Newtonsoft.Json;
 
@@ -297,6 +298,16 @@ namespace Moosend.Api.Client
         public async Task<bool> DeleteMailingListAsync(Guid mailingListId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<bool>(HttpMethod.Delete, string.Format("/lists/{0}/delete", mailingListId), null, token).ConfigureAwait(false);
+        }
+
+        /// <summary> Creates a new custom field in the specified mailing list. </summary>
+        /// <param name="mailingListId"> The id of the mailing list where the custom field will belong to. </param>
+        /// <param name="request"> A request object containing the new custom field's properties. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<Guid> CreateCustomFieldInListAsync(Guid mailingListId, CreateCustomFieldRequest request, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<Guid>(HttpMethod.Post, string.Format("/lists/{0}/customfields/create", mailingListId), request, token).ConfigureAwait(false);
         }
 
         #endregion
