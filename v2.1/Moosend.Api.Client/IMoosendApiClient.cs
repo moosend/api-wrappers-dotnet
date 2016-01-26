@@ -171,7 +171,18 @@ namespace Moosend.Api.Client
         ///     If a value greater than 1000 is specified, it will be treated as 1000. </param>
         /// <param name="token"> Cancellation Token. </param>
         Task<SubscribersResponse> GetSubscribersForListAsync(Guid mailingListId, SubscribeType status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken));
-        
+
+        /// <summary>
+        ///     Gets details for a given mailing list. You may include subscriber statistics in your results or not. 
+        ///     Any segments existing for the requested mailing list will not be included in the results.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to be returned. </param>
+        /// <param name="withStatistics"> 
+        ///     Specifies whether to fetch statistics for the subscribers or not. If ommitted, results will be returned with statistics by default.
+        ///     Specified value should be either 'true' of 'false' (without quotes). </param>
+        /// <param name="token"> Cancellation Token. </param>
+        Task<MailingList> GetMailingListByIdAsync(Guid mailingListId, bool withStatistics = true, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));

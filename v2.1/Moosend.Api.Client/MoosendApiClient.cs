@@ -276,6 +276,20 @@ namespace Moosend.Api.Client
             return await SendAsync<SubscribersResponse>(HttpMethod.Get, string.Format("/lists/{0}/subscribers/{1}", mailingListId, status), parameters, token).ConfigureAwait(false);
         }
 
+        /// <summary>
+        ///     Gets details for a given mailing list. You may include subscriber statistics in your results or not. 
+        ///     Any segments existing for the requested mailing list will not be included in the results.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to be returned. </param>
+        /// <param name="withStatistics"> 
+        ///     Specifies whether to fetch statistics for the subscribers or not. If ommitted, results will be returned with statistics by default.
+        ///     Specified value should be either 'true' of 'false' (without quotes). </param>
+        /// <param name="token"> Cancellation Token. </param>
+        public async Task<MailingList> GetMailingListByIdAsync(Guid mailingListId, bool withStatistics = true, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<MailingList>(HttpMethod.Get, string.Format("/lists/{0}/details", mailingListId), null, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers
