@@ -220,6 +220,13 @@ namespace Moosend.Api.Client
         /// <returns> Custom field's Guid. </returns>
         Task<bool> UpdateCustomFieldAsync(Guid mailingListId, Guid customFieldId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken));
 
+        /// <summary> Removes a custom field definition from the specified mailing list. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the custom field belongs. </param>
+        /// <param name="customFieldId"> The ID of the custom field to be removed. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean indicating success. </returns>
+        Task<bool> DeleteCustomFieldAsync(Guid mailingListId, Guid customFieldId, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));

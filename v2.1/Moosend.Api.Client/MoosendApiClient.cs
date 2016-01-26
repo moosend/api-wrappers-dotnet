@@ -353,6 +353,16 @@ namespace Moosend.Api.Client
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/lists/{0}/customfields/{1}/update", mailingListId, customFieldId), parameters, token).ConfigureAwait(false);
         }
 
+        /// <summary> Removes a custom field definition from the specified mailing list. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the custom field belongs. </param>
+        /// <param name="customFieldId"> The ID of the custom field to be removed. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean indicating success. </returns>
+        public async Task<bool> DeleteCustomFieldAsync(Guid mailingListId, Guid customFieldId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Delete, string.Format("/lists/{0}/customfields/{1}/delete", mailingListId, customFieldId), null, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers
