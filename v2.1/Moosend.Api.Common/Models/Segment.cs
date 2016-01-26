@@ -21,7 +21,7 @@ namespace Moosend.Api.Common.Models
         public Segment(MailingList mailingList, string name, SegmentMatchType matchType = SegmentMatchType.All)
         {
             Criteria = new List<SegmentCriteria>();
-            this.MailingListId = mailingList.ID;
+            this.MailingListId = mailingList.Id;
             this.Name = name;
             this.MatchType = matchType;
         }

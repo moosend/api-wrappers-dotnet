@@ -10,7 +10,7 @@ namespace Moosend.Api.Common.Models
             CustomFieldsDefinition = new List<CustomFieldDefinition>();
         }
 
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -38,8 +38,5 @@ namespace Moosend.Api.Common.Models
         public string UpdatedBy { get; set; }
 
         public DateTime UpdatedOn { get; set; }
-
-        // TODO set the type
-        public object ImportOperation { get; set; }
     }
 }
