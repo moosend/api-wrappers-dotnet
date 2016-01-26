@@ -203,6 +203,24 @@ namespace Moosend.Api.Client
             return await SendAsync<MailingListsResponse>(HttpMethod.Get, string.Format("/lists/{0}/{1}", page, pageSize), null, token).ConfigureAwait(false);
         }
 
+        /// <summary> Creates a new empty mailing list in your account. </summary>
+        /// <param name="name"> The name of the new mailing list. </param>
+        /// <param name="confirmationPage"> The URL of the page that will be displayed at the end of the subscription process. </param>
+        /// <param name="redirectAfterUnsubscribePage"> The URL of the page that users will be redirected after unsubscribing from your mailing list. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<Guid> CreateMailingListAsync(string name, string confirmationPage = null, string redirectAfterUnsubscribePage = null, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Name = name,
+                ConfirmationPage = confirmationPage,
+                RedirectAfterUnsubscribePage = redirectAfterUnsubscribePage
+            };
+
+            return await SendAsync<Guid>(HttpMethod.Post, "/lists/create", parameters, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers
