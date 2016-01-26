@@ -228,10 +228,29 @@ namespace Moosend.Api.Common
 
     public enum CustomFieldType
     {
+        /// <summary>
+        ///     Accepts any text as input.
+        /// </summary>
         Text = 0,
+
+        /// <summary>
+        ///     Accepts only integer or decimal values as input.
+        /// </summary>
         Number = 1,
+
+        /// <summary>
+        ///     Accepts only date values as input, with or without time.
+        /// </summary>
         DateTime = 2,
+
+        /// <summary>
+        ///     Accepts only values explicitly defined in a list.
+        /// </summary>
         SingleSelectDropdown = 3,
+
+        /// <summary>
+        ///     Accepts only values of true or false.
+        /// </summary>
         CheckBox = 5
     }
 

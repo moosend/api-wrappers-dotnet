@@ -51,7 +51,6 @@
     <Compile Include="Models\CampaignMailingListForm.cs" />
     <Compile Include="Models\CampaignSummaryMailingListDetails.cs" />
     <Compile Include="Models\CampaignSummaryMailingList.cs" />
-    <Compile Include="Requests\CreateCustomFieldRequest.cs" />
     <Compile Include="Models\Paging.cs" />
     <Compile Include="ApiClientException.cs" />
     <Compile Include="Models\Campaign.cs" />
@@ -78,7 +77,9 @@
     <Compile Include="Responses\PagedResponse.cs" />
     <Compile Include="Responses\SubscribersResponse.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Requests\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
