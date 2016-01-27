@@ -159,9 +159,17 @@ namespace Moosend.Api.Client
         /// <param name="from"> A date value that specifies since when to start returning results. If ommitted, results will be returned from the moment the campaign was sent. </param>
         /// <param name="to"> A date value that specifies up to when to return results. If ommitted, results will be returned up to date. </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<CampaignsStatisticsResult> GetCampaignStatisticsAsync(Guid campaignId, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken))
+        public async Task<CampaignsStatisticsResult> GetCampaignStatisticsAsync(Guid campaignId, MailStatus status = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<CampaignsStatisticsResult>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/{1}", campaignId, type), null, token).ConfigureAwait(false);
+            var parameters = new
+            {
+                Page = page,
+                PageSize = pageSize,
+                From = from,
+                To = to
+            };
+
+            return await SendAsync<CampaignsStatisticsResult>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/{1}", campaignId, status), parameters, token).ConfigureAwait(false);
         }
 
         /// <summary> Returns a list with your campaign links and how many clicks have been made by your recipients, either unique or total. /// </summary>
@@ -198,9 +206,9 @@ namespace Moosend.Api.Client
         /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
         /// <param name="pageSize"> The maximum number of results per page. If ommitted, 10 mailing lists will be returned per page. </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<MailingListsResponse> GetMailingListsAsync(int page = 1, int pageSize = 10, CancellationToken token = default(CancellationToken))
+        public async Task<MailingListsResult> GetMailingListsAsync(int page = 1, int pageSize = 10, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<MailingListsResponse>(HttpMethod.Get, string.Format("/lists/{0}/{1}", page, pageSize), null, token).ConfigureAwait(false);
+            return await SendAsync<MailingListsResult>(HttpMethod.Get, string.Format("/lists/{0}/{1}", page, pageSize), null, token).ConfigureAwait(false);
         }
 
         /// <summary> Creates a new empty mailing list in your account. </summary>
@@ -264,7 +272,7 @@ namespace Moosend.Api.Client
         ///     The maximum number of results per page. This must be a positive integer up to 1000. If not specified, 500 results per page will be returned. 
         ///     If a value greater than 1000 is specified, it will be treated as 1000. </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<SubscribersResponse> GetSubscribersForListAsync(Guid mailingListId, SubscribeType status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken))
+        public async Task<SubscribersResult> GetSubscribersForListAsync(Guid mailingListId, SubscribeType? status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken))
         {
             var parameters = new
             {
@@ -273,7 +281,7 @@ namespace Moosend.Api.Client
                 PageSize = pageSize
             };
 
-            return await SendAsync<SubscribersResponse>(HttpMethod.Get, string.Format("/lists/{0}/subscribers/{1}", mailingListId, status), parameters, token).ConfigureAwait(false);
+            return await SendAsync<SubscribersResult>(HttpMethod.Get, string.Format("/lists/{0}/subscribers/{1}", mailingListId, status), parameters, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -287,7 +295,11 @@ namespace Moosend.Api.Client
         /// <param name="token"> Cancellation Token. </param>
         public async Task<MailingList> GetMailingListByIdAsync(Guid mailingListId, bool withStatistics = true, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<MailingList>(HttpMethod.Get, string.Format("/lists/{0}/details", mailingListId), null, token).ConfigureAwait(false);
+            var parameters = new
+            {
+                WithStatistics = withStatistics
+            };
+            return await SendAsync<MailingList>(HttpMethod.Get, string.Format("/lists/{0}/details", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a mailing list from your account. </summary>
@@ -367,7 +379,7 @@ namespace Moosend.Api.Client
 
         #region Generic API calling method and helpers
 
-        public async Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken))
+        private async Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken))
         {
             var request = new HttpRequestMessage();
 
@@ -397,7 +409,7 @@ namespace Moosend.Api.Client
             return await GetResponse<TModel>(response).ConfigureAwait(false);
         }
 
-        public async Task<TModel> GetResponse<TModel>(HttpResponseMessage response)
+        private async Task<TModel> GetResponse<TModel>(HttpResponseMessage response)
         {
             var responseJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 

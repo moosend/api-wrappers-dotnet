@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Moosend.Api.Common;
@@ -127,7 +126,7 @@ namespace Moosend.Api.Client
         /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
         /// <param name="pageSize"> The maximum number of results per page. If ommitted, 10 mailing lists will be returned per page. </param>
         /// <param name="token"> Cancellation Token. </param>
-        Task<MailingListsResponse> GetMailingListsAsync(int page = 1, int pageSize = 10, CancellationToken token = default(CancellationToken));
+        Task<MailingListsResult> GetMailingListsAsync(int page = 1, int pageSize = 10, CancellationToken token = default(CancellationToken));
 
         /// <summary> Creates a new empty mailing list in your account. </summary>
         /// <param name="name"> The name of the new mailing list. </param>
@@ -170,7 +169,7 @@ namespace Moosend.Api.Client
         ///     The maximum number of results per page. This must be a positive integer up to 1000. If not specified, 500 results per page will be returned. 
         ///     If a value greater than 1000 is specified, it will be treated as 1000. </param>
         /// <param name="token"> Cancellation Token. </param>
-        Task<SubscribersResponse> GetSubscribersForListAsync(Guid mailingListId, SubscribeType status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken));
+        Task<SubscribersResult> GetSubscribersForListAsync(Guid mailingListId, SubscribeType? status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken));
 
         /// <summary>
         ///     Gets details for a given mailing list. You may include subscriber statistics in your results or not. 
@@ -228,8 +227,5 @@ namespace Moosend.Api.Client
         Task<bool> DeleteCustomFieldAsync(Guid mailingListId, Guid customFieldId, CancellationToken token = default(CancellationToken));
 
         #endregion
-
-        Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken));
-        Task<TModel> GetResponse<TModel>(HttpResponseMessage response);
     }
 }
