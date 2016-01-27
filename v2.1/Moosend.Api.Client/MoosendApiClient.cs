@@ -63,7 +63,7 @@ namespace Moosend.Api.Client
         ///     The method to sort results: ASC for ascending, DESC for descending. If not specified, ASC will be assumed.
         /// </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<CampaignsResponse> GetCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken))
+        public async Task<CampaignsResult> GetCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken))
         {
             var path = string.Format("/campaigns/{0}/{1}", page, pageSize);
 
@@ -73,13 +73,13 @@ namespace Moosend.Api.Client
                 SortMethod = sortMethod
             };
 
-            return await SendAsync<CampaignsResponse>(HttpMethod.Get, path, queryParams, token).ConfigureAwait(false);
+            return await SendAsync<CampaignsResult>(HttpMethod.Get, path, queryParams, token).ConfigureAwait(false);
         }
 
         /// <summary> Returns basic information for the specified sender identified by its email address. </summary>
         /// <param name="email"> The email address of the senders to get information for. </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<Sender> GetSenderAsync(string email, CancellationToken token = default(CancellationToken))
+        public async Task<Sender> GetSenderByEmailAsync(string email, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Sender>(HttpMethod.Get, "/senders/find_one", new { Email = email }, token).ConfigureAwait(false);
         }
@@ -159,25 +159,25 @@ namespace Moosend.Api.Client
         /// <param name="from"> A date value that specifies since when to start returning results. If ommitted, results will be returned from the moment the campaign was sent. </param>
         /// <param name="to"> A date value that specifies up to when to return results. If ommitted, results will be returned up to date. </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<PagedAnalyticsResponse> GetCampaignStatisticsAsync(Guid campaignId, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken))
+        public async Task<CampaignsStatisticsResult> GetCampaignStatisticsAsync(Guid campaignId, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/{1}", campaignId, type), null, token).ConfigureAwait(false);
+            return await SendAsync<CampaignsStatisticsResult>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/{1}", campaignId, type), null, token).ConfigureAwait(false);
         }
 
         /// <summary> Returns a list with your campaign links and how many clicks have been made by your recipients, either unique or total. /// </summary>
         /// <param name="campaignId"> The ID of the requested campaign </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<PagedAnalyticsResponse> GetCampaignLinkActivityAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
+        public async Task<CampaignsStatisticsResult> GetCampaignLinkActivityAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/links", campaignId), null, token).ConfigureAwait(false);
+            return await SendAsync<CampaignsStatisticsResult>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/links", campaignId), null, token).ConfigureAwait(false);
         }
 
         /// <summary> Returns a detailed report of your campaign activity (opens, clicks, etc) by country. </summary>
         /// <param name="campaignId"> The ID of the requested campaign. </param>
         /// <param name="token"></param>
-        public async Task<PagedAnalyticsResponse> GetCampaignActivityByLocationAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
+        public async Task<CampaignsStatisticsResult> GetCampaignActivityByLocationAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<PagedAnalyticsResponse>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/countries", campaignId), null, token).ConfigureAwait(false);
+            return await SendAsync<CampaignsStatisticsResult>(HttpMethod.Get, string.Format("/campaigns/{0}/stats/countries", campaignId), null, token).ConfigureAwait(false);
         }
 
         /// <summary> Updates properties of an existing draft campaign in your account. Non-draft campaigns cannot be updated. </summary>

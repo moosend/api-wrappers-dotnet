@@ -33,12 +33,12 @@ namespace Moosend.Api.Client
         ///     The method to sort results: ASC for ascending, DESC for descending. If not specified, ASC will be assumed.
         /// </param>
         /// <param name="token"> Cancellation Token. </param>
-        Task<CampaignsResponse> GetCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken));
+        Task<CampaignsResult> GetCampaignsAsync(int page = 1, int pageSize = 10, string sortBy = "CreatedOn", string sortMethod = "ASC", CancellationToken token = default(CancellationToken));
 
         /// <summary> Returns basic information for the specified sender identified by its email address. </summary>
         /// <param name="email"> The email address of the senders to get information for. </param>
         /// <param name="token"> Cancellation Token. </param>
-        Task<Sender> GetSenderAsync(string email, CancellationToken token = default(CancellationToken));
+        Task<Sender> GetSenderByEmailAsync(string email, CancellationToken token = default(CancellationToken));
 
         /// <summary>
         ///     Gets a list of your active senders in your account. 
@@ -100,17 +100,17 @@ namespace Moosend.Api.Client
         /// <param name="from"> A date value that specifies since when to start returning results. If ommitted, results will be returned from the moment the campaign was sent. </param>
         /// <param name="to"> A date value that specifies up to when to return results. If ommitted, results will be returned up to date. </param>
         /// <param name="token"> Cancellation Token. </param>
-        Task<PagedAnalyticsResponse> GetCampaignStatisticsAsync(Guid campaignId, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken));
+        Task<CampaignsStatisticsResult> GetCampaignStatisticsAsync(Guid campaignId, MailStatus type = MailStatus.Sent, int page = 1, int pageSize = 50, DateTime? from = null, DateTime? to = null, CancellationToken token = default(CancellationToken));
 
         /// <summary> Returns a list with your campaign links and how many clicks have been made by your recipients, either unique or total. /// </summary>
         /// <param name="campaignId"> The ID of the requested campaign </param>
         /// <param name="token"> Cancellation Token. </param>
-        Task<PagedAnalyticsResponse> GetCampaignLinkActivityAsync(Guid campaignId, CancellationToken token = default(CancellationToken));
+        Task<CampaignsStatisticsResult> GetCampaignLinkActivityAsync(Guid campaignId, CancellationToken token = default(CancellationToken));
 
         /// <summary> Returns a detailed report of your campaign activity (opens, clicks, etc) by country. </summary>
         /// <param name="campaignId"> The ID of the requested campaign. </param>
         /// <param name="token"></param>
-        Task<PagedAnalyticsResponse> GetCampaignActivityByLocationAsync(Guid campaignId, CancellationToken token = default(CancellationToken));
+        Task<CampaignsStatisticsResult> GetCampaignActivityByLocationAsync(Guid campaignId, CancellationToken token = default(CancellationToken));
 
         /// <summary> Updates properties of an existing draft campaign in your account. Non-draft campaigns cannot be updated. </summary>
         /// <param name="campaignId"> The ID of the draft campaign to update. </param>
