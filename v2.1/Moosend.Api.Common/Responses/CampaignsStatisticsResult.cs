@@ -3,7 +3,7 @@ using Moosend.Api.Common.Models;
 
 namespace Moosend.Api.Common.Responses
 {
-    public class PagedAnalyticsResponse : PagedResponse
+    public class CampaignsStatisticsResult : PagedResponse
     {
         public IList<AnalyticsDetails> Analytics { get; set; }
     }

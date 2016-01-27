@@ -69,9 +69,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Responses\ApiCodes.cs" />
     <Compile Include="Responses\ApiResponse.cs" />
-    <Compile Include="Responses\CampaignsResponse.cs" />
+    <Compile Include="Responses\CampaignsResult.cs" />
     <Compile Include="Responses\MailingListsResponse.cs" />
-    <Compile Include="Responses\PagedAnalyticsResponse.cs" />
+    <Compile Include="Responses\CampaignsStatisticsResult.cs" />
     <Compile Include="Responses\ContextWithWarnings.cs" />
     <Compile Include="Models\MessageWarning.cs" />
     <Compile Include="Responses\PagedResponse.cs" />
