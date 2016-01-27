@@ -70,12 +70,12 @@
     <Compile Include="Responses\ApiCodes.cs" />
     <Compile Include="Responses\ApiResponse.cs" />
     <Compile Include="Responses\CampaignsResult.cs" />
-    <Compile Include="Responses\MailingListsResponse.cs" />
+    <Compile Include="Responses\MailingListsResult.cs" />
     <Compile Include="Responses\CampaignsStatisticsResult.cs" />
     <Compile Include="Responses\ContextWithWarnings.cs" />
     <Compile Include="Models\MessageWarning.cs" />
     <Compile Include="Responses\PagedResponse.cs" />
-    <Compile Include="Responses\SubscribersResponse.cs" />
+    <Compile Include="Responses\SubscribersResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Requests\" />

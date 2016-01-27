@@ -3,8 +3,8 @@ using Moosend.Api.Common.Models;
 
 namespace Moosend.Api.Common.Responses
 {
-    public class SubscribersResponse : PagedResponse
+    public class SubscribersResult : PagedResponse
     {
-        public IList<Sender> Subscribers { get; set; }
+        public IList<Subscriber> Subscribers { get; set; }
     }
 }
