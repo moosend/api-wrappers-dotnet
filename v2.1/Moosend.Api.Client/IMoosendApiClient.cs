@@ -217,7 +217,7 @@ namespace Moosend.Api.Client
         ///     Use a comma (,) to seperate different options. </param>
         /// <param name="token"> Cancellation Token. </param>
         /// <returns> Custom field's Guid. </returns>
-        Task<bool> UpdateCustomFieldAsync(Guid mailingListId, Guid customFieldId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken));
+        Task<Guid> UpdateCustomFieldAsync(Guid mailingListId, Guid customFieldId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken));
 
         /// <summary> Removes a custom field definition from the specified mailing list. </summary>
         /// <param name="mailingListId"> The ID of the mailing list where the custom field belongs. </param>
