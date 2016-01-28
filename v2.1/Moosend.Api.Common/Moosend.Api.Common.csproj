@@ -75,6 +75,7 @@
     <Compile Include="Responses\ContextWithWarnings.cs" />
     <Compile Include="Models\MessageWarning.cs" />
     <Compile Include="Responses\PagedResponse.cs" />
+    <Compile Include="Responses\SegmentsResult.cs" />
     <Compile Include="Responses\SubscribersResult.cs" />
   </ItemGroup>
   <ItemGroup>
