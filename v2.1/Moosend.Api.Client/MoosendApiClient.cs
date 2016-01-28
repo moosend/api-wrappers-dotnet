@@ -480,6 +480,38 @@ namespace Moosend.Api.Client
 
         #endregion
 
+        #region Segments
+
+        /// <summary> Get a list of all segments with their criteria for the given mailing list. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to retrieve the segments for. </param>
+        /// <param name="page">
+        ///     The page number to display results for. If not specified, the first page will be returned.
+        /// </param>
+        /// <param name="pageSize">
+        ///     The maximum number of results per page. This must be a positive integer up to 100. If not specified, 100 results per page will be returned.
+        ///     If a value greater than 100 is specified, it will be treated as 100.
+        /// </param>
+        /// <param name="token"> Cancellation Token. </param>
+        public async Task<SegmentsResult> GetSegmentsForListAsync(Guid mailingListId, int page = 1, int pageSize = 100, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Page = page,
+                PageSize = pageSize
+            };
+
+            var segments = await SendAsync<SegmentsResult>(HttpMethod.Get, string.Format("/lists/{0}/segments", mailingListId), parameters, token).ConfigureAwait(false);
+
+            foreach (var s in segments.Segments)
+            {
+                s.MailingListId = mailingListId;
+            }
+
+            return segments;
+        }
+
+        #endregion
+
         #region Generic API calling method and helpers
 
         private async Task<TModel> SendAsync<TModel>(HttpMethod method, string path, object parameters = null, CancellationToken token = default(CancellationToken))

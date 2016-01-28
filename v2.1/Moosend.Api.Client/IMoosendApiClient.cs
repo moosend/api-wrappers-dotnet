@@ -295,5 +295,21 @@ namespace Moosend.Api.Client
         Task<bool> RemoveManyAsync(Guid mailingListId, IList<string> emails, CancellationToken token = default(CancellationToken));
 
         #endregion
+
+        #region Segments
+
+        /// <summary> Get a list of all segments with their criteria for the given mailing list. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to retrieve the segments for. </param>
+        /// <param name="page">
+        ///     The page number to display results for. If not specified, the first page will be returned.
+        /// </param>
+        /// <param name="pageSize">
+        ///     The maximum number of results per page. This must be a positive integer up to 100. If not specified, 100 results per page will be returned.
+        ///     If a value greater than 100 is specified, it will be treated as 100.
+        /// </param>
+        /// <param name="token"> Cancellation Token. </param>
+        Task<SegmentsResult> GetSegmentsForListAsync(Guid mailingListId, int page = 1, int pageSize = 100, CancellationToken token = default(CancellationToken));
+
+        #endregion
     }
 }
