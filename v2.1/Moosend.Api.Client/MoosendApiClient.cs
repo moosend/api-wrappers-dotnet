@@ -410,20 +410,29 @@ namespace Moosend.Api.Client
             return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
-        //public async Task<Subscriber> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> members, CancellationToken token = default(CancellationToken))
-        //{
-        //    var parameters = new
-        //    {
-        //        Subscribers = members.Select(m => new
-        //        {
-        //            Name = m.Name,
-        //            Email = m.Email,
-        //            CustomFields = m.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
-        //        }).ToList()
-        //    };
+        /// <summary>
+        ///     This method allows you to add multiple subscribers in a mailing list with a single call. 
+        ///     If some subscribers already exist with the given email addresses, they will be updated.
+        ///     If you try to add a subscriber with an invalid email address, this attempt will be ignored, as the process will skip to the next subscriber automatically.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to add subscribers to. </param>
+        /// <param name="subscribers"> A list of subscribers to add to the mailing list. You may specify the email address, the name and the custom fields for each subscriber. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<IList<Subscriber>> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> subscribers, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Subscribers = subscribers.Select(m => new
+                {
+                    Name = m.Name,
+                    Email = m.Email,
+                    CustomFields = m.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
+                }).ToList()
+            };
 
-        //    return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe_many", mailingListId), parameters, token).ConfigureAwait(false);
-        //}
+            return await SendAsync<IList<Subscriber>>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe_many", mailingListId), parameters, token).ConfigureAwait(false);
+        }
 
         /// <summary>
         ///     Unsubscribes a subscriber from the specified mailing list and the specified campaign. 

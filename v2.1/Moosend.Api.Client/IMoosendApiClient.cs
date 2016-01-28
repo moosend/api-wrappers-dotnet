@@ -264,6 +264,17 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         Task<bool> UnsubscribeMemberAsync(Guid mailingListId, Guid? campaignId, string email, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     This method allows you to add multiple subscribers in a mailing list with a single call. 
+        ///     If some subscribers already exist with the given email addresses, they will be updated.
+        ///     If you try to add a subscriber with an invalid email address, this attempt will be ignored, as the process will skip to the next subscriber automatically.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to add subscribers to. </param>
+        /// <param name="subscribers"> A list of subscribers to add to the mailing list. You may specify the email address, the name and the custom fields for each subscriber. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        Task<IList<Subscriber>> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> subscribers, CancellationToken token = default(CancellationToken));
+
         #endregion
     }
 }
