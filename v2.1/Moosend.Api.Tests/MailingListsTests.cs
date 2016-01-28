@@ -355,7 +355,7 @@ namespace Moosend.Api.Tests
 
             try
             {
-                await _client.GetSubscribersForListAsync(listId, status, null, page, pageSize);
+                await _client.GetSubscribersAsync(listId, status, null, page, pageSize);
             }
             catch (Exception ex)
             {
@@ -371,7 +371,7 @@ namespace Moosend.Api.Tests
         {
             try
             {
-                await _client.GetSubscribersForListAsync(new Guid(), null);
+                await _client.GetSubscribersAsync(new Guid(), null);
             }
             catch (Exception ex)
             {
@@ -404,7 +404,7 @@ namespace Moosend.Api.Tests
             var client = new MoosendApiClient(_apiKey, ctx);
 
             // act
-            var result = await client.GetSubscribersForListAsync(new Guid(), null);
+            var result = await client.GetSubscribersAsync(new Guid(), null);
 
             // assert
             Assert.That(result.Subscribers.Count, Is.EqualTo(expectedResult.Subscribers.Count));

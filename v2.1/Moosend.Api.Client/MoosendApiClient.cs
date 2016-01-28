@@ -272,7 +272,7 @@ namespace Moosend.Api.Client
         ///     The maximum number of results per page. This must be a positive integer up to 1000. If not specified, 500 results per page will be returned. 
         ///     If a value greater than 1000 is specified, it will be treated as 1000. </param>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<SubscribersResult> GetSubscribersForListAsync(Guid mailingListId, SubscribeType? status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken))
+        public async Task<SubscribersResult> GetSubscribersAsync(Guid mailingListId, SubscribeType? status, DateTime? since = null, int page = 1, int pageSize = 500, CancellationToken token = default(CancellationToken))
         {
             var parameters = new
             {
@@ -372,6 +372,21 @@ namespace Moosend.Api.Client
         public async Task<bool> DeleteCustomFieldAsync(Guid mailingListId, Guid customFieldId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<bool>(HttpMethod.Delete, string.Format("/lists/{0}/customfields/{1}/delete", mailingListId, customFieldId), null, token).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region Subscribers
+
+        /// <summary>
+        ///     Searches for a subscriber with the specified email address in the specified mailing list and returns detailed information such as id, name, date created, date unsubscribed, status and custom fields.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to search the subscriber in. </param>
+        /// <param name="email"> The email address of the subscriber being searched. </param>
+        /// <param name="token"> CancellationToken. </param>
+        public async Task<Subscriber> GetSubscriberByEmailAsync(Guid mailingListId, string email, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<Subscriber>(HttpMethod.Get, string.Format("/subscribers/{0}/view", mailingListId), new { Email = email }, token).ConfigureAwait(false);
         }
 
         #endregion
