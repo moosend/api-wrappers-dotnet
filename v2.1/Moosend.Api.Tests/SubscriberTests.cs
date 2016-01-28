@@ -191,6 +191,99 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
+        public async Task Given_MoosendApiClient_When_Updating_Member_Then_The_Right_Url_Is_Accessed()
+        {
+            var listId = new Guid();
+            var subId = new Guid();
+            var url = string.Format("/subscribers/{0}/update/{1}.json?apikey={2}", listId, subId, _apiKey);
+
+            var expectedUrl = new Uri(_uri + url);
+
+            try
+            {
+                await _client.UpdateMemberAsync(listId, subId, new SubscriberParams());
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Post));
+            Assert.That(_handler.Requests[0].RequestUri.AbsoluteUri, Is.EqualTo(expectedUrl.AbsoluteUri));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Updating_Member_Then_The_Headers_Are_As_Expected()
+        {
+            try
+            {
+                await _client.UpdateMemberAsync(new Guid(), new Guid(), new SubscriberParams());
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            IEnumerable<string> headers;
+            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
+
+            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(headers.Single(), Is.EqualTo("false"));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Updating_Member_Then_Can_Update()
+        {
+            // arrange
+            var ctx = new ServiceClientContext(_uri);
+
+            var expectedSubscriber = new Subscriber()
+            {
+                Id = new Guid()
+            };
+
+            var content = new ApiResponse<Subscriber>() { Context = expectedSubscriber };
+            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
+
+            var client = new MoosendApiClient(_apiKey, ctx);
+
+            // act
+            var subscriber = await client.UpdateMemberAsync(new Guid(), new Guid(), new SubscriberParams());
+
+            // assert
+            Assert.That(subscriber.Id, Is.EqualTo(expectedSubscriber.Id));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Updating_Member_Then_The_Payload_Is_As_Expected()
+        {
+            var member = new SubscriberParams()
+            {
+                Name = "name",
+                Email = "email@test.com",
+                CustomFields = new Dictionary<string, string>()
+                {
+                    {"Age", "30"}
+                }
+            };
+
+            try
+            {
+                await _client.UpdateMemberAsync(new Guid(), new Guid(), member);
+
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            var expectedJson = "{\"Name\":\"name\",\"Email\":\"email@test.com\",\"CustomFields\":[\"Age=30\"]}";
+
+            Assert.That(_handler.Payloads[0].Contains(expectedJson));
+        }
+
+        [Test]
         public async Task Given_MoosendApiClient_When_Subscribing_Many_Then_The_Right_Url_Is_Accessed()
         {
             var listId = new Guid();
