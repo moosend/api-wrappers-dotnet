@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignTests.cs" />
+    <Compile Include="MailingListsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHttpMessageHandler.cs" />
   </ItemGroup>

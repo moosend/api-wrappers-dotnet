@@ -29,7 +29,7 @@ namespace Moosend.Api.Tests
             _apiKey = "moosend_api_key";
             _handler = new TestHttpMessageHandler();
 
-            var ctx = new ServiceClientContext(_uri) { Handler = _handler };
+            var ctx = new ServiceClientContext(_uri) {Handler = _handler};
             _client = new MoosendApiClient(_apiKey, ctx);
         }
 
@@ -40,7 +40,8 @@ namespace Moosend.Api.Tests
             var pageSize = 11;
             var sortBy = "Name";
             var sortMethod = "DESC";
-            var url = string.Format("/campaigns/{0}/{1}.json?apikey={2}&SortBy={3}&SortMethod={4}", page, pageSize, _apiKey, sortBy, sortMethod);
+            var url = string.Format("/campaigns/{0}/{1}.json?apikey={2}&SortBy={3}&SortMethod={4}", page, pageSize,
+                _apiKey, sortBy, sortMethod);
 
             var expectedUrl = new Uri(_uri + url);
 
@@ -73,7 +74,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -84,13 +86,13 @@ namespace Moosend.Api.Tests
             var cmId = new Guid();
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedCampaigns = new CampaignsResult()
+            var expectedCampaigns = new CampaignsResult
             {
-                Paging = new Paging() { TotalPageCount = 1},
-                Campaigns = new List<CampaignSummary>() { new CampaignSummary() { Id = cmId }}
+                Paging = new Paging {TotalPageCount = 1},
+                Campaigns = new List<CampaignSummary> {new CampaignSummary {Id = cmId}}
             };
 
-            var content = new ApiResponse<CampaignsResult>() { Context = expectedCampaigns };
+            var content = new ApiResponse<CampaignsResult> {Context = expectedCampaigns};
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -122,7 +124,8 @@ namespace Moosend.Api.Tests
             }
 
             Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
-            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri), Is.EqualTo(expectedUrl.AbsoluteUri));
+            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri),
+                Is.EqualTo(expectedUrl.AbsoluteUri));
         }
 
         [Test]
@@ -141,7 +144,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -153,9 +157,9 @@ namespace Moosend.Api.Tests
             var cmId = new Guid();
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedSender = new Sender() { Id = cmId };
+            var expectedSender = new Sender {Id = cmId};
 
-            var content = new ApiResponse<Sender>() { Context = expectedSender };
+            var content = new ApiResponse<Sender> {Context = expectedSender};
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -184,7 +188,8 @@ namespace Moosend.Api.Tests
             }
 
             Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
-            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri), Is.EqualTo(expectedUrl.AbsoluteUri));
+            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri),
+                Is.EqualTo(expectedUrl.AbsoluteUri));
         }
 
         [Test]
@@ -203,7 +208,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -246,7 +252,8 @@ namespace Moosend.Api.Tests
             }
 
             Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Post));
-            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri), Is.EqualTo(expectedUrl.AbsoluteUri));
+            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri),
+                Is.EqualTo(expectedUrl.AbsoluteUri));
         }
 
         [Test]
@@ -278,7 +285,7 @@ namespace Moosend.Api.Tests
 
             var expectedId = new Guid();
 
-            var content = new ApiResponse<Guid> { Context = expectedId };
+            var content = new ApiResponse<Guid> {Context = expectedId};
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -293,12 +300,11 @@ namespace Moosend.Api.Tests
         [Test]
         public async Task Given_MoosendApiClient_When_Creating_Campaign_Then_The_Payload_Is_As_Expected()
         {
-            var campaignParams = new CampaignParams() { Name = "campaign_name", SenderEmail = "email@test.com" };
+            var campaignParams = new CampaignParams {Name = "campaign_name", SenderEmail = "email@test.com"};
 
             try
             {
                 await _client.CreateCampaignAsync(campaignParams);
-
             }
             catch (Exception ex)
             {
@@ -328,7 +334,8 @@ namespace Moosend.Api.Tests
             }
 
             Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Post));
-            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri), Is.EqualTo(expectedUrl.AbsoluteUri));
+            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri),
+                Is.EqualTo(expectedUrl.AbsoluteUri));
         }
 
         [Test]
@@ -358,7 +365,7 @@ namespace Moosend.Api.Tests
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var content = new ApiResponse<bool>() { Context = true };
+            var content = new ApiResponse<bool> {Context = true};
 
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -378,14 +385,13 @@ namespace Moosend.Api.Tests
             try
             {
                 await _client.SendTestAsync(new Guid(), emails);
-
             }
             catch (Exception ex)
             {
                 // known serialization exception caused by returning {} from test handler 
             }
 
-            var expectedJson = JsonConvert.SerializeObject(new { TestEmails = emails });
+            var expectedJson = JsonConvert.SerializeObject(new {TestEmails = emails});
 
             Assert.That(_handler.Payloads[0].Contains(expectedJson));
         }
@@ -426,9 +432,9 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
-
         }
 
         [Test]
@@ -437,7 +443,7 @@ namespace Moosend.Api.Tests
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var content = new ApiResponse<bool>() { Context = true };
+            var content = new ApiResponse<bool> {Context = true};
 
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -485,7 +491,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -495,7 +502,7 @@ namespace Moosend.Api.Tests
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var content = new ApiResponse<bool>() { Context = true };
+            var content = new ApiResponse<bool> {Context = true};
 
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -515,7 +522,8 @@ namespace Moosend.Api.Tests
             var page = 1;
             var pageSize = 11;
 
-            var url = string.Format("/campaigns/{0}/stats/{1}.json?apikey={2}&Page={3}&PageSize={4}", cmId, status, _apiKey, page, pageSize);
+            var url = string.Format("/campaigns/{0}/stats/{1}.json?apikey={2}&Page={3}&PageSize={4}", cmId, status,
+                _apiKey, page, pageSize);
 
             var expectedUrl = new Uri(_uri + url);
 
@@ -548,7 +556,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -558,13 +567,13 @@ namespace Moosend.Api.Tests
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedStats = new CampaignsStatisticsResult()
+            var expectedStats = new CampaignsStatisticsResult
             {
-                Analytics = new List<AnalyticsDetails>() {new AnalyticsDetails() { TotalCount = 5 } },
-                Paging = new Paging() { TotalResults = 1 }
+                Analytics = new List<AnalyticsDetails> {new AnalyticsDetails {TotalCount = 5}},
+                Paging = new Paging {TotalResults = 1}
             };
 
-            var content = new ApiResponse<CampaignsStatisticsResult>() { Context = expectedStats };
+            var content = new ApiResponse<CampaignsStatisticsResult> {Context = expectedStats};
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -575,7 +584,8 @@ namespace Moosend.Api.Tests
             // assert
             Assert.That(statsResult.Paging.TotalPageCount, Is.EqualTo(expectedStats.Paging.TotalPageCount));
             Assert.That(statsResult.Analytics.Count, Is.EqualTo(expectedStats.Analytics.Count));
-            Assert.That(statsResult.Analytics.Single().TotalCount, Is.EqualTo(expectedStats.Analytics.Single().TotalCount));
+            Assert.That(statsResult.Analytics.Single().TotalCount,
+                Is.EqualTo(expectedStats.Analytics.Single().TotalCount));
         }
 
         [Test]
@@ -614,7 +624,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -624,13 +635,13 @@ namespace Moosend.Api.Tests
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedLinkActivity = new CampaignsStatisticsResult()
+            var expectedLinkActivity = new CampaignsStatisticsResult
             {
-                Analytics = new List<AnalyticsDetails>() { new AnalyticsDetails() { TotalCount = 5 } },
-                Paging = new Paging() { TotalResults = 1 }
+                Analytics = new List<AnalyticsDetails> {new AnalyticsDetails {TotalCount = 5}},
+                Paging = new Paging {TotalResults = 1}
             };
 
-            var content = new ApiResponse<CampaignsStatisticsResult>() { Context = expectedLinkActivity };
+            var content = new ApiResponse<CampaignsStatisticsResult> {Context = expectedLinkActivity};
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -641,7 +652,8 @@ namespace Moosend.Api.Tests
             // assert
             Assert.That(linkActivityResult.Paging.TotalPageCount, Is.EqualTo(expectedLinkActivity.Paging.TotalPageCount));
             Assert.That(linkActivityResult.Analytics.Count, Is.EqualTo(expectedLinkActivity.Analytics.Count));
-            Assert.That(linkActivityResult.Analytics.Single().TotalCount, Is.EqualTo(expectedLinkActivity.Analytics.Single().TotalCount));
+            Assert.That(linkActivityResult.Analytics.Single().TotalCount,
+                Is.EqualTo(expectedLinkActivity.Analytics.Single().TotalCount));
         }
 
         [Test]
@@ -680,7 +692,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -690,13 +703,13 @@ namespace Moosend.Api.Tests
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedActivityByLocation = new CampaignsStatisticsResult()
+            var expectedActivityByLocation = new CampaignsStatisticsResult
             {
-                Analytics = new List<AnalyticsDetails>() { new AnalyticsDetails() { TotalCount = 5 } },
-                Paging = new Paging() { TotalResults = 1 }
+                Analytics = new List<AnalyticsDetails> {new AnalyticsDetails {TotalCount = 5}},
+                Paging = new Paging {TotalResults = 1}
             };
 
-            var content = new ApiResponse<CampaignsStatisticsResult>() { Context = expectedActivityByLocation };
+            var content = new ApiResponse<CampaignsStatisticsResult> {Context = expectedActivityByLocation};
 
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -707,7 +720,8 @@ namespace Moosend.Api.Tests
             // assert
             Assert.AreEqual(ctivityByLocationResult.Paging.TotalResults, expectedActivityByLocation.Paging.TotalResults);
             Assert.AreEqual(ctivityByLocationResult.Analytics.Count, expectedActivityByLocation.Analytics.Count);
-            Assert.AreEqual(ctivityByLocationResult.Analytics.Single().TotalCount, expectedActivityByLocation.Analytics.Single().TotalCount);
+            Assert.AreEqual(ctivityByLocationResult.Analytics.Single().TotalCount,
+                expectedActivityByLocation.Analytics.Single().TotalCount);
         }
 
         [Test]
@@ -719,7 +733,7 @@ namespace Moosend.Api.Tests
 
             try
             {
-                await _client.UpdateCampaignAsync(new Guid(),new CampaignParams());
+                await _client.UpdateCampaignAsync(new Guid(), new CampaignParams());
             }
             catch (Exception ex)
             {
@@ -746,7 +760,8 @@ namespace Moosend.Api.Tests
             _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
 
             Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
             Assert.That(headers.Single(), Is.EqualTo("false"));
         }
 
@@ -756,7 +771,7 @@ namespace Moosend.Api.Tests
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var content = new ApiResponse<bool>() { Context = true };
+            var content = new ApiResponse<bool> {Context = true};
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
@@ -771,12 +786,11 @@ namespace Moosend.Api.Tests
         [Test]
         public async Task Given_MoosendApiClient_When_Updating_Campaign_Then_The_Payload_Is_As_Expected()
         {
-            var campaignParams = new CampaignParams() { Name = "campaign_name", SenderEmail = "email@test.com" };
+            var campaignParams = new CampaignParams {Name = "campaign_name", SenderEmail = "email@test.com"};
 
             try
             {
-                await _client.UpdateCampaignAsync(new Guid(),  campaignParams);
-
+                await _client.UpdateCampaignAsync(new Guid(), campaignParams);
             }
             catch (Exception ex)
             {
