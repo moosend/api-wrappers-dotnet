@@ -411,6 +411,27 @@ namespace Moosend.Api.Client
         }
 
         /// <summary>
+        ///     Updates a subscriber in the specified mailing list. You can even update the subscribers email, if he has not unsubscribed.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to add the new member. </param>
+        /// <param name="subscriberId"> The id of the subscriber to be updated. </param>
+        /// <param name="email"> The email address of the member. </param>
+        /// <param name="customFields"> Name-value pairs that match the member's custom fields defined in the mailing list. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<Subscriber> UpdateMemberAsync(Guid mailingListId, Guid subscriberId, SubscriberParams updatedMember, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Name = updatedMember.Name,
+                Email = updatedMember.Email,
+                CustomFields = updatedMember.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
+            };
+
+            return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/update/{1}", mailingListId, subscriberId), parameters, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
         ///     This method allows you to add multiple subscribers in a mailing list with a single call. 
         ///     If some subscribers already exist with the given email addresses, they will be updated.
         ///     If you try to add a subscriber with an invalid email address, this attempt will be ignored, as the process will skip to the next subscriber automatically.
@@ -508,6 +529,26 @@ namespace Moosend.Api.Client
             }
 
             return segments;
+        }
+
+        /// <summary>
+        ///     Creates a new empty segment (without criteria) for the given mailing list. 
+        ///     You may specify the name of the segment and the way the criteria will match together.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the segment belongs. </param>
+        /// <param name="name"> The name of the segment. </param>
+        /// <param name="matchType"> Specifies how the segment's criteria will match together. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> New segment's ID. </returns>
+        public async Task<int> CreateSegmentAsync(Guid mailingListId, string name, SegmentMatchType matchType = SegmentMatchType.All, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Name = name,
+                MatchType = matchType
+            };
+
+            return await SendAsync<int>(HttpMethod.Post, string.Format("/lists/{0}/segments/create", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
         #endregion

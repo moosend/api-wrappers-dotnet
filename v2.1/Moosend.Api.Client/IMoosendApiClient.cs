@@ -294,6 +294,17 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         Task<bool> RemoveManyAsync(Guid mailingListId, IList<string> emails, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Updates a subscriber in the specified mailing list. You can even update the subscribers email, if he has not unsubscribed.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to add the new member. </param>
+        /// <param name="subscriberId"> The id of the subscriber to be updated. </param>
+        /// <param name="email"> The email address of the member. </param>
+        /// <param name="customFields"> Name-value pairs that match the member's custom fields defined in the mailing list. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        Task<Subscriber> UpdateMemberAsync(Guid mailingListId, Guid subscriberId, SubscriberParams updatedMember, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         #region Segments
@@ -309,6 +320,17 @@ namespace Moosend.Api.Client
         /// </param>
         /// <param name="token"> Cancellation Token. </param>
         Task<SegmentsResult> GetSegmentsForListAsync(Guid mailingListId, int page = 1, int pageSize = 100, CancellationToken token = default(CancellationToken));
+
+        /// <summary>
+        ///     Creates a new empty segment (without criteria) for the given mailing list. 
+        ///     You may specify the name of the segment and the way the criteria will match together.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the segment belongs. </param>
+        /// <param name="name"> The name of the segment. </param>
+        /// <param name="matchType"> Specifies how the segment's criteria will match together. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> New segment's ID. </returns>
+        Task<int> CreateSegmentAsync(Guid mailingListId, string name, SegmentMatchType matchType = SegmentMatchType.All, CancellationToken token = default(CancellationToken));
 
         #endregion
     }
