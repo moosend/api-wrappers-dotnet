@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -387,6 +388,26 @@ namespace Moosend.Api.Client
         public async Task<Subscriber> GetSubscriberByEmailAsync(Guid mailingListId, string email, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Subscriber>(HttpMethod.Get, string.Format("/subscribers/{0}/view", mailingListId), new { Email = email }, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///     Adds a new subscriber to the specified mailing list.
+        ///     If there is already a subscriber with the specified email address in the list, an update will be performed instead.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to add the new member. </param>
+        /// <param name="member"> New member's parameters. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> The new subscriber. </returns>
+        public async Task<Subscriber> SubscribeMemberAsync(Guid mailingListId, SubscriberParams member, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Name = member.Name,
+                Email = member.Email,
+                CustomFields = member.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
+            };
+
+            return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
         #endregion

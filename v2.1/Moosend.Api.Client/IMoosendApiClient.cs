@@ -238,6 +238,16 @@ namespace Moosend.Api.Client
         /// <param name="token"> CancellationToken. </param>
         Task<Subscriber> GetSubscriberByEmailAsync(Guid mailingListId, string email, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Adds a new subscriber to the specified mailing list.
+        ///     If there is already a subscriber with the specified email address in the list, an update will be performed instead.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to add the new member. </param>
+        /// <param name="member"> New member's parameters. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> The new subscriber. </returns>
+        Task<Subscriber> SubscribeMemberAsync(Guid mailingListId, SubscriberParams member, CancellationToken token = default(CancellationToken));
+
         #endregion
     }
 }
