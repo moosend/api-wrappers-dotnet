@@ -248,6 +248,22 @@ namespace Moosend.Api.Client
         /// <returns> The new subscriber. </returns>
         Task<Subscriber> SubscribeMemberAsync(Guid mailingListId, SubscriberParams member, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Unsubscribes a subscriber from the specified mailing list and the specified campaign. 
+        ///     The subscriber is not deleted, but moved to the supression list. 
+        ///     This call will take into account the setting you have in "Supression list and unsubscribe settings" and will remove the subscriber from all other mailing lists or not accordingly.
+        /// </summary>
+        /// <param name="mailingListId">
+        ///     The ID of the mailing list to unsubscribe the subscriber from. 
+        ///     If also omitted, the email address of the subscriber will be unsubscribed from all mailing lists. </param>
+        /// <param name="campaignId">
+        ///     The ID of the campaign from which the subscriber unsubscribed. It can be omitted if no such information is available.
+        /// </param>
+        /// <param name="email"> The email address of the subscriber to be supressed. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        Task<bool> UnsubscribeMemberAsync(Guid mailingListId, Guid? campaignId, string email, CancellationToken token = default(CancellationToken));
+
         #endregion
     }
 }

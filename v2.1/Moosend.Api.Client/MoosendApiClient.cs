@@ -410,6 +410,40 @@ namespace Moosend.Api.Client
             return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
+        //public async Task<Subscriber> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> members, CancellationToken token = default(CancellationToken))
+        //{
+        //    var parameters = new
+        //    {
+        //        Subscribers = members.Select(m => new
+        //        {
+        //            Name = m.Name,
+        //            Email = m.Email,
+        //            CustomFields = m.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
+        //        }).ToList()
+        //    };
+
+        //    return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe_many", mailingListId), parameters, token).ConfigureAwait(false);
+        //}
+
+        /// <summary>
+        ///     Unsubscribes a subscriber from the specified mailing list and the specified campaign. 
+        ///     The subscriber is not deleted, but moved to the supression list. 
+        ///     This call will take into account the setting you have in "Supression list and unsubscribe settings" and will remove the subscriber from all other mailing lists or not accordingly.
+        /// </summary>
+        /// <param name="mailingListId">
+        ///     The ID of the mailing list to unsubscribe the subscriber from. 
+        ///     If also omitted, the email address of the subscriber will be unsubscribed from all mailing lists. </param>
+        /// <param name="campaignId">
+        ///     The ID of the campaign from which the subscriber unsubscribed. It can be omitted if no such information is available.
+        /// </param>
+        /// <param name="email"> The email address of the subscriber to be supressed. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<bool> UnsubscribeMemberAsync(Guid mailingListId, Guid? campaignId, string email, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/subscribers/{0}/{1}/unsubscribe", mailingListId, campaignId ), new { Email = email }, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers
