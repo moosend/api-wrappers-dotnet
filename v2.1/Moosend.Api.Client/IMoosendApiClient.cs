@@ -284,6 +284,16 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         Task<bool> RemoveMemberAsync(Guid mailingListId, string email, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Removes a list of subscribers from the specified mailing list permanently (without putting them in the supression list). 
+        ///     Any invalid email addresses specified will be ignored.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to remove subscribers from. </param>
+        /// <param name="emails"> A list of email addresses to be removed </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        Task<bool> RemoveManyAsync(Guid mailingListId, IList<string> emails, CancellationToken token = default(CancellationToken));
+
         #endregion
     }
 }
