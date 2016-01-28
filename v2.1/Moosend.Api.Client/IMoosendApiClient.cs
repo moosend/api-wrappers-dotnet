@@ -262,7 +262,7 @@ namespace Moosend.Api.Client
         /// <param name="email"> The email address of the subscriber to be supressed. </param>
         /// <param name="token"> Cancellation Token. </param>
         /// <returns></returns>
-        Task<bool> UnsubscribeMemberAsync(Guid mailingListId, Guid? campaignId, string email, CancellationToken token = default(CancellationToken));
+        Task<bool> UnsubscribeMemberAsync(Guid mailingListId, Guid campaignId, string email, CancellationToken token = default(CancellationToken));
 
         /// <summary>
         ///     This method allows you to add multiple subscribers in a mailing list with a single call. 
@@ -274,6 +274,15 @@ namespace Moosend.Api.Client
         /// <param name="token"> Cancellation Token. </param>
         /// <returns></returns>
         Task<IList<Subscriber>> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> subscribers, CancellationToken token = default(CancellationToken));
+
+        /// <summary>
+        ///     Removes a subscriber from the specified mailing list permanently (without moving to the supression list).
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to search the subscriber in. </param>
+        /// <param name="email"> The email address of the subscriber being searched. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        Task<bool> RemoveMemberAsync(Guid mailingListId, string email, CancellationToken token = default(CancellationToken));
 
         #endregion
     }
