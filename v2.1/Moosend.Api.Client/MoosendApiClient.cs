@@ -655,6 +655,78 @@ namespace Moosend.Api.Client
             return await SendAsync<int>(HttpMethod.Post, string.Format("/lists/{0}/segments/{1}/criteria/add", mailingListId, segmentId), parameters, token).ConfigureAwait(false);
         }
 
+        /// <summary> Updates an existing criterion in the specified segment. </summary>
+        /// <param name="mailingListId"> The ID of the mailing list the criterion's segment belongs to. </param>
+        /// <param name="segmentId"> The ID of the segment the criterion belongs to. </param>
+        /// <param name="criteriaId"> The ID of the criterion to process. </param>
+        /// <param name="field">
+        ///     The field of the criterion to filter the mailing list by. This must be one of the following values:
+        ///     <ul>
+        ///         <li><strong><pre>DateAdded</pre></strong> : filters subscribers by the date they where added to the mailing list</li>
+        ///         <li><strong><pre>RecipientName</pre></strong> : filters subscribers by the recipient name</li>
+        ///         <li><strong><pre>RecipientEmail</pre></strong> : filters subscribers by their email address</li>
+        ///         <li><strong><pre>CampaignsOpened</pre></strong> : filters subscribers according to how many campaigns they have opened (within the past 60 days maximum)</li>
+        ///         <li><strong><pre>LinksClicked</pre></strong> : filters subscribers according to how many links they have clicked from previous campaigns sent to them (within the past 60 days maximum)</li>
+        ///         <li><strong><pre>CampaignName</pre></strong> : filters subscribers according to which campaigns they have opened, based on their names</li>
+        ///         <li><strong><pre>LinkURL</pre></strong> : filters subscribers according to which links they have clicked, based on their urls</li>
+        ///         <li>An ID of any custom field in the mailing list the segment belongs : filters the mailing list according to the value of the specified custom field for each subscriber</li>
+        ///     </ul>
+        /// </param>
+        /// <param name="comparer">
+        ///     An operator that defines the way to compare a criterion field with its value. This must be one of the following values:
+        ///     <ul>
+        ///         <li><strong><pre>Is</pre></strong> : to find subscribers where the field is exactly <u>equal to</u> the search term</li>
+        ///         <li><strong><pre>IsNot</pre></strong> : to find subscribers where the field is <u>other than</u> the search term</li>
+        ///         <li><strong><pre>Contains</pre></strong> : to find subscribers where the field <u>contains</u> the search term</li>
+        ///         <li><strong><pre>DoesNotContain</pre></strong> : to find subscribers where the field <u>does not contain</u> the search term</li>
+        ///         <li><strong><pre>StartsWith</pre></strong> : to find subscribers where the field <u>starts with</u> the search term</li>
+        ///         <li><strong><pre>DoesNotStartWith</pre></strong> : to find subscribers where the field <u>does not start with</u> the search term</li>
+        ///         <li><strong><pre>EndsWith</pre></strong> : to find subscribers where the field <u>ends with</u> the search term</li>
+        ///         <li><strong><pre>DoesNotEndWith</pre></strong> : to find subscribers where the field <u>does not end with</u> the search term</li>
+        ///         <li><strong><pre>IsGreaterThan</pre></strong> : to find subscribers where the field <u>is greater than</u> the search term</li>
+        ///         <li><strong><pre>IsGreaterThanOrEqualTo</pre></strong> : to find subscribers where the field <u>is greater than or equal to</u> the search term</li>
+        ///         <li><strong><pre>IsLessThan</pre></strong> : to find subscribers where the field <u>is less than</u> the search term</li>
+        ///         <li><strong><pre>IsLessThanOrEqualTo</pre></strong> : to find subscribers where the field <u>is less than or equal to</u> the search term</li>
+        ///         <li><strong><pre>IsBefore</pre></strong> : to find subscribers where the specified date field <u>is before</u> the specified date value</li>
+        ///         <li><strong><pre>IsAfter</pre></strong> : to find subscribers where the specified date field <u>is after</u> the specified date value</li>
+        ///         <li><strong><pre>IsEmpty</pre></strong> : to find subscribers where the field <u>contains no value</u></li>
+        ///         <li><strong><pre>IsNotEmpty</pre></strong> : to find subscribers <u>excluding</u> those where the field <u>contains no value</u></li>
+        ///         <li><strong><pre>IsTrue</pre></strong> : to find subscribers where the condition defined by the field <u>is true</u></li>
+        ///         <li><strong><pre>IsFalse</pre></strong> : to find subscribers where the condition defined by the field <u>is false</u></li>
+        ///     </ul>
+        ///     If not specified, <pre>Is</pre> will be assumed.
+        /// </param>
+        /// <param name="value"> A search term to filter the specified field by. </param>
+        /// <param name="dateFrom">
+        ///     Provides an additional filter option to be combined with the following fields:
+        ///     <ul>
+        ///         <li><strong><pre>CampaignsOpened</pre></strong> : to search subscribers that opened campaigns that where sent since the specified date</li>
+        ///         <li><strong><pre>LinksClicked</pre></strong> : to search subscribers that clicked on links in campaigns that where sent since the specified date</li>
+        ///     </ul>
+        /// </param>
+        /// <param name="dateTo">
+        ///     Provides an additional filter option to be combined with the following fields:
+        ///     <ul>
+        ///         <li><strong><pre>CampaignsOpened</pre></strong> : to search subscribers that opened campaigns that where sent up to the specified date</li>
+        ///         <li><strong><pre>LinksClicked</pre></strong> : to search subscribers that clicked on links in campaigns that where sent up to the specified date</li>
+        ///     </ul>
+        /// </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean value indicating succeess. </returns>
+        public async Task<bool> UpdateSegmentCriteriaAsync(Guid mailingListId, int segmentId, int criteriaId, string field, SegmentCriteriaComparer comparer, string value, DateTime? dateFrom = null, DateTime? dateTo = null, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Field = field,
+                Comparer = comparer,
+                Value = value,
+                DateFrom = dateFrom,
+                DateTo = dateTo
+            };
+
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/lists/{0}/segments/{1}/criteria/{2}/update", mailingListId, segmentId, criteriaId), parameters, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers
