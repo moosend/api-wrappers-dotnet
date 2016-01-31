@@ -90,9 +90,9 @@ namespace Moosend.Api.Client
         ///     You may specify any email address of these senders when sending a campaign.
         /// </summary>
         /// <param name="token"> Cancellation Token. </param>
-        public async Task<IList<Sender>> GetSendersAsync(CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Sender>> GetSendersAsync(CancellationToken token = default(CancellationToken))
         {
-            return await SendAsync<IList<Sender>>(HttpMethod.Get, "/senders/find_all", null, token).ConfigureAwait(false);
+            return await SendAsync<IEnumerable<Sender>>(HttpMethod.Get, "/senders/find_all", null, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Moosend.Api.Client
             {
                 Name = member.Name,
                 Email = member.Email,
-                CustomFields = member.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
+                CustomFields = member.CustomFields.Select(c => c.Key + "=" + c.Value)
             };
 
             return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe", mailingListId), parameters, token).ConfigureAwait(false);
@@ -425,7 +425,7 @@ namespace Moosend.Api.Client
             {
                 Name = updatedMember.Name,
                 Email = updatedMember.Email,
-                CustomFields = updatedMember.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
+                CustomFields = updatedMember.CustomFields.Select(c => c.Key + "=" + c.Value)
             };
 
             return await SendAsync<Subscriber>(HttpMethod.Post, string.Format("/subscribers/{0}/update/{1}", mailingListId, subscriberId), parameters, token).ConfigureAwait(false);
@@ -440,7 +440,7 @@ namespace Moosend.Api.Client
         /// <param name="subscribers"> A list of subscribers to add to the mailing list. You may specify the email address, the name and the custom fields for each subscriber. </param>
         /// <param name="token"> Cancellation Token. </param>
         /// <returns></returns>
-        public async Task<IList<Subscriber>> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> subscribers, CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Subscriber>> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> subscribers, CancellationToken token = default(CancellationToken))
         {
             var parameters = new
             {
@@ -448,11 +448,11 @@ namespace Moosend.Api.Client
                 {
                     Name = m.Name,
                     Email = m.Email,
-                    CustomFields = m.CustomFields.Select(c => c.Key + "=" + c.Value).ToList()
-                }).ToList()
+                    CustomFields = m.CustomFields.Select(c => c.Key + "=" + c.Value)
+                })
             };
 
-            return await SendAsync<IList<Subscriber>>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe_many", mailingListId), parameters, token).ConfigureAwait(false);
+            return await SendAsync<IEnumerable<Subscriber>>(HttpMethod.Post, string.Format("/subscribers/{0}/subscribe_many", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
         /// <summary>

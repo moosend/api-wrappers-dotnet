@@ -44,7 +44,7 @@ namespace Moosend.Api.Client
         ///     You may specify any email address of these senders when sending a campaign.
         /// </summary>
         /// <param name="token"> Cancellation Token. </param>
-        Task<IList<Sender>> GetSendersAsync(CancellationToken token = default(CancellationToken));
+        Task<IEnumerable<Sender>> GetSendersAsync(CancellationToken token = default(CancellationToken));
 
         /// <summary>
         ///     Creates a new campaign in your account. This method does not send the campaign, but rather creates it as a draft, ready for sending or testing.
@@ -273,7 +273,7 @@ namespace Moosend.Api.Client
         /// <param name="subscribers"> A list of subscribers to add to the mailing list. You may specify the email address, the name and the custom fields for each subscriber. </param>
         /// <param name="token"> Cancellation Token. </param>
         /// <returns></returns>
-        Task<IList<Subscriber>> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> subscribers, CancellationToken token = default(CancellationToken));
+        Task<IEnumerable<Subscriber>> SubscribeManyAsync(Guid mailingListId, IList<SubscriberParams> subscribers, CancellationToken token = default(CancellationToken));
 
         /// <summary>
         ///     Removes a subscriber from the specified mailing list permanently (without moving to the supression list).
