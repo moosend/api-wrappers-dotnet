@@ -726,6 +726,18 @@ namespace Moosend.Api.Client
 
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/lists/{0}/segments/{1}/criteria/{2}/update", mailingListId, segmentId, criteriaId), parameters, token).ConfigureAwait(false);
         }
+        
+        /// <summary>
+        ///     Gets detailed information on a specific segment and its criteria.
+        ///     However, it does not include the subscribers returned by the segment.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list the specified segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to fetch results for. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        public async Task<Segment> GetSegmentById(Guid mailingListId, int segmentId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<Segment>(HttpMethod.Get, string.Format("/lists/{0}/segments/{1}/details", mailingListId, segmentId), null, token).ConfigureAwait(false);
+        }
 
         #endregion
 

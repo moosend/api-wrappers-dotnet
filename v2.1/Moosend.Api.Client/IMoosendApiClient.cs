@@ -472,6 +472,15 @@ namespace Moosend.Api.Client
         /// <returns> A boolean value indicating succeess. </returns>
         Task<bool> UpdateSegmentCriteriaAsync(Guid mailingListId, int segmentId, int criteriaId, string field, SegmentCriteriaComparer comparer, string value, DateTime? dateFrom = null, DateTime? dateTo = null, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Gets detailed information on a specific segment and its criteria.
+        ///     However, it does not include the subscribers returned by the segment.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list the specified segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to fetch results for. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        Task<Segment> GetSegmentById(Guid mailingListId, int segmentId, CancellationToken token = default(CancellationToken));
+
         #endregion
     }
 }
