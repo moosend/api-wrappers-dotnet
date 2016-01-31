@@ -332,6 +332,17 @@ namespace Moosend.Api.Client
         /// <returns> New segment's ID. </returns>
         Task<int> CreateSegmentAsync(Guid mailingListId, string name, SegmentMatchType matchType = SegmentMatchType.All, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Updates the properties of an existing segment. You may update the name and match type of the segment.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to update. </param>
+        /// <param name="name"> The name of the segment. </param>
+        /// <param name="matchType"> Specifies how the segment's criteria will match together. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean value indicating success. </returns>
+        Task<bool> UpdateSegmentAsync(Guid mailingListId, int segmentId, string name, SegmentMatchType matchType = SegmentMatchType.All, CancellationToken token = default(CancellationToken));
+
         #endregion
     }
 }

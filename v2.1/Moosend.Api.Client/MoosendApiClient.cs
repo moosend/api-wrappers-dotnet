@@ -551,6 +551,26 @@ namespace Moosend.Api.Client
             return await SendAsync<int>(HttpMethod.Post, string.Format("/lists/{0}/segments/create", mailingListId), parameters, token).ConfigureAwait(false);
         }
 
+        /// <summary>
+        ///     Updates the properties of an existing segment. You may update the name and match type of the segment.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to update. </param>
+        /// <param name="name"> The name of the segment. </param>
+        /// <param name="matchType"> Specifies how the segment's criteria will match together. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean value indicating success. </returns>
+        public async Task<bool> UpdateSegmentAsync(Guid mailingListId, int segmentId, string name, SegmentMatchType matchType = SegmentMatchType.All, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Name = name,
+                MatchType = matchType
+            };
+
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/lists/{0}/segments/{1}/update", mailingListId, segmentId), parameters, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers
