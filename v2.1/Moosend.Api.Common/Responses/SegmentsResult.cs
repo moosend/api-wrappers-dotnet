@@ -5,6 +5,6 @@ namespace Moosend.Api.Common.Responses
 {
     public class SegmentsResult : PagedResponse
     {
-         public IList<Segment> Segments { get; set; } 
+         public IEnumerable<Segment> Segments { get; set; } 
     }
 }

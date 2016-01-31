@@ -5,6 +5,6 @@ namespace Moosend.Api.Common.Responses
 {
     public class MailingListsResult : PagedResponse
     {
-         public IList<MailingList> MailingLists { get; set; } 
+         public IEnumerable<MailingList> MailingLists { get; set; } 
     }
 }

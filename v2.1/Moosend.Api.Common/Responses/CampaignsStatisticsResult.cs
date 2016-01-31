@@ -5,6 +5,6 @@ namespace Moosend.Api.Common.Responses
 {
     public class CampaignsStatisticsResult : PagedResponse
     {
-        public IList<AnalyticsDetails> Analytics { get; set; }
+        public IEnumerable<AnalyticsDetails> Analytics { get; set; }
     }
 }
