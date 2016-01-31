@@ -571,6 +571,19 @@ namespace Moosend.Api.Client
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/lists/{0}/segments/{1}/update", mailingListId, segmentId), parameters, token).ConfigureAwait(false);
         }
 
+        /// <summary>
+        ///     Deletes a segment along with its criteria from the mailing list.
+        ///     The subscribers of the mailing list that the segment returned are not deleted or affected in any way.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to be deleted. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean value indicating success. </returns>
+        public async Task<bool> DeleteSegmentAsync(Guid mailingListId, int segmentId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Delete, string.Format("/lists/{0}/segments/{1}/delete", mailingListId, segmentId), null, token).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Generic API calling method and helpers

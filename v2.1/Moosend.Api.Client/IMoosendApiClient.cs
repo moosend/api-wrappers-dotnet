@@ -343,6 +343,16 @@ namespace Moosend.Api.Client
         /// <returns> A boolean value indicating success. </returns>
         Task<bool> UpdateSegmentAsync(Guid mailingListId, int segmentId, string name, SegmentMatchType matchType = SegmentMatchType.All, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Deletes a segment along with its criteria from the mailing list.
+        ///     The subscribers of the mailing list that the segment returned are not deleted or affected in any way.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list where the segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to be deleted. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns> A boolean value indicating success. </returns>
+        Task<bool> DeleteSegmentAsync(Guid mailingListId, int segmentId, CancellationToken token = default(CancellationToken));
+
         #endregion
     }
 }
