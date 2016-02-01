@@ -159,7 +159,7 @@ namespace Moosend.Api.Client
         ///     Use a comma (,) to seperate different options. </param>
         /// <param name="token"> Cancellation Token. </param>
         /// <returns> A boolean indicating success. </returns>
-        public async Task<Guid> UpdateCustomFieldAsync(Guid mailingListId, Guid customFieldId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken))
+        public async Task<bool> UpdateCustomFieldAsync(Guid mailingListId, Guid customFieldId, string name, CustomFieldType customFieldType = CustomFieldType.Text, bool isRequired = false, string options = null, CancellationToken token = default(CancellationToken))
         {
             var parameters = new
             {
@@ -169,7 +169,7 @@ namespace Moosend.Api.Client
                 Options = options
             };
 
-            return await SendAsync<Guid>(HttpMethod.Post, string.Format("/lists/{0}/customfields/{1}/update", mailingListId, customFieldId), parameters, token).ConfigureAwait(false);
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/lists/{0}/customfields/{1}/update", mailingListId, customFieldId), parameters, token).ConfigureAwait(false);
         }
 
         /// <summary> Removes a custom field definition from the specified mailing list. </summary>
