@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Moosend.Api.Tests
 {
     [TestFixture]
-    public class SubscriberTests
+    public class SubscribersTests
     {
         private Uri _uri;
         private string _apiKey;

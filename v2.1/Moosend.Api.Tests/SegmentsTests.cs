@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Moosend.Api.Tests
 {
     [TestFixture]
-    public class MailingListsTests
+    public class SegmentsTests
     {
         private Uri _uri;
         private string _apiKey;
@@ -23,7 +23,7 @@ namespace Moosend.Api.Tests
 
         [SetUp]
         public void Setup()
-        {            
+        {
             _uri = new Uri("https://api.moosend.com/v3");
             _apiKey = "moosend_api_key";
             _handler = new TestHttpMessageHandler();
@@ -33,17 +33,18 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Getting_Mailing_Lists_Then_The_Right_Url_Is_Accessed()
+        public async Task Given_MoosendApiClient_When_Getting_Segments_Then_The_Right_Url_Is_Accessed()
         {
+            var listId = new Guid();
             var page = 2;
-            var pageSize = 11;
-            var url = string.Format("/lists/{0}/{1}.json?apikey={2}", page, pageSize, _apiKey);
+            var pageSize = 110;
+            var url = string.Format("/lists/{0}/segments.json?apikey={1}&Page={2}&PageSize={3}", listId, _apiKey, page, pageSize);
 
             var expectedUrl = new Uri(_uri + url);
 
             try
             {
-                await _client.GetMailingListsAsync(page, pageSize);
+                await _client.GetSegmentsForListAsync(listId, page, pageSize);
             }
             catch (Exception ex)
             {
@@ -55,11 +56,11 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Getting_Mailing_Lists_Then_The_Headers_Are_As_Expected()
+        public async Task Given_MoosendApiClient_When_Getting_Segments_Then_The_Headers_Are_As_Expected()
         {
             try
             {
-                await _client.GetMailingListsAsync();
+                await _client.GetSegmentsForListAsync(new Guid());
             }
             catch (Exception ex)
             {
@@ -76,42 +77,43 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Getting_Mailing_Lists_Then_Can_Get_Mailing_Lists()
+        public async Task Given_MoosendApiClient_When_Getting_Segments_Then_Can_Get_Segment()
         {
             // arrange
-            var listId = new Guid();
+            var segId = 1;
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedLists = new MailingListsResult()
+            var expectedSegments = new SegmentsResult()
             {
                 Paging = new Paging() { TotalResults = 1 },
-                MailingLists = new List<MailingList>() { new MailingList() { Id = listId } }
+                Segments = new List<Segment>() { new Segment() { Id = segId } }
             };
 
-            var content = new ApiResponse<MailingListsResult>() { Context = expectedLists };
+            var content = new ApiResponse<SegmentsResult>() { Context = expectedSegments };
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
 
             // act
-            var result = await client.GetMailingListsAsync();
+            var result = await client.GetSegmentsForListAsync(new Guid());
 
             // assert
-            Assert.That(result.Paging.TotalResults, Is.EqualTo(expectedLists.Paging.TotalResults));
-            Assert.That(result.MailingLists.Count, Is.EqualTo(expectedLists.MailingLists.Count()));
-            Assert.That(result.MailingLists.Single().Id, Is.EqualTo(expectedLists.MailingLists.Single().Id));
+            Assert.That(result.Paging.TotalResults, Is.EqualTo(expectedSegments.Paging.TotalResults));
+            Assert.That(result.Segments.Count, Is.EqualTo(expectedSegments.Segments.Count()));
+            Assert.That(result.Segments.Single().Id, Is.EqualTo(expectedSegments.Segments.Single().Id));
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_List_Then_The_Right_Url_Is_Accessed()
+        public async Task Given_MoosendApiClient_When_Creating_Segments_Then_The_Right_Url_Is_Accessed()
         {
-            var url = string.Format("/lists/create.json?apikey={0}", _apiKey);
+            var listId = new Guid();
+            var url = string.Format("/lists/{0}/segments/create.json?apikey={1}", listId, _apiKey);
 
             var expectedUrl = new Uri(_uri + url);
 
             try
             {
-                await _client.CreateMailingListAsync("list_name");
+                await _client.CreateSegmentAsync(listId, "segment_name");
             }
             catch (Exception ex)
             {
@@ -123,11 +125,11 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_List_Then_The_Headers_Are_As_Expected()
+        public async Task Given_MoosendApiClient_When_Creating_Segment_Then_The_Headers_Are_As_Expected()
         {
             try
             {
-                await _client.CreateMailingListAsync("list_name");
+                await _client.CreateSegmentAsync(new Guid(), "segment_name");
             }
             catch (Exception ex)
             {
@@ -143,41 +145,39 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_List_Then_Can_Create()
+        public async Task Given_MoosendApiClient_When_Creating_Segment_Then_Can_Create()
         {
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedId = new Guid();
+            var expectedId = 1;
 
-            var content = new ApiResponse<Guid>() { Context = expectedId };
+            var content = new ApiResponse<int>() { Context = expectedId };
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
 
             // act
-            var listId = await client.CreateMailingListAsync("list_name");
+            var listId = await client.CreateSegmentAsync(new Guid(), "segment_name");
 
             // assert
             Assert.That(listId, Is.EqualTo(expectedId));
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_List_Then_The_Payload_Is_As_Expected()
+        public async Task Given_MoosendApiClient_When_Creating_Segment_Then_The_Payload_Is_As_Expected()
         {
-            var listName = "list_name";
-            var confirmationPage = "http://a-confirmationPage.com";
-            var redirectAfterUnsubscribePage = "http://a-redirectAfterUnsubscribePage.com";
+            var segmentName = "segment_name";
+            var segmentMatchType = SegmentMatchType.All;
             var parameters = new
             {
-                Name = listName,
-                ConfirmationPage = confirmationPage,
-                RedirectAfterUnsubscribePage = redirectAfterUnsubscribePage
+                Name = segmentName,
+                MatchType = segmentMatchType
             };
 
             try
             {
-                await _client.CreateMailingListAsync(listName, confirmationPage, redirectAfterUnsubscribePage);
+                await _client.CreateSegmentAsync(new Guid(), segmentName, segmentMatchType);
 
             }
             catch (Exception ex)
@@ -191,15 +191,17 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_List_Then_The_Right_Url_Is_Accessed()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Then_The_Right_Url_Is_Accessed()
         {
-            var url = string.Format("/lists/{0}/update.json?apikey={1}", new Guid(), _apiKey);
+            var listId = new Guid();
+            var segId = 1;
+            var url = string.Format("/lists/{0}/segments/{1}/update.json?apikey={2}", listId, segId, _apiKey);
 
             var expectedUrl = new Uri(_uri + url);
 
             try
             {
-                await _client.UpdateMailingListAsync(new Guid(), "list_name");
+                await _client.UpdateSegmentAsync(listId, segId, "segment_name");
             }
             catch (Exception ex)
             {
@@ -211,11 +213,11 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_List_Then_The_Headers_Are_As_Expected()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Then_The_Headers_Are_As_Expected()
         {
             try
             {
-                await _client.UpdateMailingListAsync(new Guid(), "list_name");
+                await _client.UpdateSegmentAsync(new Guid(), 1, "segment_name");
             }
             catch (Exception ex)
             {
@@ -231,39 +233,37 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_List_Then_Can_Update()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Then_Can_Update()
         {
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var content = new ApiResponse<Guid> { Context = new Guid() };
+            var content = new ApiResponse<bool>() { Context = true };
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
 
             // act
-            var listId = await client.UpdateMailingListAsync(new Guid(), "list_name");
+            var listId = await client.UpdateSegmentAsync(new Guid(), 1, "segment_name");
 
             // assert
-            Assert.That(listId, Is.EqualTo(content.Context));
+            Assert.That(listId, Is.True);
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_List_Then_The_Payload_Is_As_Expected()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Then_The_Payload_Is_As_Expected()
         {
-            const string listName = "list_name";
-            const string confirmationPage = "http://a-confirmationPage.com";
-            const string redirectAfterUnsubscribePage = "http://a-redirectAfterUnsubscribePage.com";
+            var segmentName = "segment_name";
+            var segmentMatchType = SegmentMatchType.All;
             var parameters = new
             {
-                Name = listName,
-                ConfirmationPage = confirmationPage,
-                RedirectAfterUnsubscribePage = redirectAfterUnsubscribePage
+                Name = segmentName,
+                MatchType = segmentMatchType
             };
 
             try
             {
-                await _client.UpdateMailingListAsync(new Guid(), listName, confirmationPage, redirectAfterUnsubscribePage);
+                await _client.UpdateSegmentAsync(new Guid(), 1, segmentName, segmentMatchType);
 
             }
             catch (Exception ex)
@@ -277,152 +277,17 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Getting_A_Mailing_List_Then_The_Right_Url_Is_Accessed()
+        public async Task Given_MoosendApiClient_When_Deleting_Segment_Then_The_Right_Url_Is_Accessed()
         {
             var listId = new Guid();
-
-            var url = string.Format("/lists/{0}/details.json?apikey={1}&WithStatistics={2}", listId, _apiKey, false);
+            var segId = 1;
+            var url = string.Format("/lists/{0}/segments/{1}/delete.json?apikey={2}", listId, segId, _apiKey);
 
             var expectedUrl = new Uri(_uri + url);
 
             try
             {
-                await _client.GetMailingListByIdAsync(listId, false);
-            }
-            catch (Exception ex)
-            {
-                // known serialization exception caused by returning {} from test handler 
-            }
-
-            Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
-            Assert.That(_handler.Requests[0].RequestUri.AbsoluteUri, Is.EqualTo(expectedUrl.AbsoluteUri));
-        }
-
-        [Test]
-        public async Task Given_MoosendApiClient_When_Getting_A_Mailing_List_Then_The_Headers_Are_As_Expected()
-        {
-            try
-            {
-                await _client.GetMailingListByIdAsync(new Guid());
-            }
-            catch (Exception ex)
-            {
-                // known serialization exception caused by returning {} from test handler 
-            }
-
-            IEnumerable<string> headers;
-            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
-
-            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
-            Assert.That(headers.Single(), Is.EqualTo("false"));
-        }
-
-        [Test]
-        public async Task Given_MoosendApiClient_When_Getting_A_Mailing_List_Then_Can_Get_Mailing_List()
-        {
-            // arrange
-            var ctx = new ServiceClientContext(_uri);
-
-            var expectedList = new MailingList()
-            {
-                Id = new Guid()
-            };
-
-            var content = new ApiResponse<MailingList>() { Context = expectedList };
-            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
-
-            var client = new MoosendApiClient(_apiKey, ctx);
-
-            // act
-            var listResult = await client.GetMailingListByIdAsync(new Guid());
-
-            // assert
-            Assert.That(listResult.Id, Is.EqualTo(expectedList.Id));
-        }
-
-        [Test]
-        public async Task Given_MoosendApiClient_When_Getting_Subscribers_Then_The_Right_Url_Is_Accessed()
-        {
-            var listId = new Guid();
-            var status = SubscribeType.Bounced;
-            var page = 2;
-            var pageSize = 300;
-
-            var url = string.Format("/lists/{0}/subscribers/{1}.json?apikey={2}&Page={3}&PageSize={4}", listId, status, _apiKey, page, pageSize);
-
-            var expectedUrl = new Uri(_uri + url);
-
-            try
-            {
-                await _client.GetSubscribersAsync(listId, status, null, page, pageSize);
-            }
-            catch (Exception ex)
-            {
-                // known serialization exception caused by returning {} from test handler 
-            }
-
-            Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
-            Assert.That(_handler.Requests[0].RequestUri.AbsoluteUri, Is.EqualTo(expectedUrl.AbsoluteUri));
-        }
-
-        [Test]
-        public async Task Given_MoosendApiClient_When_Getting_Subscribers_List_Then_The_Headers_Are_As_Expected()
-        {
-            try
-            {
-                await _client.GetSubscribersAsync(new Guid(), null);
-            }
-            catch (Exception ex)
-            {
-                // known serialization exception caused by returning {} from test handler 
-            }
-
-            IEnumerable<string> headers;
-            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
-
-            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
-            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
-            Assert.That(headers.Single(), Is.EqualTo("false"));
-        }
-
-        [Test]
-        public async Task Given_MoosendApiClient_When_Getting_Subscribers_List_Then_Can_Get_Subscribers()
-        {
-            // arrange
-            var ctx = new ServiceClientContext(_uri);
-
-            var expectedResult = new SubscribersResult
-            {
-                Paging = new Paging() { TotalResults = 200},
-                Subscribers = new List<Subscriber>() {new Subscriber() {Id = new Guid()}}
-            };
-
-            var expectedContent = new ApiResponse<SubscribersResult>() { Context = expectedResult };
-
-            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, expectedContent);
-            var client = new MoosendApiClient(_apiKey, ctx);
-
-            // act
-            var result = await client.GetSubscribersAsync(new Guid(), null);
-
-            // assert
-            Assert.That(result.Subscribers.Count, Is.EqualTo(expectedResult.Subscribers.Count()));
-            Assert.That(result.Subscribers.Single().Id, Is.EqualTo(expectedResult.Subscribers.Single().Id));
-            Assert.That(result.Paging.TotalResults, Is.EqualTo(expectedResult.Paging.TotalResults));
-        }
-
-        [Test] public async Task Given_MoosendApiClient_When_Deleting_A_Mailing_List_Then_The_Right_Url_Is_Accessed()
-        {
-            var listId = new Guid();
-
-            var url = string.Format("/lists/{0}/delete.json?apikey={1}", listId, _apiKey);
-
-            var expectedUrl = new Uri(_uri + url);
-
-            try
-            {
-                await _client.DeleteMailingListAsync(listId);
+                await _client.DeleteSegmentAsync(listId, segId);
             }
             catch (Exception ex)
             {
@@ -434,11 +299,11 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Deleting_A_Mailing_List_Then_The_Headers_Are_As_Expected()
+        public async Task Given_MoosendApiClient_When_Deleting_Segment_Then_The_Headers_Are_As_Expected()
         {
             try
             {
-                await _client.DeleteMailingListAsync(new Guid());
+                await _client.DeleteSegmentAsync(new Guid(), 1);
             }
             catch (Exception ex)
             {
@@ -454,7 +319,7 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Deleting_A_Mailing_List_Then_Can_Delete_Mailing_List()
+        public async Task Given_MoosendApiClient_When_Deleting_Segment_Then_Can_Delete()
         {
             // arrange
             var ctx = new ServiceClientContext(_uri);
@@ -465,23 +330,24 @@ namespace Moosend.Api.Tests
             var client = new MoosendApiClient(_apiKey, ctx);
 
             // act
-            var success = await client.DeleteMailingListAsync(new Guid());
+            var listId = await client.DeleteSegmentAsync(new Guid(), 1);
 
             // assert
-            Assert.That(success, Is.True);
+            Assert.That(listId, Is.True);
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_Custom_Field_Then_The_Right_Url_Is_Accessed()
+        public async Task Given_MoosendApiClient_When_Adding_Segment_Criteria_Then_The_Right_Url_Is_Accessed()
         {
             var listId = new Guid();
-            var url = string.Format("/lists/{0}/customfields/create.json?apikey={1}", listId, _apiKey);
+            var segId = 1;
+            var url = string.Format("/lists/{0}/segments/{1}/criteria/add.json?apikey={2}", listId, segId, _apiKey);
 
             var expectedUrl = new Uri(_uri + url);
 
             try
             {
-                await _client.CreateCustomFieldAsync(listId, "custom_field_name");
+                await _client.AddSegmentCriteriaAsync(listId, segId, "CampaignsOpened", SegmentCriteriaComparer.IsGreaterThanOrEqualTo, "100");
             }
             catch (Exception ex)
             {
@@ -493,11 +359,11 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_Custom_Field_Then_The_Headers_Are_As_Expected()
+        public async Task Given_MoosendApiClient_When_Adding_Segment_Criteria_Then_The_Headers_Are_As_Expected()
         {
             try
             {
-                await _client.CreateCustomFieldAsync(new Guid(), "cf_name");
+                await _client.AddSegmentCriteriaAsync(new Guid(), 1, "CampaignsOpened", SegmentCriteriaComparer.IsGreaterThanOrEqualTo, "100");
             }
             catch (Exception ex)
             {
@@ -513,44 +379,46 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_Custom_Field_Then_Can_Create()
+        public async Task Given_MoosendApiClient_When_Adding_Segment_Criteria_Then_Can_Add()
         {
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedId = new Guid();
+            var expectedId = 1;
 
-            var content = new ApiResponse<Guid>() { Context = expectedId };
+            var content = new ApiResponse<int>() { Context = expectedId };
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
 
             // act
-            var cfId = await client.CreateCustomFieldAsync(new Guid(), "cf_name");
+            var criteriaId = await client.AddSegmentCriteriaAsync(new Guid(), 1, "CampaignsOpened", SegmentCriteriaComparer.IsGreaterThanOrEqualTo, "100");
 
             // assert
-            Assert.That(cfId, Is.EqualTo(expectedId));
+            Assert.That(criteriaId, Is.EqualTo(expectedId));
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Creating_Custom_Field_Then_The_Payload_Is_As_Expected()
+        public async Task Given_MoosendApiClient_When_Adding_Segment_Criteria_Then_The_Payload_Is_As_Expected()
         {
-            var name = "cf_name";
-            var type = CustomFieldType.SingleSelectDropdown;
-            var isRequired = false;
-            var options = "yes, no";
-
+            var field = "CampaignsOpened";
+            var comparer = SegmentCriteriaComparer.IsGreaterThan;
+            var value = "100";
+            var dateFrom = new DateTime();
+            var dateTo = new DateTime();
             var parameters = new
             {
-                Name = name,
-                CustomFieldType = type,
-                IsRequired = isRequired,
-                Options = options
+                Field = field,
+                Comparer = comparer,
+                Value = value,
+                DateFrom = dateFrom,
+                DateTo = dateTo
             };
 
             try
             {
-                await _client.CreateCustomFieldAsync(new Guid(), name, type, isRequired, options);
+                await _client.AddSegmentCriteriaAsync(new Guid(), 1, field, comparer, value, dateFrom, dateTo);
+
             }
             catch (Exception ex)
             {
@@ -563,17 +431,18 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_Custom_Field_Then_The_Right_Url_Is_Accessed()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Criteria_Then_The_Right_Url_Is_Accessed()
         {
             var listId = new Guid();
-            var cfId = new Guid();
-            var url = string.Format("/lists/{0}/customfields/{1}/update.json?apikey={2}", listId, cfId, _apiKey);
+            var segId = 1;
+            var criteriaId = 1;
+            var url = string.Format("/lists/{0}/segments/{1}/criteria/{2}/update.json?apikey={3}", listId, segId, criteriaId, _apiKey);
 
             var expectedUrl = new Uri(_uri + url);
 
             try
             {
-                await _client.UpdateCustomFieldAsync(listId, cfId, "cf_name");
+                await _client.UpdateSegmentCriteriaAsync(listId, segId, criteriaId, "CampaignsOpened", SegmentCriteriaComparer.IsGreaterThanOrEqualTo, "100");
             }
             catch (Exception ex)
             {
@@ -585,11 +454,11 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_Custom_Field_Then_The_Headers_Are_As_Expected()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Criteria_Then_The_Headers_Are_As_Expected()
         {
             try
             {
-                await _client.UpdateCustomFieldAsync(new Guid(), new Guid(), "cf_name");
+                await _client.UpdateSegmentCriteriaAsync(new Guid(), 1, 1, "CampaignsOpened", SegmentCriteriaComparer.IsGreaterThanOrEqualTo, "100");
             }
             catch (Exception ex)
             {
@@ -605,44 +474,44 @@ namespace Moosend.Api.Tests
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_Custom_Field_Then_Can_Create()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Criteria_Then_Can_Update()
         {
             // arrange
             var ctx = new ServiceClientContext(_uri);
 
-            var expectedId = new Guid();
-
-            var content = new ApiResponse<Guid>() { Context = expectedId };
+            var content = new ApiResponse<bool>() { Context = true };
             ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
 
             var client = new MoosendApiClient(_apiKey, ctx);
 
             // act
-            var cfId = await client.UpdateCustomFieldAsync(new Guid(), new Guid(), "cf_name");
+            var criteriaId = await client.UpdateSegmentCriteriaAsync(new Guid(), 1, 1, "CampaignsOpened", SegmentCriteriaComparer.IsGreaterThanOrEqualTo, "100");
 
             // assert
-            Assert.That(cfId, Is.EqualTo(expectedId));
+            Assert.That(criteriaId, Is.True);
         }
 
         [Test]
-        public async Task Given_MoosendApiClient_When_Updating_Custom_Field_Then_The_Payload_Is_As_Expected()
+        public async Task Given_MoosendApiClient_When_Updating_Segment_Criteria_Then_The_Payload_Is_As_Expected()
         {
-            var name = "cf_name";
-            var type = CustomFieldType.SingleSelectDropdown;
-            var isRequired = false;
-            var options = "yes, no";
-
+            var field = "CampaignsOpened";
+            var comparer = SegmentCriteriaComparer.IsGreaterThan;
+            var value = "100";
+            var dateFrom = new DateTime();
+            var dateTo = new DateTime();
             var parameters = new
             {
-                Name = name,
-                CustomFieldType = type,
-                IsRequired = isRequired,
-                Options = options
+                Field = field,
+                Comparer = comparer,
+                Value = value,
+                DateFrom = dateFrom,
+                DateTo = dateTo
             };
 
             try
             {
-                await _client.CreateCustomFieldAsync(new Guid(), name, type, isRequired, options);
+                await _client.UpdateSegmentCriteriaAsync(new Guid(), 1, 1, field, comparer, value, dateFrom, dateTo);
+
             }
             catch (Exception ex)
             {
@@ -652,6 +521,70 @@ namespace Moosend.Api.Tests
             var expectedJson = JsonConvert.SerializeObject(parameters);
 
             Assert.That(_handler.Payloads[0].Contains(expectedJson));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Segment_Then_The_Right_Url_Is_Accessed()
+        {
+            var listId = new Guid();
+            var segId = 2;
+            var url = string.Format("/lists/{0}/segments/{1}/details.json?apikey={2}", listId, segId, _apiKey);
+
+            var expectedUrl = new Uri(_uri + url);
+
+            try
+            {
+                await _client.GetSegmentById(listId, segId);
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
+            Assert.That(_handler.Requests[0].RequestUri.AbsoluteUri, Is.EqualTo(expectedUrl.AbsoluteUri));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Segment_Then_The_Headers_Are_As_Expected()
+        {
+            try
+            {
+                await _client.GetSegmentById(new Guid(), 1);
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            IEnumerable<string> headers;
+            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
+
+            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(headers.Single(), Is.EqualTo("false"));
+
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Segment_Then_Can_Get_Segments()
+        {
+            // arrange
+            var segId = 1;
+            var ctx = new ServiceClientContext(_uri);
+
+            var expectedSegment = new Segment() { Id = 1 };
+
+            var content = new ApiResponse<Segment>() { Context = expectedSegment };
+            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
+
+            var client = new MoosendApiClient(_apiKey, ctx);
+
+            // act
+            var result = await client.GetSegmentById(new Guid(), 1);
+
+            // assert
+            Assert.That(result.Id, Is.EqualTo(expectedSegment.Id));
         }
     }
 }

@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Moosend.Api.Tests
 {
     [TestFixture]
-    public class CampaignTests
+    public class CampaignsTests
     {
         private Uri _uri;
         private string _apiKey;
@@ -102,7 +102,7 @@ namespace Moosend.Api.Tests
 
             // assert
             Assert.That(campaignsResult.Paging.TotalPageCount, Is.EqualTo(expectedCampaigns.Paging.TotalPageCount));
-            Assert.That(campaignsResult.Campaigns.Count, Is.EqualTo(expectedCampaigns.Campaigns.Count));
+            Assert.That(campaignsResult.Campaigns.Count, Is.EqualTo(expectedCampaigns.Campaigns.Count()));
             Assert.That(campaignsResult.Campaigns.Single().Id, Is.EqualTo(campaignsResult.Campaigns.Single().Id));
         }
 
@@ -583,7 +583,7 @@ namespace Moosend.Api.Tests
 
             // assert
             Assert.That(statsResult.Paging.TotalPageCount, Is.EqualTo(expectedStats.Paging.TotalPageCount));
-            Assert.That(statsResult.Analytics.Count, Is.EqualTo(expectedStats.Analytics.Count));
+            Assert.That(statsResult.Analytics.Count, Is.EqualTo(expectedStats.Analytics.Count()));
             Assert.That(statsResult.Analytics.Single().TotalCount,
                 Is.EqualTo(expectedStats.Analytics.Single().TotalCount));
         }
@@ -651,7 +651,7 @@ namespace Moosend.Api.Tests
 
             // assert
             Assert.That(linkActivityResult.Paging.TotalPageCount, Is.EqualTo(expectedLinkActivity.Paging.TotalPageCount));
-            Assert.That(linkActivityResult.Analytics.Count, Is.EqualTo(expectedLinkActivity.Analytics.Count));
+            Assert.That(linkActivityResult.Analytics.Count, Is.EqualTo(expectedLinkActivity.Analytics.Count()));
             Assert.That(linkActivityResult.Analytics.Single().TotalCount,
                 Is.EqualTo(expectedLinkActivity.Analytics.Single().TotalCount));
         }
@@ -719,7 +719,7 @@ namespace Moosend.Api.Tests
 
             // assert
             Assert.AreEqual(ctivityByLocationResult.Paging.TotalResults, expectedActivityByLocation.Paging.TotalResults);
-            Assert.AreEqual(ctivityByLocationResult.Analytics.Count, expectedActivityByLocation.Analytics.Count);
+            Assert.AreEqual(ctivityByLocationResult.Analytics.Count(), expectedActivityByLocation.Analytics.Count());
             Assert.AreEqual(ctivityByLocationResult.Analytics.Single().TotalCount,
                 expectedActivityByLocation.Analytics.Single().TotalCount);
         }
