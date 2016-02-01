@@ -8,6 +8,10 @@ namespace Moosend.Api.Common
         {
         }
 
+        public ApiClientException(string message) : base(message)
+        {
+        }
+
         public ApiClientException(string message, int code)
         : base(message)
         {
