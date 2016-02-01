@@ -5,7 +5,7 @@ namespace Moosend.Api.Common.Models
 {
     public class Segment
     {
-        internal Segment()
+        public Segment()
         {
             Criteria = new List<SegmentCriteria>();
         }
