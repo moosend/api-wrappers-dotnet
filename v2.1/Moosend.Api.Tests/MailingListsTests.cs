@@ -621,7 +621,7 @@ namespace Moosend.Api.Tests
             var cfId = await client.UpdateCustomFieldAsync(new Guid(), new Guid(), "cf_name");
 
             // assert
-            Assert.That(cfId, Is.EqualTo(expectedId));
+            Assert.That(cfId, Is.True);
         }
 
         [Test]
