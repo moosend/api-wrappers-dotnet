@@ -623,5 +623,71 @@ namespace Moosend.Api.Tests
 
             Assert.That(_handler.Payloads[0].Contains(expectedJson));
         }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Subscriber_By_Id_Lists_Then_The_Right_Url_Is_Accessed()
+        {
+            var listId = new Guid();
+            var subId = new Guid();
+            var url = string.Format("/subscribers/{0}/find/{1}.json?apikey={2}", listId, subId, _apiKey);
+
+            var expectedUrl = new Uri(_uri + url);
+
+            try
+            {
+                await _client.GetSubscriberByIdAsync(listId, subId);
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
+            Assert.That(HttpUtility.UrlDecode(_handler.Requests[0].RequestUri.AbsoluteUri), Is.EqualTo(expectedUrl.AbsoluteUri));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Subscriber_By_Id_Lists_Then_The_Headers_Are_As_Expected()
+        {
+            try
+            {
+                await _client.GetSubscriberByIdAsync(new Guid(), new Guid());
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            IEnumerable<string> headers;
+            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
+
+            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(headers.Single(), Is.EqualTo("false"));
+
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Subscriber_By_Id_Lists_Then_Can_Get_Subscriber()
+        {
+            // arrange
+            var ctx = new ServiceClientContext(_uri);
+
+            var expectedSubscriber = new Subscriber()
+            {
+                Id = new Guid()
+            };
+
+            var content = new ApiResponse<Subscriber>() { Context = expectedSubscriber };
+            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
+
+            var client = new MoosendApiClient(_apiKey, ctx);
+
+            // act
+            var result = await client.GetSubscriberByIdAsync(new Guid(), new Guid());
+
+            // assert
+            Assert.That(result.Id, Is.EqualTo(expectedSubscriber.Id));
+        }
     }
 }
