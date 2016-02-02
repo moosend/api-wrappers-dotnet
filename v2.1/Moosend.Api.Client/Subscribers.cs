@@ -46,8 +46,7 @@ namespace Moosend.Api.Client
         /// </summary>
         /// <param name="mailingListId"> The ID of the mailing list to add the new member. </param>
         /// <param name="subscriberId"> The id of the subscriber to be updated. </param>
-        /// <param name="email"> The email address of the member. </param>
-        /// <param name="customFields"> Name-value pairs that match the member's custom fields defined in the mailing list. </param>
+        /// <param name="updatedMember"> Subscriber parameters to update. </param>
         /// <param name="token"> Cancellation Token. </param>
         /// <returns></returns>
         public async Task<Subscriber> UpdateMemberAsync(Guid mailingListId, Guid subscriberId, SubscriberParams updatedMember, CancellationToken token = default(CancellationToken))
@@ -100,7 +99,7 @@ namespace Moosend.Api.Client
         /// <param name="email"> The email address of the subscriber to be supressed. </param>
         /// <param name="token"> Cancellation Token. </param>
         /// <returns></returns>
-        public async Task<bool> UnsubscribeMemberAsync(Guid mailingListId, Guid campaignId, string email, CancellationToken token = default(CancellationToken))
+        public async Task<bool> UnsubscribeMemberAsync(Guid mailingListId, Guid? campaignId, string email, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/subscribers/{0}/{1}/unsubscribe", mailingListId, campaignId), new { Email = email }, token).ConfigureAwait(false);
         }
