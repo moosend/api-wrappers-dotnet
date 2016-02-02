@@ -10,6 +10,22 @@ namespace Moosend.Api.Client
 {
     public partial class MoosendApiClient
     {
+        /// <summary>
+        ///     Gets details for a given mailing list. You may include subscriber statistics in your results or not. 
+        ///     Any segments existing for the requested mailing list will not be included in the results.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to be returned. </param>
+        /// <param name="withStatistics">  Specifies whether to fetch statistics for the subscribers or not. If ommitted, results will be returned with statistics by default. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        public async Task<MailingList> GetMailingListByIdAsync(Guid mailingListId, bool withStatistics = true, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                WithStatistics = withStatistics,
+            };
+            return await SendAsync<MailingList>(HttpMethod.Get, string.Format("/lists/{0}/details", mailingListId), parameters, token).ConfigureAwait(false);
+        }
+
         /// <summary> Gets a list of your active mailing lists in your account. </summary>
         /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
         /// <param name="pageSize"> The maximum number of results per page. If ommitted, 10 mailing lists will be returned per page. </param>
@@ -89,25 +105,11 @@ namespace Moosend.Api.Client
                 PageSize = pageSize
             };
 
-            return await SendAsync<SubscribersResult>(HttpMethod.Get, string.Format("/lists/{0}/subscribers/{1}", mailingListId, status), parameters, token).ConfigureAwait(false);
-        }
+            var path = status == null
+                ? string.Format("/lists/{0}/subscribers", mailingListId)
+                : string.Format("/lists/{0}/subscribers/{1}", mailingListId, status);
 
-        /// <summary>
-        ///     Gets details for a given mailing list. You may include subscriber statistics in your results or not. 
-        ///     Any segments existing for the requested mailing list will not be included in the results.
-        /// </summary>
-        /// <param name="mailingListId"> The ID of the mailing list to be returned. </param>
-        /// <param name="withStatistics"> 
-        ///     Specifies whether to fetch statistics for the subscribers or not. If ommitted, results will be returned with statistics by default.
-        ///     Specified value should be either 'true' of 'false' (without quotes). </param>
-        /// <param name="token"> Cancellation Token. </param>
-        public async Task<MailingList> GetMailingListByIdAsync(Guid mailingListId, bool withStatistics = true, CancellationToken token = default(CancellationToken))
-        {
-            var parameters = new
-            {
-                WithStatistics = withStatistics
-            };
-            return await SendAsync<MailingList>(HttpMethod.Get, string.Format("/lists/{0}/details", mailingListId), parameters, token).ConfigureAwait(false);
+            return await SendAsync<SubscribersResult>(HttpMethod.Get, path, parameters, token).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a mailing list from your account. </summary>

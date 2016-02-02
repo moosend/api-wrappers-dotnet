@@ -22,6 +22,18 @@ namespace Moosend.Api.Client
         }
 
         /// <summary>
+        ///     Searches for a subscriber with the specified unique id in the specified mailing list and returns detailed information such as email, name, date created, date unsubscribed, status and custom fields.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list to search the subscriber in. </param>
+        /// <param name="subcriberId"> The id of the subscriber being searched. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<Subscriber> GetSubscriberByIdAsync(Guid mailingListId, Guid subcriberId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<Subscriber>(HttpMethod.Get, string.Format("/subscribers/{0}/find/{1}", mailingListId, subcriberId), null, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
         ///     Adds a new subscriber to the specified mailing list.
         ///     If there is already a subscriber with the specified email address in the list, an update will be performed instead.
         /// </summary>
