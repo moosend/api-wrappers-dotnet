@@ -126,6 +126,13 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         Task<bool> UnscheduleCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Provides a basic summary of the results for a sent AB test campaign, separately for each version (A and B), such as the number of recipients, opens, clicks, bounces, unsubscribes, forwards etc to date.
+        /// </summary>
+        /// <param name="campaignId"> The ID of the requested AB test campaign. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        Task<AbTestCampaignSummaryResult> GetAbTestCampaignSummary(Guid campaignId, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         #region Mailing Lists

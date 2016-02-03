@@ -171,10 +171,20 @@ namespace Moosend.Api.Client
         /// </summary>
         /// <param name="campaignId"> The ID of the campaign to be unscheduled. </param>
         /// <param name="token"> Cancellation Token. </param>
-        /// <returns></returns>
+        /// <returns> A boolena value indicating success. </returns>
         public async Task<bool> UnscheduleCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/unschedule", campaignId), null, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///     Provides a basic summary of the results for a sent AB test campaign, separately for each version (A and B), such as the number of recipients, opens, clicks, bounces, unsubscribes, forwards etc to date.
+        /// </summary>
+        /// <param name="campaignId"> The ID of the requested AB test campaign. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        public async Task<AbTestCampaignSummaryResult> GetAbTestCampaignSummary(Guid campaignId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<AbTestCampaignSummaryResult>(HttpMethod.Get, string.Format("/campaigns/{0}/view_ab_summary", campaignId), null, token).ConfigureAwait(false);
         }
     }
 }
