@@ -118,6 +118,14 @@ namespace Moosend.Api.Client
         /// <returns></returns>
         Task<bool> UpdateCampaignAsync(Guid campaignId, CampaignParams campaignParams, CancellationToken token = default(CancellationToken));
 
+        /// <summary>
+        ///     Removes a previously defined scheduled date and time from a campaign, so that it will be delivered immediately if already queued or when sent.
+        /// </summary>
+        /// <param name="campaignId"> The ID of the campaign to be unscheduled. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        Task<bool> UnscheduleCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         #region Mailing Lists

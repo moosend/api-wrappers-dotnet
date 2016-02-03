@@ -165,5 +165,16 @@ namespace Moosend.Api.Client
         {
             return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/update", campaignId), campaignParams, token).ConfigureAwait(false);
         }
+
+        /// <summary>
+        ///     Removes a previously defined scheduled date and time from a campaign, so that it will be delivered immediately if already queued or when sent.
+        /// </summary>
+        /// <param name="campaignId"> The ID of the campaign to be unscheduled. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<bool> UnscheduleCampaignAsync(Guid campaignId, CancellationToken token = default(CancellationToken))
+        {
+            return await SendAsync<bool>(HttpMethod.Post, string.Format("/campaigns/{0}/unschedule", campaignId), null, token).ConfigureAwait(false);
+        }
     }
 }
