@@ -133,6 +133,104 @@ namespace Moosend.Api.Client
         /// <param name="token"> Cancellation Token. </param>
         Task<AbTestCampaignSummaryResult> GetAbTestCampaignSummary(Guid campaignId, CancellationToken token = default(CancellationToken));
 
+        /// <summary> Assigns a scheduled date and time at which the campaign will be delivered. </summary>
+        /// <param name="campaignId"> The ID of the campaign to be scheduled. </param>
+        /// <param name="dateTime"> The date and time at which the campaign will be delivered. </param>
+        /// <param name="timezone">
+        /// /// <summary>
+        /// The timezone the specified date and time refers to. By default the timezone in your settings panel will be used. If specified, one of the following values must be used:
+        /// <ul>
+        /// <li>Dateline Standard Time</li>
+        /// <li>Samoa Standard Time</li>
+        /// <li>Hawaiian Standard Time</li>
+        /// <li>Alaskan Standard Time</li>
+        /// <li>Pacific Standard Time</li>
+        /// <li>Pacific Standard Time (Mexico)</li>
+        /// <li>US Mountain Standard Time</li>
+        /// <li>Mountain Standard Time (Mexico)</li>
+        /// <li>Mountain Standard Time</li>
+        /// <li>Central Standard Time</li>
+        /// <li>Central Standard Time (Mexico)</li>
+        /// <li>Canada Central Standard Time</li>
+        /// <li>SA Pacific Standard Time</li>
+        /// <li>US Eastern Standard Time</li>
+        /// <li>Eastern Standard Time</li>
+        /// <li>Venezuela Standard Time</li>
+        /// <li>Atlantic Standard Time</li>
+        /// <li>SA Western Standard Time</li>
+        /// <li>Central Brazilian Standard Time</li>
+        /// <li>Pacific SA Standard Time</li>
+        /// <li>Newfoundland Standard Time</li>
+        /// <li>E. South America Standard Time</li>
+        /// <li>Argentina Standard Time</li>
+        /// <li>SA Eastern Standard Time</li>
+        /// <li>Greenland Standard Time</li>
+        /// <li>Montevideo Standard Time</li>
+        /// <li>Mid-Atlantic Standard Time</li>
+        /// <li>Azores Standard Time</li>
+        /// <li>Cape Verde Standard Time</li>
+        /// <li>Greenwich Standard Time</li>
+        /// <li>GMT Standard Time</li>
+        /// <li>Morocco Standard Time</li>
+        /// <li>W. Central Africa Standard Time</li>
+        /// <li>Central European Standard Time</li>
+        /// <li>Romance Standard Time</li>
+        /// <li>W. Europe Standard Time</li>
+        /// <li>Namibia Standard Time</li>
+        /// <li>E. Europe Standard Time</li>
+        /// <li>Israel Standard Time</li>
+        /// <li>FLE Standard Time</li>
+        /// <li>South Africa Standard Time</li>
+        /// <li>Egypt Standard Time</li>
+        /// <li>Middle East Standard Time</li>
+        /// <li>GTB Standard Time</li>
+        /// <li>Jordan Standard Time</li>
+        /// <li>Iran Standard Time</li>
+        /// <li>Georgian Standard Time</li>
+        /// <li>E. Africa Standard Time</li>
+        /// <li>Russian Standard Time</li>
+        /// <li>Arab Standard Time</li>
+        /// <li>Arabic Standard Time</li>
+        /// <li>Caucasus Standard Time</li>
+        /// <li>Mauritius Standard Time</li>
+        /// <li>Azerbaijan Standard Time</li>
+        /// <li>Arabian Standard Time</li>
+        /// <li>Afghanistan Standard Time</li>
+        /// <li>West Asia Standard Time</li>
+        /// <li>Pakistan Standard Time</li>
+        /// <li>Ekaterinburg Standard Time</li>
+        /// <li>Sri Lanka Standard Time</li>
+        /// <li>India Standard Time</li>
+        /// <li>Nepal Standard Time</li>
+        /// <li>N. Central Asia Standard Time</li>
+        /// <li>Central Asia Standard Time</li>
+        /// <li>Myanmar Standard Time</li>
+        /// <li>North Asia Standard Time</li>
+        /// <li>SE Asia Standard Time</li>
+        /// <li>Taipei Standard Time</li>
+        /// <li>W. Australia Standard Time</li>
+        /// <li>Singapore Standard Time</li>
+        /// <li>North Asia East Standard Time</li>
+        /// <li>China Standard Time</li>
+        /// <li>Yakutsk Standard Time</li>
+        /// <li>Korea Standard Time</li>
+        /// <li>Tokyo Standard Time</li>
+        /// <li>AUS Central Standard Time</li>
+        /// <li>Cen. Australia Standard Time</li>
+        /// <li>AUS Eastern Standard Time</li>
+        /// <li>West Pacific Standard Time</li>
+        /// <li>Tasmania Standard Time</li>
+        /// <li>Vladivostok Standard Time</li>
+        /// <li>Central Pacific Standard Time</li>
+        /// <li>New Zealand Standard Time</li>
+        /// <li>Tonga Standard Time</li>
+        /// </ul>
+        /// </summary>
+        /// </param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<bool> ScheduleCampaignAsync(Guid campaignId, DateTime dateTime, string timezone, CancellationToken token = default(CancellationToken));
+
         #endregion
 
         #region Mailing Lists
