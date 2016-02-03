@@ -404,20 +404,16 @@ namespace Moosend.Api.Tests
             var field = "CampaignsOpened";
             var comparer = SegmentCriteriaComparer.IsGreaterThan;
             var value = "100";
-            var dateFrom = new DateTime();
-            var dateTo = new DateTime();
             var parameters = new
             {
                 Field = field,
                 Comparer = comparer,
                 Value = value,
-                DateFrom = dateFrom,
-                DateTo = dateTo
             };
 
             try
             {
-                await _client.AddSegmentCriteriaAsync(new Guid(), 1, field, comparer, value, dateFrom, dateTo);
+                await _client.AddSegmentCriteriaAsync(new Guid(), 1, field, comparer, value);
 
             }
             catch (Exception ex)
@@ -425,7 +421,7 @@ namespace Moosend.Api.Tests
                 // known serialization exception caused by returning {} from test handler 
             }
 
-            var expectedJson = JsonConvert.SerializeObject(parameters);
+            var expectedJson = "{\"Field\":\"CampaignsOpened\",\"Comparer\":8,\"Value\":\"100\",\"DateFrom\":null,\"DateTo\":null}";
 
             Assert.That(_handler.Payloads[0].Contains(expectedJson));
         }
@@ -585,6 +581,79 @@ namespace Moosend.Api.Tests
 
             // assert
             Assert.That(result.Id, Is.EqualTo(expectedSegment.Id));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Segment_Members_Then_The_Right_Url_Is_Accessed()
+        {
+            var listId = new Guid();
+            var segId = 2;
+            var page = 2;
+            var pageSize = 10;
+
+            var url = string.Format("/lists/{0}/segments/{1}/members.json?apikey={2}&Page={3}&PageSize={4}", listId, segId, _apiKey, page, pageSize);
+
+            var expectedUrl = new Uri(_uri + url);
+
+            try
+            {
+                await _client.GetSegmentSubscribersAsync(listId, segId, null, page, pageSize);
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
+            Assert.That(_handler.Requests[0].RequestUri.AbsoluteUri, Is.EqualTo(expectedUrl.AbsoluteUri));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Segment_Members_Then_The_Headers_Are_As_Expected()
+        {
+            try
+            {
+                await _client.GetSegmentSubscribersAsync(new Guid(), 1, null);
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            IEnumerable<string> headers;
+            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
+
+            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(), Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(headers.Single(), Is.EqualTo("false"));
+
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_Segment_Members_Then_Can_Get_Members()
+        {
+            // arrange
+            var subId = new Guid();
+            var ctx = new ServiceClientContext(_uri);
+
+            var expectedSubscribers = new SubscribersResult()
+            {
+                Paging = new Paging() { TotalResults = 1 },
+                Subscribers = new List<Subscriber>() { new Subscriber() { Id = subId } }
+            };
+
+            var content = new ApiResponse<SubscribersResult>() { Context = expectedSubscribers };
+            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
+
+            var client = new MoosendApiClient(_apiKey, ctx);
+
+            // act
+            var result = await client.GetSegmentSubscribersAsync(new Guid(), 1, null);
+
+            // assert
+            Assert.That(result.Paging.TotalResults, Is.EqualTo(expectedSubscribers.Paging.TotalResults));
+            Assert.That(result.Subscribers.Count, Is.EqualTo(expectedSubscribers.Subscribers.Count()));
+            Assert.That(result.Subscribers.Single().Id, Is.EqualTo(expectedSubscribers.Subscribers.Single().Id));
         }
     }
 }
