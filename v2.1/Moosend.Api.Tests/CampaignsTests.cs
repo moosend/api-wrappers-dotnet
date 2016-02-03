@@ -861,5 +861,73 @@ namespace Moosend.Api.Tests
             Assert.That(success, Is.True);
         }
 
+        [Test]
+        public async Task Given_MoosendApiClient_When_AbTestCampaignSummary_Then_The_Right_Url_Is_Accessed()
+        {
+           var cmId = new Guid();
+            var url = string.Format("/campaigns/{0}/view_ab_summary.json?apikey={1}", cmId, _apiKey);
+
+            var expectedUrl = new Uri(_uri + url);
+
+            try
+            {
+                await _client.GetAbTestCampaignSummary(cmId);
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            Assert.That(_handler.Requests[0].Method, Is.EqualTo(HttpMethod.Get));
+            Assert.That(_handler.Requests[0].RequestUri.AbsoluteUri, Is.EqualTo(expectedUrl.AbsoluteUri));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_AbTestCampaignSummary_Then_The_Headers_Are_As_Expected()
+        {
+            try
+            {
+                await _client.GetAbTestCampaignSummary(new Guid());
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            IEnumerable<string> headers;
+            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
+
+            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(headers.Single(), Is.EqualTo("false"));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Getting_AbTestCampaignSummary_Then_Can_Get_Summary()
+        {
+            // arrange
+            var ctx = new ServiceClientContext(_uri);
+
+            var expectedSummary = new AbTestCampaignSummaryResult()
+            {
+                A = new ABCampaign {CampaignID = new Guid()},
+                B = new ABCampaign {CampaignID = new Guid()},
+                CampaignId = new Guid()
+            };
+
+            var content = new ApiResponse<AbTestCampaignSummaryResult> { Context = expectedSummary };
+            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
+
+            var client = new MoosendApiClient(_apiKey, ctx);
+
+            // act
+            var result = await client.GetAbTestCampaignSummary(new Guid());
+
+            // assert
+            Assert.That(result.A.CampaignID, Is.EqualTo(expectedSummary.A.CampaignID));
+            Assert.That(result.B.CampaignID, Is.EqualTo(expectedSummary.B.CampaignID));
+            Assert.That(result.CampaignId, Is.EqualTo(expectedSummary.CampaignId));
+        }
     }
 }
