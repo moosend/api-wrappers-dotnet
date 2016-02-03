@@ -801,5 +801,65 @@ namespace Moosend.Api.Tests
 
             Assert.That(_handler.Payloads[0].Contains(expectedJson));
         }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Unscheduling_Campaign_Then_The_Right_Url_Is_Accessed()
+        {
+            var url = string.Format("/campaigns/{0}/unschedule.json?apikey={1}", new Guid(), _apiKey);
+
+            var expectedUrl = new Uri(_uri + url);
+
+            try
+            {
+                await _client.UnscheduleCampaignAsync(new Guid());
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            Assert.That(HttpMethod.Post, Is.EqualTo(_handler.Requests[0].Method));
+            Assert.That(expectedUrl.AbsoluteUri, Is.EqualTo(_handler.Requests[0].RequestUri.AbsoluteUri));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Unscheduling_Campaign_Then_The_Headers_Are_As_Expected()
+        {
+            try
+            {
+                await _client.UnscheduleCampaignAsync(new Guid());
+            }
+            catch (Exception ex)
+            {
+                // known serialization exception caused by returning {} from test handler 
+            }
+
+            IEnumerable<string> headers;
+            _handler.Requests[0].Headers.TryGetValues("Keep-Alive", out headers);
+
+            Assert.That(_handler.Requests[0].Headers.Accept.FirstOrDefault().MediaType, Is.EqualTo("application/json"));
+            Assert.That(_handler.Requests[0].Headers.UserAgent.ToString(),
+                Is.EqualTo(string.Format("moosend-api-client-{0}-{1}", Environment.Version, Environment.OSVersion)));
+            Assert.That(headers.Single(), Is.EqualTo("false"));
+        }
+
+        [Test]
+        public async Task Given_MoosendApiClient_When_Unscheduling_Campaign_Then_Can_Unschedule()
+        {
+            // arrange
+            var ctx = new ServiceClientContext(_uri);
+
+            var content = new ApiResponse<bool> {Context = true};
+            ctx.Handler = new TestHttpMessageHandler(HttpStatusCode.OK, content);
+
+            var client = new MoosendApiClient(_apiKey, ctx);
+
+            // act
+            var success = await client.UnscheduleCampaignAsync(new Guid());
+
+            // assert
+            Assert.That(success, Is.True);
+        }
+
     }
 }
