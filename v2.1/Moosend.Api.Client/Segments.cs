@@ -155,8 +155,8 @@ namespace Moosend.Api.Client
                 Field = field,
                 Comparer = comparer,
                 Value = value,
-                DateFrom = dateFrom,
-                DateTo = dateTo
+                DateFrom = dateFrom.HasValue ? dateFrom.Value.ToString("dd-MM-yy") : null,
+                DateTo = dateTo.HasValue ? dateTo.Value.ToString("dd-MM-yy") : null
             };
 
             return await SendAsync<int>(HttpMethod.Post, string.Format("/lists/{0}/segments/{1}/criteria/add", mailingListId, segmentId), parameters, token).ConfigureAwait(false);
@@ -244,6 +244,33 @@ namespace Moosend.Api.Client
         public async Task<Segment> GetSegmentById(Guid mailingListId, int segmentId, CancellationToken token = default(CancellationToken))
         {
             return await SendAsync<Segment>(HttpMethod.Get, string.Format("/lists/{0}/segments/{1}/details", mailingListId, segmentId), null, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///     Gets a list of the subscribers that the specified segment returns according to its criteria. 
+        ///     Because the results from this call could be quite big, paging information is required as input.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list the specified segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to fetch results for. </param>
+        /// <param name="status">
+        ///     Specifies which subscribers to fetch, according to their status. 
+        ///     If ommitted, only active subscribers will be returned.</param>
+        /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
+        /// <param name="pageSize"> 
+        ///     The maximum number of results per page. This must be a positive integer up to 1000. If not specified, 500 results per page will be returned. 
+        ///     If a value greater than 1000 is specified, it will be treated as 1000. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        public async Task<SubscribersResult> GetSegmentSubscribersAsync(Guid mailingListId, int segmentId, SubscribeType? status, int page = 1, int pageSize = 100, CancellationToken token = default(CancellationToken))
+        {
+            var parameters = new
+            {
+                Page = page,
+                PageSize = pageSize,
+                Status = status
+            };
+
+            return await SendAsync<SubscribersResult>(HttpMethod.Get, string.Format("/lists/{0}/segments/{1}/members", mailingListId, segmentId), parameters, token).ConfigureAwait(false);
         }
     }
 }

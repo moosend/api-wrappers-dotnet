@@ -229,6 +229,24 @@ namespace Moosend.Api.Client
         #region Subscribers
 
         /// <summary>
+        ///     Gets a list of the subscribers that the specified segment returns according to its criteria. 
+        ///     Because the results from this call could be quite big, paging information is required as input.
+        /// </summary>
+        /// <param name="mailingListId"> The ID of the mailing list the specified segment belongs. </param>
+        /// <param name="segmentId"> The ID of the segment to fetch results for. </param>
+        /// <param name="status"> 
+        ///     Specifies which subscribers to fetch, according to their status. 
+        ///     If ommitted, only active subscribers will be returned.
+        /// </param>
+        /// <param name="page"> The page number to display results for. If not specified, the first page will be returned. </param>
+        /// <param name="pageSize"> 
+        ///     The maximum number of results per page. This must be a positive integer up to 1000. If not specified, 500 results per page will be returned. 
+        ///     If a value greater than 1000 is specified, it will be treated as 1000. </param>
+        /// <param name="token"> Cancellation Token. </param>
+        /// <returns></returns>
+        Task<SubscribersResult> GetSegmentSubscribersAsync(Guid mailingListId, int segmentId, SubscribeType? status, int page = 1, int pageSize = 100, CancellationToken token = default(CancellationToken));
+
+        /// <summary>
         ///     Searches for a subscriber with the specified unique id in the specified mailing list and returns detailed information such as email, name, date created, date unsubscribed, status and custom fields.
         /// </summary>
         /// <param name="mailingListId"> The ID of the mailing list to search the subscriber in. </param>
