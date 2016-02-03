@@ -4,120 +4,48 @@ namespace Moosend.Api.Common.Models
 {
     public class CampaignStatisticsSummary
     {
-        public int Id
-        {
-            get;
-            internal set;
-        }
+        public int Id { get; set; }
 
-        public AbVersion AbVersion
-        {
-            get;
-            internal set;
-        }
+        public AbVersion AbVersion { get; set; }
 
-        public Guid CampaignId
-        {
-            get;
-            internal set;
-        }
+        public Guid CampaignId { get; set; }
 
-        public string CampaignName
-        {
-            get;
-            internal set;
-        }
+        public string CampaignName { get; set; }
 
-        public Guid MailingListId
-        {
-            get;
-            internal set;
-        }
+        public Guid MailingListId { get; set; }
 
-        public string MailingListName
-        {
-            get;
-            internal set;
-        }
+        public string MailingListName { get; set; }
 
-        public DateTime? CampaignDeliveredOn
-        {
-            get;
-            internal set;
-        }
+        public DateTime? CampaignDeliveredOn { get; set; }
 
-        public DateTime To
-        {
-            get;
-            internal set;
-        }
+        public DateTime To { get; set; }
 
-        public DateTime From
-        {
-            get;
-            internal set;
-        }
+        public DateTime From { get; set; }
 
-        public int TotalOpens
-        {
-            get;
-            internal set;
-        }
+        public int TotalOpens { get; set; }
 
-        public int UniqueOpens
-        {
-            get;
-            internal set;
-        }
+        public int UniqueOpens { get; set; }
 
-        public int TotalBounces
-        {
-            get;
-            internal set;
-        }
+        public int TotalBounces { get; set; }
 
-        public int TotalForwards
-        {
-            get;
-            internal set;
-        }
+        public int TotalForwards { get; set; }
 
-        public int UniqueForwards
-        {
-            get;
-            internal set;
-        }
+        public int UniqueForwards { get; set; }
 
-        public int TotalUnsubscribes
-        {
-            get;
-            internal set;
-        }
+        public int TotalUnsubscribes { get; set; }
 
-        public int TotalLinkClicks
-        {
-            get;
-            internal set;
-        }
+        public int TotalLinkClicks { get; set; }
 
-        public int UniqueLinkClicks
-        {
-            get;
-            internal set;
-        }
+        public int UniqueLinkClicks { get; set; }
 
-        public int Sent
-        {
-            get;
-            internal set;
-        }
+        public int Sent { get; set; }
 
         public double LinkClicksPercentage
         {
             get
             {
                 if (Sent == 0) return 0;
-                return ((double)UniqueLinkClicks / (double)Sent);
+                return UniqueLinkClicks/(double) Sent;
             }
         }
 
@@ -126,7 +54,7 @@ namespace Moosend.Api.Common.Models
             get
             {
                 if (Sent == 0) return 0;
-                return ((double)UniqueOpens / (double)Sent);
+                return UniqueOpens/(double) Sent;
             }
         }
 
@@ -135,7 +63,7 @@ namespace Moosend.Api.Common.Models
             get
             {
                 if (Sent == 0) return 0;
-                return ((double)TotalBounces / (double)Sent);
+                return TotalBounces/(double) Sent;
             }
         }
 
@@ -144,7 +72,7 @@ namespace Moosend.Api.Common.Models
             get
             {
                 if (Sent == 0) return 0;
-                return ((double)TotalUnsubscribes / (double)Sent);
+                return TotalUnsubscribes/(double) Sent;
             }
         }
 
@@ -153,16 +81,13 @@ namespace Moosend.Api.Common.Models
             get
             {
                 if (Sent == 0) return 0;
-                return ((double)TotalBounces / (double)Sent);
+                return TotalBounces/(double) Sent;
             }
         }
 
         public int NotOpenedCount
         {
-            get
-            {
-                return Sent - UniqueOpens - TotalBounces;
-            }
+            get { return Sent - UniqueOpens - TotalBounces; }
         }
     }
 }

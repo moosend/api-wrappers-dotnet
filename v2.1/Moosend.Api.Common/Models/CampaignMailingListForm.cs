@@ -6,6 +6,5 @@ namespace Moosend.Api.Common.Models
     {
         public Guid MailingListId { get; set; }
         public int SegmentId { get; set; }
-
     }
 }
