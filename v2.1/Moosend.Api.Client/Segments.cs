@@ -155,6 +155,7 @@ namespace Moosend.Api.Client
                 Field = field,
                 Comparer = comparer,
                 Value = value,
+                // TODO check for bug in API as I cannot set the right date times. Maybe is a format issue.
                 DateFrom = dateFrom.HasValue ? dateFrom.Value.ToString("dd-MM-yy") : null,
                 DateTo = dateTo.HasValue ? dateTo.Value.ToString("dd-MM-yy") : null
             };
