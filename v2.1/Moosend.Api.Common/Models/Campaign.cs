@@ -34,6 +34,7 @@ namespace Moosend.Api.Common.Models
 
         public AbCampaignData AbCampaignData { get; set; }
 
+		// TODO Change it to MailingLists
         public MailingList MailingList { get; set; }
 
         public string ConfirmationTo { get; set; }

@@ -45,5 +45,11 @@ namespace Moosend.Api.Common.Models
         public DateTime UpdatedOn { get; set; }
 
         public Guid MailingListId { get; set; }
+
+        public SegmentFetchType FetchType { get; set; }
+
+        public int FetchValue { get; set; }
+
+        public string Description { get; set; }
     }
 }

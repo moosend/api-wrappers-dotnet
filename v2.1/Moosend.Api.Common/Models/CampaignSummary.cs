@@ -19,8 +19,6 @@ namespace Moosend.Api.Common.Models
         public DateTime? ScheduledFor { get; set; }
         public string ScheduledForTimezone { get; set; }
         public IList<CampaignSummaryMailingList> MailingLists { get; set; }
-        public int SegmentId { get; set; }
-        public string SegmentName { get; set; }
         public int TotalSent { get; set; }
         public int TotalOpens { get; set; }
         public int UniqueOpens { get; set; }

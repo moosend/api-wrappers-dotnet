@@ -39,6 +39,13 @@ namespace Moosend.Api.Common
         Complained = 9
     }
 
+    public enum SegmentFetchType
+    {
+        All = 0,
+        Top = 1,
+        TopPercent = 2
+    }
+
     public enum SegmentMatchType
     {
         /// <summary>
