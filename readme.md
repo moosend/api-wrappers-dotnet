@@ -102,7 +102,8 @@ Subscribers
     catch (ApiClientException ex)
     {
         Console.WriteLine("ERROR: {0}", ex.Message);
-    }```
+    }
+```
 
 Lists
 
