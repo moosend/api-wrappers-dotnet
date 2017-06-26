@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+ <metadata>
+   <id>moosend</id>
+   <title>Moosend .Net Wrapper</title>
+   <version>$version$</version>
+   <description>Complete control over your Moosend (www.moosend.com) account. Manage mailing lists, subscribers and email campaigns with just a few lines of code!</description>
+   <authors>Moosend Ltd</authors>
+   <owners>Moosend Ltd</owners>
+   <requireLicenseAcceptance>false</requireLicenseAcceptance>
+ </metadata>
+</package>

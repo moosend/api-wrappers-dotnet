@@ -1,4 +1,4 @@
-﻿Moosend .NET API Wrapper
+Moosend .NET API Wrapper
 =======
 
 Moosend .NET API wrapper allows you to connect to the [Moosend](http://www.moosend.com) API and supports the operations listed below.
@@ -42,32 +42,30 @@ Campaigns
 Usage
 =======
 
-To use, simply add a reference to Moosend.API.Client.dll in your project and use the methods available to make requests. For more information you can follow the examples below.
+To use, simply add Moosend.Api.Client NuGet package in your project and use the methods available to make requests. For more information you can follow the examples below.
 
-Include the following using statements for your convinience
+Include the following using statements for your convenience
 
 ```c#
-	using Moosend.API.Client;
-	using Moosend.API.Client.Models;
+	using Moosend.Api.Client;
+	using Moosend.Api.Common.Models;
 ```
 
 Make a declaration like the following in your class to access the API
 
 ```c#
-	private ApiManager MoosendAPI = new ApiManager("YOUR_API_KEY");
+	var moosendApiClient = new MoosendApiClient(Guid.Parse("YOUR_API_KEY"));
 ```
 
 Examples
 =======
-
-Wrapper Examples
 
 Subscribers
 
 - Subscribe a subscriber to your mailing list
 
 ```c#
-    var mailingListID = Guid.Parse("YOUR_MAILING_LIST_ID");
+    var mailingListId = Guid.Parse("YOUR_MAILING_LIST_ID");
 
     var info = new SubscriberParams()
     {
@@ -77,11 +75,11 @@ Subscribers
 
     try
     {
-        var subscriber = MoosendAPI.Subscribers.Subscribe(mailingListID, info);
+        var subscriber = await moosendApiClient.SubscribeMemberAsync(mailingListId, info).ConfigureAwait(false);
 
-        Console.WriteLine("ID: {0}, Name: {1}, Email: {2}", subscriber.ID, subscriber.Name, subscriber.Email);
+        Console.WriteLine("ID: {0}, Name: {1}, Email: {2}", subscriber.Id, subscriber.Name, subscriber.Email);
     }
-    catch (ApiException ex)
+    catch (ApiClientException ex)
     {
         Console.WriteLine("ERROR: {0}", ex.Message);
     }
@@ -90,22 +88,21 @@ Subscribers
 - Unsubscribe a subscriber from a mailing list
 
 ```c#
-    var mailingListID = Guid.Parse("YOUR_MAILING_LIST_ID");
-    var campaignID = Guid.Parse("YOUR_CAMPAIGN_ID");
+    var mailingListId = Guid.Parse("YOUR_MAILING_LIST_ID");
+    var campaignId = Guid.Parse("YOUR_CAMPAIGN_ID");
 
     var subscriberEmail = "john.doe@some-domain.com";
 
     try
     {
-        MoosendAPI.Subscribers.Unsubscribe(mailingListID, campaignID, subscriberEmail);
+        await moosendApiClient.UnsubscribeMemberAsync(mailingListId, campaignId, subscriberEmail).ConfigureAwait(false);
 
-        Console.WriteLine("Unsubscribe successfule");
+        Console.WriteLine("Unsubscribe successful");
     }
-    catch (ApiException ex)
+    catch (ApiClientException ex)
     {
         Console.WriteLine("ERROR: {0}", ex.Message);
-    }
-```
+    }```
 
 Lists
 

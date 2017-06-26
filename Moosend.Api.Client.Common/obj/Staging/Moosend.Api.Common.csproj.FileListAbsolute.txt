@@ -1,0 +1,6 @@
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Staging\Moosend.Api.Common.dll
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Staging\Moosend.Api.Common.pdb
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Staging\Newtonsoft.Json.dll
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Staging\Newtonsoft.Json.xml
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\obj\Staging\Moosend.Api.Common.dll
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\obj\Staging\Moosend.Api.Common.pdb

@@ -1,0 +1,7 @@
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Debug\Moosend.Api.Client.Common.dll
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Debug\Moosend.Api.Client.Common.pdb
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\obj\Debug\Moosend.Api.Client.Common.csprojResolveAssemblyReference.cache
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\obj\Debug\Moosend.Api.Client.Common.dll
+C:\Users\Tourkos\moosend\wrappers\dotnet-wrapper\Moosend.Api.Common\obj\Debug\Moosend.Api.Client.Common.pdb
