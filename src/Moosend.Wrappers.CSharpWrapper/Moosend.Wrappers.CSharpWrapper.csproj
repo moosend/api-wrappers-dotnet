@@ -12,7 +12,7 @@ OpenAPI spec version: 1.0
     
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{881D4D1C-24E7-4B8E-A41D-5173FC279EF0}</ProjectGuid>
+    <ProjectGuid>{F1F1E1AB-C7A8-4770-9279-6EDAFC3585C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Moosend.Wrappers.CSharpWrapper</RootNamespace>

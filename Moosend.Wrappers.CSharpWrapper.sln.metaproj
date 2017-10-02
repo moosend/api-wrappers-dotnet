@@ -25,7 +25,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <CurrentSolutionConfigurationContents>
       <SolutionConfiguration xmlns="">
-  <ProjectConfiguration Project="{881D4D1C-24E7-4B8E-A41D-5173FC279EF0}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{F1F1E1AB-C7A8-4770-9279-6EDAFC3585C5}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
   <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
 </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
@@ -37,7 +37,7 @@
       <Platform>Any CPU</Platform>
       <Content>
         <SolutionConfiguration xmlns="">
-  <ProjectConfiguration Project="{881D4D1C-24E7-4B8E-A41D-5173FC279EF0}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{F1F1E1AB-C7A8-4770-9279-6EDAFC3585C5}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
   <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
 </SolutionConfiguration>
       </Content>
@@ -47,7 +47,7 @@
       <Platform>Any CPU</Platform>
       <Content>
         <SolutionConfiguration xmlns="">
-  <ProjectConfiguration Project="{881D4D1C-24E7-4B8E-A41D-5173FC279EF0}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{F1F1E1AB-C7A8-4770-9279-6EDAFC3585C5}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
   <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
 </SolutionConfiguration>
       </Content>
