@@ -17,16 +17,16 @@
     <VCTargetsPath14>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\</VCTargetsPath14>
     <VisualStudioVersion>12.0</VisualStudioVersion>
     <AspNetConfiguration>Release</AspNetConfiguration>
-    <SolutionDir>E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\</SolutionDir>
+    <SolutionDir>G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\</SolutionDir>
     <SolutionExt>.sln</SolutionExt>
     <SolutionFileName>Moosend.Wrappers.CSharpWrapper.sln</SolutionFileName>
     <SolutionName>Moosend.Wrappers.CSharpWrapper</SolutionName>
-    <SolutionPath>E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\Moosend.Wrappers.CSharpWrapper.sln</SolutionPath>
+    <SolutionPath>G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\Moosend.Wrappers.CSharpWrapper.sln</SolutionPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <CurrentSolutionConfigurationContents>
       <SolutionConfiguration xmlns="">
-  <ProjectConfiguration Project="{530E8E41-720C-4BDA-9BE8-50E9DB9007D8}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
-  <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{5B3276B5-3C1A-4834-8F95-CDA0F8E527CB}" AbsolutePath="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
 </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -37,8 +37,8 @@
       <Platform>Any CPU</Platform>
       <Content>
         <SolutionConfiguration xmlns="">
-  <ProjectConfiguration Project="{530E8E41-720C-4BDA-9BE8-50E9DB9007D8}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
-  <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{5B3276B5-3C1A-4834-8F95-CDA0F8E527CB}" AbsolutePath="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
 </SolutionConfiguration>
       </Content>
     </SolutionConfiguration>
@@ -47,14 +47,14 @@
       <Platform>Any CPU</Platform>
       <Content>
         <SolutionConfiguration xmlns="">
-  <ProjectConfiguration Project="{530E8E41-720C-4BDA-9BE8-50E9DB9007D8}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
-  <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{5B3276B5-3C1A-4834-8F95-CDA0F8E527CB}" AbsolutePath="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{19F1DEBC-DE5E-4517-8062-F000CD499087}" AbsolutePath="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj" BuildProjectInSolution="True">Release|AnyCPU</ProjectConfiguration>
 </SolutionConfiguration>
       </Content>
     </SolutionConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj">
+    <ProjectReference Include="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj">
       <ToolsVersion>
       </ToolsVersion>
       <SkipNonexistentProjects>False</SkipNonexistentProjects>
@@ -62,7 +62,7 @@
       <Configuration>Release</Configuration>
       <Platform>AnyCPU</Platform>
     </ProjectReference>
-    <ProjectReference Include="E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj">
+    <ProjectReference Include="G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj">
       <ToolsVersion>
       </ToolsVersion>
       <SkipNonexistentProjects>False</SkipNonexistentProjects>
@@ -98,35 +98,35 @@
     <MSBuild Projects="@(ProjectReference)" Targets="Publish" BuildInParallel="True" Properties="BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" SkipNonexistentProjects="%(ProjectReference.SkipNonexistentProjects)" />
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper" Outputs="@(Moosend_Wrappers_CSharpWrapperBuildOutput)">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
       <Output TaskParameter="TargetOutputs" ItemName="Moosend_Wrappers_CSharpWrapperBuildOutput" />
     </MSBuild>
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper:Clean">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" Targets="Clean" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" Targets="Clean" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper:Rebuild" Outputs="@(Moosend_Wrappers_CSharpWrapperBuildOutput)">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" Targets="Rebuild" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" Targets="Rebuild" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
       <Output TaskParameter="TargetOutputs" ItemName="Moosend_Wrappers_CSharpWrapperBuildOutput" />
     </MSBuild>
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper:Publish">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" Targets="Publish" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper\Moosend.Wrappers.CSharpWrapper.csproj'" Projects="@(ProjectReference)" Targets="Publish" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper_Test" Outputs="@(Moosend_Wrappers_CSharpWrapper_TestBuildOutput)">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
       <Output TaskParameter="TargetOutputs" ItemName="Moosend_Wrappers_CSharpWrapper_TestBuildOutput" />
     </MSBuild>
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper_Test:Clean">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" Targets="Clean" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" Targets="Clean" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper_Test:Rebuild" Outputs="@(Moosend_Wrappers_CSharpWrapper_TestBuildOutput)">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" Targets="Rebuild" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" Targets="Rebuild" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
       <Output TaskParameter="TargetOutputs" ItemName="Moosend_Wrappers_CSharpWrapper_TestBuildOutput" />
     </MSBuild>
   </Target>
   <Target Name="Moosend_Wrappers_CSharpWrapper_Test:Publish">
-    <MSBuild Condition="'%(ProjectReference.Identity)' == 'E:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" Targets="Publish" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'G:\build-tools\agent\work\99d221936a7519dd\GeneratedWrapper\src\Moosend.Wrappers.CSharpWrapper.Test\Moosend.Wrappers.CSharpWrapper.Test.csproj'" Projects="@(ProjectReference)" Targets="Publish" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Release; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
   </Target>
 </Project>
